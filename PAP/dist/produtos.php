@@ -123,7 +123,98 @@ session_start();
                         FROM 
                         produtos p
                         INNER JOIN categorias c ON p.id_categoria = c.id_categoria
-                        INNER JOIN marcas m ON p.id_marca = m.id_marca";
+                        INNER JOIN marcas m ON p.id_marca = m.id_marca
+                        WHERE p.id_prod = 5";
+                    $result2 = mysqli_query($con, $sqlProd);
+                    if (mysqli_num_rows($result2) > 0) {
+                        while ($row2 = mysqli_fetch_assoc($result2)) {
+                    ?>
+                            <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
+                                <div class="card-img position-relative">
+                                    <div class="card-badges">
+                                    </div>
+                                    <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
+                                    <picture class="position-relative overflow-hidden d-block bg-light">
+                                        <img class="w-100 img-fluid position-relative z-index-10" title="" src="<?= $row2['foto_prod']; ?>" alt="">
+                                    </picture>
+                                    <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
+                                        <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i> Adicionar ao
+                                            carrinho</button>
+                                    </div>
+                                </div>
+                                <div class="card-body px-0">
+                                    <a class="text-decoration-none link-cover" href="./prod.php?id_prod=<?= $row2['id_prod']?>"><?= $row2['nome_prod']; ?></a>
+                                    <small class="text-muted d-block">9 tamanhos disponíveis</small>
+                                    <p class="mt-2 mb-0 small"><?= $row2['preco_prod']; ?>€</p>
+                                </div>
+                            </div>
+                    <?php
+                        }
+                    }
+                    ?>
+                    <!--/ Card Product-->
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <!-- Card Product-->
+                    <?php
+                    $sqlProd = "SELECT DISTINCT 
+                        p.id_prod,
+                        p.nome_prod,
+                        c.nome_categoria,
+                        m.nome_marca,
+                        p.preco_prod,
+                        p.foto_prod,
+                        p.desc_prod
+                        FROM 
+                        produtos p
+                        INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                        INNER JOIN marcas m ON p.id_marca = m.id_marca
+                        WHERE p.id_prod = 2";
+                    $result2 = mysqli_query($con, $sqlProd);
+                    if (mysqli_num_rows($result2) > 0) {
+                        while ($row2 = mysqli_fetch_assoc($result2)) {
+                    ?>
+                            <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
+                                <div class="card-img position-relative">
+                                    <div class="card-badges">
+                                    </div>
+                                    <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
+                                    <picture class="position-relative overflow-hidden d-block bg-light">
+                                        <img class="w-100 img-fluid position-relative z-index-10" title="" src="<?= $row2['foto_prod']; ?>" alt="">
+                                    </picture>
+                                    <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
+                                        <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i> Adicionar ao
+                                            carrinho</button>
+                                    </div>
+                                </div>
+                                <div class="card-body px-0">
+                                    <a class="text-decoration-none link-cover" href="./prod.php?id_prod=<?= $row2['id_prod']?>"><?= $row2['nome_prod']; ?></a>
+                                    <small class="text-muted d-block">9 tamanhos disponíveis</small>
+                                    <p class="mt-2 mb-0 small"><?= $row2['preco_prod']; ?>€</p>
+                                </div>
+                            </div>
+                    <?php
+                        }
+                    }
+                    ?>
+                    <!--/ Card Product-->
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <!-- Card Product-->
+                    <?php
+                    $sqlProd = "SELECT DISTINCT 
+                        p.id_prod,
+                        p.nome_prod,
+                        c.nome_categoria,
+                        m.nome_marca,
+                        p.preco_prod,
+                        p.foto_prod,
+                        p.desc_prod
+                        FROM 
+                        produtos p
+                        INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                        INNER JOIN marcas m ON p.id_marca = m.id_marca
+                        WHERE p.id_prod = 8";
                     $result2 = mysqli_query($con, $sqlProd);
                     if (mysqli_num_rows($result2) > 0) {
                         while ($row2 = mysqli_fetch_assoc($result2)) {
@@ -247,7 +338,6 @@ session_start();
                     </div>
                     <!--/ Card Product-->
                 </div>
-
             </div>
             <!-- / Products-->
 

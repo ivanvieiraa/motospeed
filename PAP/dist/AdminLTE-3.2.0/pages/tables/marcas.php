@@ -89,7 +89,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="./utilizadores.php" class="nav-link active">
+                  <a href="./utilizadores.php" class="nav-link">
                     <p>Utilizadores</p>
                   </a>
                 </li>
@@ -99,7 +99,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="marcas.php" class="nav-link">
+                  <a href="./marcas.php" class="nav-link active">
                     <p>Marcas</p>
                   </a>
                 </li>
@@ -123,7 +123,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Utilizadores
+              <h1>Marcas
               </h1>
               <?php
               // Verifica se a mensagem de erro está definida na sessão
@@ -142,9 +142,9 @@
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item active">Gestão</a></li>
-                <li class="breadcrumb-item active">Utilizadores</li>
+                <li class="breadcrumb-item active">Marcas</li>
                 <li class="breadcrumb-item active">
-                  &nbsp;<a href="criarUser.php"> <i class="fa-solid fa-user-plus fa-xl"></i></a>
+                &nbsp;<a href="criarMarca.php"> <i class="fa-regular fa-square-plus fa-xl"></i></a>
                 </li>
               </ol>
             </div>
@@ -161,17 +161,7 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Foto</th>
-                  <th>Nome</th>
-                  <th>Apelido</th>
-                  <th>Email</th>
-                  <th>Data de Nascimento</th>
-                  <th>Morada</th>
-                  <th>Código Postal</th>
-                  <th>Administrador</th>
-                  <th>Criado em</th>
-                  <th>Alterado em</th>
-                  <th>Estado</th>
+                  <th>Marca</th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -180,30 +170,15 @@
                 // Inclua o arquivo de conexão
                 include 'ligacao.php';
                 // Consulta SQL para obter os dados da tabela
-                $sql = "SELECT * FROM users";
+                $sql = "SELECT * FROM marcas";
                 $result = mysqli_query($con, $sql);
                 // Loop através dos resultados da consulta e exibir cada linha na tabela
                 if (mysqli_num_rows($result) > 0) {
                   while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
-                    echo "<td>" . $row["id_user"] . "</td>";
-                    echo "<td style='text-align:center'><img style='border-radius:50%' src='../../../" . $row['foto'] . "' width='50px' height='50px'></td>";
-                    echo "<td style='text-align:center'>" . ($row["nome"] ? $row["nome"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["apelido"] ? $row["apelido"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["email"] ? $row["email"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["data_nasc"] ? $row["data_nasc"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["morada"] ? $row["morada"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["codigop"] ? $row["codigop"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["adm"] ? 'Sim' : 'Não') . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["criado_a"] ? $row["criado_a"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["alterado_a"] ? $row["alterado_a"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    if ($row['status'] == 1) {
-                      echo "<td style='text-align:center'><a href='statusUser.php?id_user=" . $row['id_user'] . "'title='Desativar utilizador'><i class='fa-solid fa-circle' style='color: #4dff00;'></i> </a></td>  ";
-                    }
-                    if ($row['status'] == 0) {
-                      echo "<td style='text-align:center'><a href='statusUser.php?id_user=" . $row['id_user'] . "'title='Ativar utilizador'><i class='fa-solid fa-circle' style='color: #ff0000;'></i></a></td>  ";
-                    }
-                    echo "<td style='text-align:center'><a href='editUser.php?id_user=" . $row['id_user'] . "'><i class='fa-solid fa-pen-to-square'></i></a></td>";
+                    echo "<td>" . $row["id_marca"] . "</td>";
+                    echo "<td style='text-align:center'>" . ($row["nome_marca"] ? $row["nome_marca"] : "<a href='editMarca.php?id_marca=" . $row['id_marca'] . "'><i>N/A</i></a>") . "</td>";
+                    echo "<td style='text-align:center'><a href='editMarca.php?id_marca=" . $row['id_marca'] . "'><i class='fa-solid fa-pen-to-square'></i></a></td>";
                     echo "</tr>";
                   }
                 } else {

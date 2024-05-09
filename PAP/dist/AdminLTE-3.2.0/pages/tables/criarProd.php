@@ -208,18 +208,13 @@ include("ligacao.php");
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/tables/jsgrid.html" class="nav-link">
+                                    <a href="marcas.php" class="nav-link">
                                         <p>Marcas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/tables/jsgrid.html" class="nav-link">
+                                    <a href="categorias.php" class="nav-link">
                                         <p>Categorias</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/tables/jsgrid.html" class="nav-link">
-                                        <p>Tamanhos</p>
                                     </a>
                                 </li>
                             </ul>
@@ -269,7 +264,7 @@ include("ligacao.php");
                             <!-- general form elements -->
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="inserirProd.php" method="POST" enctype="multipart/form-marca" onsubmit="return validateForm()">
+                            <form action="inserirProd.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
                                 <label for="nome">Nome:</label>
                                 <input type="text" name="nome" id="nome" value="" oninput="clearErrorMessage('nome-error')"><br>
                                 <span id="nome-error" class="error-message"></span><br>
@@ -328,9 +323,10 @@ include("ligacao.php");
                                 <span id="tamanho-error" class="error-message"></span><br>
 
                                 <label for="preco">Preço:</label><br>
-                                <input type="number" name="preco" id="preco" oninput="clearErrorMessage('preco-error')" step="0.01">
+                                <input type="number" name="preco" id="preco" oninput="clearErrorMessage('preco-error')" step="any">
                                 <i class="fa-solid fa-euro-sign fa-lg" style="color: #000000;"></i><br>
                                 <span id="preco-error" class="error-message"></span><br>
+
 
                                 <div class="form-group">
                                     <div class="checkbox-group">

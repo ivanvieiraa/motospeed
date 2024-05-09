@@ -208,22 +208,20 @@ include("ligacao.php");
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages/tables/jsgrid.html" class="nav-link">
+                <li class="nav-item">
+                  <a href="marcas.php" class="nav-link">
                     <p>Marcas</p>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="pages/tables/jsgrid.html" class="nav-link">
-                    <p>Categorias</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/tables/jsgrid.html" class="nav-link">
-                    <p>Tamanhos</p>
-                  </a>
-                </li>
-              </ul>
+                </a>
             </li>
+            <li class="nav-item">
+              <a href="categorias.php" class="nav-link">
+                <p>Categorias</p>
+              </a>
+            </li>
+          </ul>
+          </li>
         </nav>
         <!-- /.sidebar-menu -->
       </div>

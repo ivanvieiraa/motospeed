@@ -11,16 +11,14 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/images/favicon/favicon-16x16.png">
     <link rel="mask-icon" href="./assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
     <script src="https://kit.fontawesome.com/d5954f6b26.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.7/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
 
     <style>
         .content-wrapper {
@@ -56,8 +54,7 @@
             <div class="sidebar">
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                         <li class="nav-item menu-closed">
                             <a href="#" class="nav-link ">
@@ -100,18 +97,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/tables/jsgrid.html" class="nav-link">
+                                    <a href="marcas.php" class="nav-link">
                                         <p>Marcas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/tables/jsgrid.html" class="nav-link">
+                                    <a href="categorias.php" class="nav-link">
                                         <p>Categorias</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/tables/jsgrid.html" class="nav-link">
-                                        <p>Tamanhos</p>
                                     </a>
                                 </li>
                             </ul>
@@ -133,14 +125,9 @@
                             </h1>
                             <?php
                             // Verifica se a mensagem de erro está definida na sessão
-                            if (isset($_SESSION['mensagem']) && ($_SESSION['mensagem'] == "Produto ativado com sucesso!" || $_SESSION['mensagem'] == "Produto desativado com sucesso!" || $_SESSION['mensagem'] == "Utilizador editado com sucesso!")) {
+                            if (isset($_SESSION['mensagem'])) {
                                 echo '<div id="alert" class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
                                 unset($_SESSION['mensagem']);
-                            } else {
-                                if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "Este produto não pode ser desativado.") {
-                                    echo '<div id="alert" class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
-                                    unset($_SESSION['mensagem']);
-                                }
                             }
                             ?>
                         </div>
@@ -218,10 +205,10 @@
                         </table>
                     </div>
                     <script>
-                        document.addEventListener('DOMContentLoaded', function () {
+                        document.addEventListener('DOMContentLoaded', function() {
                             var alertBox = document.getElementById('alert');
                             if (alertBox) {
-                                setTimeout(function () {
+                                setTimeout(function() {
                                     alertBox.classList.add('hide');
                                 }, 3000); // 5000 milissegundos = 5 segundos
                             }
@@ -272,9 +259,11 @@
     <script src="../../dist/js/demo.js"></script>
     <!-- Page specific script -->
     <script>
-        $(function () {
+        $(function() {
             $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#example2').DataTable({
@@ -287,10 +276,9 @@
                 "responsive": true,
             });
         });
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#example2').DataTable();
         });
-
     </script>
 </body>
 

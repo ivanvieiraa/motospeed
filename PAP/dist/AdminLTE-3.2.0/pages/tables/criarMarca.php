@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -6,6 +8,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Motospeed | Dashboard</title>
+
   <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/images/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/images/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/images/favicon/favicon-16x16.png">
@@ -17,9 +20,6 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <script src="https://kit.fontawesome.com/d5954f6b26.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.7/css/jquery.dataTables.css">
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
-
   <style>
     .checkbox-group {
       display: flex;
@@ -51,7 +51,7 @@
     /* Custom CSS for form */
     form {
       width: 80%;
-      height: 100%;
+      height: auto;
       margin: 0 auto;
       padding: 20px;
       background-color: #fff;
@@ -66,7 +66,8 @@
 
     form input[type="text"],
     form input[type="email"],
-    form input[type="date"] {
+    form input[type="date"],
+    form input[type="password"] {
       width: 100%;
       padding: 5px;
       /* margin-bottom: 15px; */
@@ -121,8 +122,10 @@
         <img src="mstile-150x150.png" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Motospeed</span>
       </a>
+
       <!-- Sidebar -->
       <div class="sidebar">
+
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -158,7 +161,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="./utilizadores.php" class="nav-link active">
+                  <a href="./utilizadores.php" class="nav-link">
                     <p>Utilizadores</p>
                   </a>
                 </li>
@@ -169,7 +172,7 @@
                 </li>
                 <li class="nav-item">
                 <li class="nav-item">
-                  <a href="marcas.php" class="nav-link">
+                  <a href="marcas.php" class="nav-link active">
                     <p>Marcas</p>
                   </a>
                 </li>
@@ -195,7 +198,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Utilizadores
+              <h1>Marcas
               </h1>
               <?php
               // Verifica se a mensagem de erro está definida na sessão
@@ -209,165 +212,47 @@
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item active">Gestão</li>
-                <li class="breadcrumb-item active"><a href="utilizadores.php">Utilizadores</a></li>
+                <li class="breadcrumb-item active"><a href="marcas.php">Marcas</a></li>
                 <li class="breadcrumb-item active">
-                  Editar utilizador
+                  Inserir marca
                 </li>
               </ol>
             </div>
           </div>
         </div><!-- /.container-fluid -->
       </section>
-
       <!-- Main content -->
       <section class="content">
-        <!-- /.card-header -->
-        <div class="card-body">
-          <?php
-          include("ligacao.php");
+        <div class="container-fluid">
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form action="inserirMarca.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                <label for="nome">Nome:</label>
+                <input type="text" name="nome" id="nome" value="" oninput="clearErrorMessage('nome-error')"><br>
+                <span id="nome-error" class="error-message"></span><br>
 
-          // Verifica se o utilizador está autenticado
-          if (!isset($_SESSION['id_user'])) {
-            header('Location: login.php');
-            exit();
-          }
-
-          $id_user = $_GET['id_user'];
-
-          // Consulta SQL para obter os dados do utilizador
-          $sql = "SELECT * FROM users WHERE id_user = '$id_user'";
-          $result = mysqli_query($con, $sql);
-
-          // Verifica se o utilizador existe
-          if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-          } else {
-            $_SESSION['mensagem'] = "Utilizador não encontrado";
-            header('Location: utilizadores.php');
-            exit();
-          }
-          ?>
-          <form action="updateUser.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-            <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
-
-            <label for="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" value="<?php echo $row['nome']; ?>" oninput="clearErrorMessage('nome-error')"><br>
-            <span id="nome-error" class="error-message"></span><br>
-
-            <label for="apelido">Apelido:</label>
-            <input type="text" name="apelido" id="apelido" value="<?php echo $row['apelido']; ?>" oninput="clearErrorMessage('apelido-error')"><br>
-            <span id="apelido-error" class="error-message"></span><br>
-
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" value="<?php echo $row['email']; ?>" oninput="clearErrorMessage('email-error')"><br>
-            <span id="email-error" class="error-message"></span><br>
-
-            <label for="data">Data de Nascimento:</label>
-            <input type="date" name="data" id="data" value="<?php echo $row['data_nasc']; ?>" oninput="clearErrorMessage('data-error')"><br>
-            <span id="data-error" class="error-message"></span><br>
-
-            <label for="morada">Morada:</label>
-            <input type="text" name="morada" id="morada" value="<?php echo $row['morada']; ?>" oninput="clearErrorMessage('morada-error')"><br>
-            <span id="morada-error" class="error-message"></span><br>
-
-            <label for="codp">Código Postal:</label>
-            <input type="text" name="codp" id="codp" value="<?php echo $row['codigop']; ?>" oninput="clearErrorMessage('codp-error')"><br>
-            <span id="codp-error" class="error-message"></span><br>
-            <div class="form-group">
-              <div class="checkbox-group">
-                <div>
-                  <label for="isActive">Estado:</label>
-                  <input type="checkbox" name="status" id="statusCheckbox" value="1" <?php echo ($row['status'] == 1) ? "checked" : ""; ?>>
-                  <span id="statusText">
-                    <?php echo ($row['status'] == 1) ? "Ativo" : "Não ativo"; ?>
-                  </span>
-                  <input type="hidden" name="status" id="statusValue" value="<?php echo ($row['status'] == 1) ? 1 : 0; ?>">
-
-                  <script>
-                    // Função para atualizar o texto ao lado da checkbox
-                    document.getElementById('statusCheckbox').addEventListener('change', function() {
-                      var statusText = document.getElementById('statusText');
-                      var statusValue = document.getElementById('statusValue');
-
-                      if (this.checked) {
-                        statusText.textContent = "Ativo";
-                        statusValue.value = 1;
-                      } else {
-                        statusText.textContent = "Não ativo";
-                        statusValue.value = 0;
-                      }
-                    });
-                  </script>
-                </div>
-              </div>
+                <input type="submit" value="Criar">
+                <li class="breadcrumb-item active" style="list-style: none;">
+                  <a href="marcas.php"> <i class="fas fa-arrow-left"></i> Voltar</a>
+                </li>
+              </form>
+              
             </div>
-            <input type="submit" value="Editar">
-            <li class="breadcrumb-item active" style="list-style: none;">
-              <a href="utilizadores.php"> <i class="fas fa-arrow-left"></i> Voltar</a>
-            </li>
-          </form>
-          <script>
-            function validateForm() {
-              var nome = document.getElementById('nome').value;
-              var apelido = document.getElementById('apelido').value;
-              var email = document.getElementById('email').value;
-              var data = document.getElementById('data').value;
-              var morada = document.getElementById('morada').value;
-              var codp = document.getElementById('codp').value;
-
-              if (nome.trim() == '') {
-                displayErrorMessage('nome-error', 'Insira um nome!');
-                return false;
-              }
-              if (apelido.trim() == '') {
-                displayErrorMessage('apelido-error', 'Insira um apelido!');
-                return false;
-              }
-              if (email.trim() == '') {
-                displayErrorMessage('email-error', 'Insira um email!');
-                return false;
-              }
-              // if (data.trim() == '') {
-              //   displayErrorMessage('data-error', 'Insira uma data de nascimento!');
-              //   return false;
-              // }
-              // if (morada.trim() == '') {
-              //   displayErrorMessage('morada-error', 'Insira uma morada!');
-              //   return false;
-              // }
-              // if (codp.trim() == '') {
-              //   displayErrorMessage('codp-error', 'Insira um código postal!');
-              //   return false;
-              // }
-              return true;
-            }
-
-            function displayErrorMessage(id, message) {
-              document.getElementById(id).innerHTML = message;
-            }
-
-            function clearErrorMessage(id) {
-              document.getElementById(id).innerHTML = '';
-            }
-          </script>
-        </div>
-        <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            var alertBox = document.getElementById('alert');
-            if (alertBox) {
-              setTimeout(function() {
-                alertBox.classList.add('hide');
-              }, 3000); // 5000 milissegundos = 5 segundos
-            }
-          });
-        </script>
-
       </section>
       <!-- /.content -->
     </div>
-
+    <!-- /.content-wrapper -->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
   </div>
-
+  <!-- ./wrapper -->
 
   <!-- jQuery -->
   <script src="../../plugins/jquery/jquery.min.js"></script>
@@ -391,28 +276,6 @@
   <!-- AdminLTE for demo purposes -->
   <script src="../../dist/js/demo.js"></script>
   <!-- Page specific script -->
-  <script>
-    $(function() {
-      $("#example1").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
-    });
-    $(document).ready(function() {
-      $('#example2').DataTable();
-    });
-  </script>
 </body>
 
 </html>

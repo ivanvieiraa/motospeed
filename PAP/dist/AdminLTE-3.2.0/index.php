@@ -110,11 +110,6 @@ if($_SESSION['adm'] != 1){
                     <p>Categorias</p>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="./pages/tables/tamanhos.php" class="nav-link">
-                    <p>Tamanhos</p>
-                  </a>
-                </li>
               </ul>
             </li>
         </nav>

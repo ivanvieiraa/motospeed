@@ -1,0 +1,81 @@
+<div class="row py-3 py-lg-0 flex-wrap gx-4 gy-6">
+    <!-- menu row-->
+    <div class="col">
+        <h6 class="dropdown-heading">Coats & Jackets</h6>
+        <ul class="list-unstyled">
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Waterproof Jackets</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Insulated Jackets</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Down Jackets</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Softshell Jackets</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Casual Jackets</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Windproof Jackets</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Breathable Jackets</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Cleaning & Proofing</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="{{webRoot}}/produtos.php">View All</a></li>
+        </ul>
+    </div>
+    <!-- / menu row-->
+
+    <!-- menu row-->
+    <div class="col">
+        <h6 class="dropdown-heading">Insulated</h6>
+        <ul class="list-unstyled">
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Insulated Jackets</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Bodywarmers</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Parkas</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Baselayers & Thermals</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Winter Hats</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Scarves & Neck</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Gloves & Mitts</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Accessories</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="{{webRoot}}/produtos.php">View All</a></li>
+        </ul>
+    </div>
+    <!-- / menu row-->
+
+    <!-- menu row-->
+    <div class="d-none d-xxl-block col">
+        <h6 class="dropdown-heading">Footwear</h6>
+        <ul class="list-unstyled">
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Lifestyle & Casual</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Walking Shoes</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Running Shoes</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Military Boots</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Fabric Walking Boots</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Leather Walking Boots</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Wellies</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item" href="{{webRoot}}/produtos.php">Winter Footwear</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="{{webRoot}}/produtos.php">View All</a></li>
+        </ul>
+    </div>
+    <!-- / menu row-->  
+    
+    <!-- menu row-->
+    <div class="col">
+        <h6 class="dropdown-heading text-danger">Special Offers</h6>
+        <ul class="list-unstyled">
+            <li class="dropdown-list-item"><a class="dropdown-item text-danger" href="{{webRoot}}/produtos.php">Insulated Jackets</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item text-danger" href="{{webRoot}}/produtos.php">Bodywarmers</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item text-danger" href="{{webRoot}}/produtos.php">Parkas</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item text-danger" href="{{webRoot}}/produtos.php">Baselayers & Thermals</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item text-danger" href="{{webRoot}}/produtos.php">Winter Hats</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item text-danger" href="{{webRoot}}/produtos.php">Scarves & Neck</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item text-danger" href="{{webRoot}}/produtos.php">Gloves & Mitts</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item text-danger" href="{{webRoot}}/produtos.php">Accessories</a></li>
+            <li class="dropdown-list-item"><a class="dropdown-item text-danger dropdown-link-all" href="{{webRoot}}/produtos.php">View All</a></li>
+        </ul>
+    </div>
+    <!-- / menu row-->      
+</div>
+
+<div class="align-items-center justify-content-between mt-5 d-none d-lg-flex">
+    {{#each (limit slideshow-brands.entries 6)}}
+    <div class="me-5 f-w-20">
+        <a class="d-block" href="{{webRoot}}/produtos.php">
+            <picture>
+                <img class="img-fluid d-table mx-auto" src="{{ img }}" alt="{{ config.defaultImgAlt }}">
+            </picture>
+        </a>
+    </div>
+    {{/each}}
+</div>

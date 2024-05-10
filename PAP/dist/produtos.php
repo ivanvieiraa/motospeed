@@ -79,7 +79,7 @@ session_start();
                         <?php
                         include('ligacao.php');
 
-                        $sql = "SELECT COUNT(*) as produtos FROM produtos";
+                        $sql = "SELECT COUNT(*) as produtos FROM produtos WHERE status =1";
                         $result = mysqli_query($con, $sql);
                         $row = mysqli_fetch_array($result);
                         $produtos = $row[0];
@@ -120,7 +120,8 @@ session_start();
                         FROM 
                         produtos p
                         INNER JOIN categorias c ON p.id_categoria = c.id_categoria
-                        INNER JOIN marcas m ON p.id_marca = m.id_marca";
+                        INNER JOIN marcas m ON p.id_marca = m.id_marca
+                        WHERE status = 1";
                 $result2 = mysqli_query($con, $sqlProd);
                 if (mysqli_num_rows($result2) > 0) {
                     while ($row2 = mysqli_fetch_assoc($result2)) {

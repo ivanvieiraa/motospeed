@@ -103,7 +103,7 @@ $id_prod = $_GET['id_prod'];
                     <div class="row g-9" data-sticky-container>
 
                         <!-- Product Images-->
-                        <div class="col-12 col-md-6 col-xl-7">
+                        <div class="col-12 col-md-12 col-xl-4">
                             <div class="row g-3" data-aos="fade-right">
                                 <div class="col-12">
                                     <picture>
@@ -121,7 +121,7 @@ $id_prod = $_GET['id_prod'];
                         <!-- /Product Images-->
 
                         <!-- Product Information-->
-                        <div class="col-12 col-md-6 col-lg-5">
+                        <div class="col-12 col-md-6 col-lg-7">
                             <div class="sticky-top top-5">
                                 <div class="pb-3" data-aos="fade-in">
                                     <div class="d-flex align-items-center mb-3">
@@ -224,11 +224,11 @@ $id_prod = $_GET['id_prod'];
                                     <div class="accordion" id="accordionProduct">
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingThree">
-                                                <button class="accordion-button open" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                                <button class="accordion-button open collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                                     Descrição do produto
                                                 </button>
                                             </h2>
-                                            <div id="collapseThree" class="accordion-collapse open" aria-labelledby="headingThree" data-bs-parent="#accordionProduct">
+                                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionProduct">
                                                 <div class="accordion-body">
                                                     <p class="m-0"><?= $row2['desc_prod'] ?></p>
                                                 </div>

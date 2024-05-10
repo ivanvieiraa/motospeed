@@ -150,11 +150,7 @@ $user_data = mysqli_fetch_assoc($result);
                         </h3>
                         <p class="text-muted text-center">Informações</p>
                         <h1 class="fw-bold fs-3 mb-2 text-left">
-                            <?php if ($_SESSION['adm'] == 1) { ?>
-                                <a class="fw-bold fs-3 mb-2" href="./AdminLTE-3.2.0">Dashboard</a>
-                            <?php } else { ?>
-                                Perfil do utilizador
-                            <?php } ?>
+                            Perfil do utilizador
                             <a class="fw-bold fs-3 mb-2" href="logout.php" style="float:right;">Logout</a>
                         </h1>
                         <?php if (isset($_SESSION['mensagem'])) { ?>

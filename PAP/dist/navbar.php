@@ -64,7 +64,13 @@
                                 <hr>
                                 <li><a class="dropdown-item" href="./perfil.php">Editar Perfil</a></li>
                                 <li><a class="dropdown-item" href="./pedidos.php">Histórico de Pedidos</a></li>
-                                <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
+                                <?php 
+                                    if($_SESSION['adm'] == 1)
+                                    echo '<li><a class="dropdown-item" href="./AdminLTE-3.2.0">Dashboard</a></li>
+                                    ';
+                                ?>
+
+                                <li><a class="dropdown-item" href="./logout.php" style="color:red">Logout</a></li>
 
 
                             </ul>

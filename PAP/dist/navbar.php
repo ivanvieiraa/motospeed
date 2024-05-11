@@ -224,33 +224,6 @@
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->
-
-                                                <!-- menu row-->
-                                                <div class="col">
-                                                    <h6 class="dropdown text-danger">Promoções
-                                                    </h6>
-                                                    <ul class="list-unstyled">
-                                                        <li class="dropdown-list-item"><a
-                                                                class="dropdown-item text-danger"
-                                                                href="./produtos.php">Capacetes</a></li>
-                                                        <li class="dropdown-list-item"><a
-                                                                class="dropdown-item text-danger"
-                                                                href="./produtos.php">Casacos</a></li>
-                                                        <li class="dropdown-list-item"><a
-                                                                class="dropdown-item text-danger"
-                                                                href="./produtos.php">Luvas</a></li>
-                                                        <li class="dropdown-list-item"><a
-                                                                class="dropdown-item text-danger"
-                                                                href="./produtos.php">Calças</a></li>
-                                                        <li class="dropdown-list-item"><a
-                                                                class="dropdown-item text-danger"
-                                                                href="./produtos.php">Botas</a></li>
-                                                        <li class="dropdown-list-item"><a
-                                                                class="dropdown-item text-danger dropdown-link-all"
-                                                                href="./produtos.php">Ver todas</a></li>
-                                                    </ul>
-                                                </div>
-                                                <!-- / menu row-->
                                             </div>
 
                                             <div

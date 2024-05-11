@@ -85,7 +85,7 @@
                         </nav>
                         <div class="mt-5">
                             <h3 class="fs-5 fw-bolder mb-0 border-bottom pb-4">Carrinho</h3>
-                            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                            <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
                                 <table class="table2 align-middle">
                                     <tbody class="border-0">
                                         <?php

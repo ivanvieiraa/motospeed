@@ -152,7 +152,7 @@
                                                                 href="./produtos.php">Abertos</a></li>
                                                         <li class="dropdown-list-item"><a
                                                                 class="dropdown-item dropdown-link-all"
-                                                                href="./produtos.php">Ver todos</a></li>
+                                                                href="./capacetes.php">Ver todos</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->

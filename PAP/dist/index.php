@@ -402,7 +402,7 @@ session_start();
                                 </picture>
                                 <p class="title-small mb-2 text-muted">Motospeed</p>
                                 <h4 class="lead fw-bold">CAPACETES</h4>
-                                <a href="./produtos.php" class="btn btn-psuedo align-self-start">Comprar capacetes</a>
+                                <a href="./capacetes.php" class="btn btn-psuedo align-self-start">Comprar capacetes</a>
                             </div>
                         </div>
                         <div class="swiper-slide align-self-stretch bg-transparent h-auto">

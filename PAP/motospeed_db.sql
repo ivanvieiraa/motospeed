@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2024 at 03:44 PM
+-- Generation Time: May 11, 2024 at 04:30 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -103,10 +103,17 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`id_prod`, `nome_prod`, `preco_prod`, `desc_prod`, `foto_prod`, `id_marca`, `id_categoria`, `criado_a`, `alterado_a`, `status`) VALUES
-(2, 'Scorpion EXO 520 Air', 199.99, ' Capacete integral confeccionado em policarbonato injetado com homologação ECE 22-06 e projetado especificamente para proporcionar um nível aerodinâmico esportivo aliado ao conforto de um capacete de uso diário. O Exo-520 Evo Air destaca-se por incorporar o protetor solar Speedview® integrado, mecanismo de viseira Ellip-Tech®, interior acolchoado Kwikwick®2 e um sistema de ventilação eficaz.', 'uploads/produtos/scorpion-520air.png', 2, 1, '2024-03-19 17:36:29', '2024-05-09 23:00:42', 1),
+(2, 'Scorpion EXO 520 Air', 199.99, ' Capacete integral confeccionado em policarbonato injetado com homologação ECE 22-06 e projetado especificamente para proporcionar um nível aerodinâmico esportivo aliado ao conforto de um capacete de uso diário. O Exo-520 Evo Air destaca-se por incorporar o protetor solar Speedview® integrado, mecanismo de viseira Ellip-Tech®, interior acolchoado Kwikwick®2 e um sistema de ventilação eficaz.', 'uploads/produtos/scorpion-520air.png', 2, 1, '2024-03-19 17:36:29', '2024-05-11 15:22:12', 1),
 (5, 'AGV Pista GP RR', 1499, 'Capacete Agv Pista GP RR E2206 Futuro Carbonio Forgiato. O novo Pista GP RR é homologado de acordo com os regulamentos de corrida da FIM e os novos regulamentos ECE 22.06. A Pista GP RR Futuro Carbonio Forgiato foi fabricada com carcaça e asa PRO Spoiler em carbono forjado exclusivo e detalhes na cor Elettro Iridium. A estrutura de carbono forjado com acabamento fosco torna cada concha e cada PRO Spoiler uma peça única. Os detalhes e a tela na cor exclusiva Elettro Iridium são inspirados na potência silenciosa e limpa do futuro da mobilidade.', 'uploads/produtos/agv-pista.png', 3, 1, '2024-05-09 22:11:19', '2024-05-11 12:42:01', 1),
 (8, 'Shark Race-R PRO', 695, 'Capacete Shark Race-R Pro GP 06 Blank Matte Black . Shark evolui seu capacete mais esportivo e equipa o novo Race-R Pro GP 06 com os novos regulamentos ECE 22.06. A casca externa feita com estrutura COVA (fibra de carbono e aramida) oferece excelente desempenho aerodinâmico. Ele tem o recorde de velocidade na MotoGP capturado em 363,6 km/h! O spoiler traseiro destaca-se por melhorar o desempenho aerodinâmico e a estabilidade em alta velocidade. Este é o capacete topo de gama, fruto da experiência da Shark nos mais altos escalões de competição (MotoGP e SBK) com mais de 250 pódios.', 'uploads/produtos/shark.png', 7, 1, '2024-05-09 22:19:50', '2024-05-09 22:20:13', 1),
-(9, 'DAINESE AVRO 4 ', 495.99, 'Casaco de pele Dainese Avro 4 Preto Mate / Branco. Casaco desportivo confeccionado em pele bovina de primeira qualidade; destaca-se pelo seu conforto, segurança e design. Possui proteções certificadas nos ombros e cotovelos e inserções de alumínio nos ombros.', 'uploads/produtos/dainese-avro4.png', 4, 2, '2024-05-11 13:33:39', NULL, 1);
+(9, 'DAINESE AVRO 4 ', 495.99, 'Casaco de pele Dainese Avro 4 Preto Mate / Branco. Casaco desportivo confeccionado em pele bovina de primeira qualidade; destaca-se pelo seu conforto, segurança e design. Possui proteções certificadas nos ombros e cotovelos e inserções de alumínio nos ombros.', 'uploads/produtos/dainese-avro4.png', 4, 2, '2024-05-11 13:33:39', '2024-05-11 15:28:02', 1),
+(10, 'DAINESE ELETTRICA AIR', 149.99, ' Jaqueta de verão com forro térmico desmontável. Confeccionada em tecido D-Synth 350, dispõe de forro térmico desmontável para ser usada inclusive durante os dias mais frios. Incorpora proteções compostas desmontáveis certificadas em ombros e cotovelos. ', 'uploads/produtos/dainese-elettrica.png', 4, 2, '2024-05-11 14:50:45', '2024-05-11 15:27:58', 0),
+(11, 'SHOEI VFX-WR 06', 539, '. O capacete Shoei VFX-WR 06 é o capacete Off-Road de sucesso que possui a homologação ECE 22-06 junto com avanços tecnológicos e alto desempenho. O capacete VFX-WR 06 caracteriza-se por ser muito leve, resistente e por incorporar o sistema MEDS (Movement Energy Distribution System) que reduz significativamente a energia transmitida ao capacete em caso de impacto. ', 'uploads/produtos/vfc-wr.png', 6, 1, '2024-05-11 14:53:48', '2024-05-11 14:56:02', 1),
+(12, 'SHARK Vairal Anger', 259, 'Capacete Shark Varial Anger Preto / Azul / Fúcsia. Fabricado em fibra de vidro, o Varial combina um design agressivo, com detalhes e acabamentos de primeira qualidade.', 'uploads/produtos/varial-anger.png', 7, 1, '2024-05-11 14:55:31', '2024-05-11 14:56:04', 1),
+(13, 'AGV X70 FLAKE ', 129, 'Capacete AGV X70 Grey (coleção Legends ). A Agv inventou o capacete a jato de fibra em 1954. O X70 foi projetado no mesmo formato e cores, mas com a tecnologia AGV atual. Caracteriza-se por oferecer uma concha limpa e arredondada e detalhes vintage.', 'uploads/produtos/X70-flake.png', 3, 1, '2024-05-11 14:59:45', '2024-05-11 14:59:48', 1),
+(14, 'SHOEI J-CRUISE 2', 425.99, 'O J-Cruise 2 é mais moderno e seguro, e dispõe de um sistema de ventilação e de alguns acolchoados interiores totalmente evoluídos.', 'uploads/produtos/shoei-j-cruise2.png', 6, 1, '2024-05-11 15:02:00', NULL, 1),
+(15, 'SCORPION EXO-230 SR', 150, 'Capacete Scorpion Exo-230 SR Azul Escuro / Branco. Capacete Jet com design moderno, muito prático e funcional para uso urbano. Feito de policarbonato avançado, possui uma grande viseira transparente com predisposição para Pinlock (não incluído) e acolchoamento interno Kwikwick C muito confortável.', 'uploads/produtos/exo-230-sr.png', 2, 1, '2024-05-11 15:03:24', '2024-05-11 15:20:10', 1),
+(16, 'ALPINESTARS SUPERTECH S-M8', 420, 'Capacete Alpinestars Supertech S-M8 Radium 2 Preto / Branco. Capacete Alpinestars SM-8 incorpora os últimos avanços tecnológicos e caracteriza-se por ser muito leve, confortável e arejado.', 'uploads/produtos/supertech-sm8.webp', 1, 1, '2024-05-11 15:03:35', '2024-05-11 15:06:45', 1);
 
 -- --------------------------------------------------------
 
@@ -139,7 +146,37 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (9, 'M', 30),
 (9, 'S', 50),
 (9, 'XL', 10),
-(9, 'XS', 50);
+(9, 'XS', 50),
+(10, 'L', 50),
+(10, 'M', 50),
+(10, 'S', 50),
+(10, 'XL', 50),
+(10, 'XS', 50),
+(11, 'L', 10),
+(11, 'M', 20),
+(11, 'S', 30),
+(11, 'XL', 10),
+(11, 'XS', 20),
+(12, 'L', 40),
+(12, 'M', 170),
+(12, 'S', 220),
+(12, 'XL', 165),
+(12, 'XS', 200),
+(13, 'L', 15),
+(13, 'M', 20),
+(13, 'S', 30),
+(13, 'XL', 45),
+(13, 'XS', 65),
+(14, 'L', 20),
+(14, 'M', 30),
+(14, 'S', 10),
+(14, 'XL', 10),
+(14, 'XS', 10),
+(16, 'L', 200),
+(16, 'M', 200),
+(16, 'S', 200),
+(16, 'XL', 200),
+(16, 'XS', 20);
 
 -- --------------------------------------------------------
 
@@ -282,7 +319,7 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT for table `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id_prod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_prod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`

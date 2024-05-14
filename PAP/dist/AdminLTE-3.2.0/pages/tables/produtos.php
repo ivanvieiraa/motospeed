@@ -178,21 +178,21 @@
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         echo "<tr>";
                                         echo "<td>" . $row["id_prod"] . "</td>";
-                                        echo "<td style='text-align:center'><img style='border-radius:50%' src='../../../" . $row['foto_prod'] . "' width='50px' height='50px'></td>";
-                                        echo "<td style='text-align:center'>" . ($row["nome_prod"] ? $row["nome_prod"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                                        echo "<td style='text-align:center'>" . ($row["preco_prod"] ? number_format($row["preco_prod"], 2, ',', '.') . '€' : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                                        echo "<td style='text-align:center'>" . ($row["desc_prod"] ? $row["desc_prod"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                                        echo "<td style='text-align:center'>" . ($row["nome_marca"] ? $row["nome_marca"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                                        echo "<td style='text-align:center'>" . ($row["nome_categoria"] ? $row["nome_categoria"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                                        echo "<td style='text-align:center'>" . ($row["criado_a"] ? $row["criado_a"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                                        echo "<td style='text-align:center'>" . ($row["alterado_a"] ? $row["alterado_a"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        echo "<td style='text-align:left'><img style='border-radius:50%' src='../../../" . $row['foto_prod'] . "' width='50px' height='50px'></td>";
+                                        echo "<td style='text-align:left'>" . ($row["nome_prod"] ? $row["nome_prod"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        echo "<td style='text-align:left'>" . ($row["preco_prod"] ? number_format($row["preco_prod"], 2, ',', '.') . '€' : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        echo "<td style='text-align:left'>" . ($row["desc_prod"] ? $row["desc_prod"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        echo "<td style='text-align:left'>" . ($row["nome_marca"] ? $row["nome_marca"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        echo "<td style='text-align:left'>" . ($row["nome_categoria"] ? $row["nome_categoria"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        echo "<td style='text-align:left'>" . ($row["criado_a"] ? $row["criado_a"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        echo "<td style='text-align:left'>" . ($row["alterado_a"] ? $row["alterado_a"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
                                         if ($row['status'] == 1) {
-                                            echo "<td style='text-align:center'><a href='statusProd.php?id_prod=" . $row['id_prod'] . "' title='Desativar Produto'><i class='fa-solid fa-circle' style='color: #4dff00;'></i></a></td>";
+                                            echo "<td style='text-align:left'><a href='statusProd.php?id_prod=" . $row['id_prod'] . "' title='Desativar Produto'><i class='fa-solid fa-circle' style='color: #4dff00;'></i></a></td>";
                                         }
                                         if ($row['status'] == 0) {
-                                            echo "<td style='text-align:center'><a href='statusProd.php?id_prod=" . $row['id_prod'] . "' title='Ativar Produto'><i class='fa-solid fa-circle' style='color: #ff0000;'></i></a></td>  ";
+                                            echo "<td style='text-align:left'><a href='statusProd.php?id_prod=" . $row['id_prod'] . "' title='Ativar Produto'><i class='fa-solid fa-circle' style='color: #ff0000;'></i></a></td>  ";
                                         }
-                                        echo "<td style='text-align:center'><a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i class='fa-solid fa-pen-to-square'></i></a></td>";
+                                        echo "<td style='text-align:left'><a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i class='fa-solid fa-pen-to-square'></i></a></td>";
                                         echo "</tr>";
                                     }
                                 } else {

@@ -177,8 +177,8 @@
                   while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
                     echo "<td>" . $row["id_marca"] . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["nome_marca"] ? $row["nome_marca"] : "<a href='editMarca.php?id_marca=" . $row['id_marca'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'><a href='editMarca.php?id_marca=" . $row['id_marca'] . "'><i class='fa-solid fa-pen-to-square'></i></a></td>";
+                    echo "<td style='text-align:left'>" . ($row["nome_marca"] ? $row["nome_marca"] : "<a href='editMarca.php?id_marca=" . $row['id_marca'] . "'><i>N/A</i></a>") . "</td>";
+                    echo "<td style='text-align:left'><a href='editMarca.php?id_marca=" . $row['id_marca'] . "'><i class='fa-solid fa-pen-to-square'></i></a></td>";
                     echo "</tr>";
                   }
                 } else {

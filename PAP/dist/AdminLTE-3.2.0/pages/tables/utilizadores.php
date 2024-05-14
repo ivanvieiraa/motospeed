@@ -187,23 +187,23 @@
                   while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
                     echo "<td>" . $row["id_user"] . "</td>";
-                    echo "<td style='text-align:center'><img style='border-radius:50%' src='../../../" . $row['foto'] . "' width='50px' height='50px'></td>";
-                    echo "<td style='text-align:center'>" . ($row["nome"] ? $row["nome"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["apelido"] ? $row["apelido"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["email"] ? $row["email"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["data_nasc"] ? $row["data_nasc"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["morada"] ? $row["morada"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["codigop"] ? $row["codigop"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["adm"] ? 'Sim' : 'Não') . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["criado_a"] ? $row["criado_a"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:center'>" . ($row["alterado_a"] ? $row["alterado_a"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
+                    echo "<td style='text-align:left'><img style='border-radius:50%' src='../../../" . $row['foto'] . "' width='50px' height='50px'></td>";
+                    echo "<td style='text-align:left'>" . ($row["nome"] ? $row["nome"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
+                    echo "<td style='text-align:left'>" . ($row["apelido"] ? $row["apelido"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
+                    echo "<td style='text-align:left'>" . ($row["email"] ? $row["email"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
+                    echo "<td style='text-align:left'>" . ($row["data_nasc"] ? $row["data_nasc"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
+                    echo "<td style='text-align:left'>" . ($row["morada"] ? $row["morada"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
+                    echo "<td style='text-align:left'>" . ($row["codigop"] ? $row["codigop"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
+                    echo "<td style='text-align:left'>" . ($row["adm"] ? 'Sim' : 'Não') . "</td>";
+                    echo "<td style='text-align:left'>" . ($row["criado_a"] ? $row["criado_a"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
+                    echo "<td style='text-align:left'>" . ($row["alterado_a"] ? $row["alterado_a"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
                     if ($row['status'] == 1) {
-                      echo "<td style='text-align:center'><a href='statusUser.php?id_user=" . $row['id_user'] . "'title='Desativar utilizador'><i class='fa-solid fa-circle' style='color: #4dff00;'></i> </a></td>  ";
+                      echo "<td style='text-align:left'><a href='statusUser.php?id_user=" . $row['id_user'] . "'title='Desativar utilizador'><i class='fa-solid fa-circle' style='color: #4dff00;'></i> </a></td>  ";
                     }
                     if ($row['status'] == 0) {
-                      echo "<td style='text-align:center'><a href='statusUser.php?id_user=" . $row['id_user'] . "'title='Ativar utilizador'><i class='fa-solid fa-circle' style='color: #ff0000;'></i></a></td>  ";
+                      echo "<td style='text-align:left'><a href='statusUser.php?id_user=" . $row['id_user'] . "'title='Ativar utilizador'><i class='fa-solid fa-circle' style='color: #ff0000;'></i></a></td>  ";
                     }
-                    echo "<td style='text-align:center'><a href='editUser.php?id_user=" . $row['id_user'] . "'><i class='fa-solid fa-pen-to-square'></i></a></td>";
+                    echo "<td style='text-align:left'><a href='editUser.php?id_user=" . $row['id_user'] . "'><i class='fa-solid fa-pen-to-square'></i></a></td>";
                     echo "</tr>";
                   }
                 } else {

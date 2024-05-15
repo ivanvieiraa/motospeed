@@ -152,7 +152,7 @@
                                                                 href="./produtos.php">Abertos</a></li>
                                                         <li class="dropdown-list-item"><a
                                                                 class="dropdown-item dropdown-link-all"
-                                                                href="./capacetes.php">Ver todos</a></li>
+                                                                href="./produtos.php?id_categoria=1">Ver todos</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->
@@ -169,7 +169,7 @@
                                                                 href="./produtos.php">Verão</a></li>
                                                         <li class="dropdown-list-item"><a
                                                                 class="dropdown-item dropdown-link-all"
-                                                                href="./produtos.php">Ver todos</a></li>
+                                                                href="./produtos.php?id_categoria=2">Ver todos</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->
@@ -186,7 +186,7 @@
                                                                 href="./produtos.php">Verão</a></li>
                                                         <li class="dropdown-list-item"><a
                                                                 class="dropdown-item dropdown-link-all"
-                                                                href="./produtos.php">Ver todas</a></li>
+                                                                href="./produtos.php?id_categoria=4">Ver todas</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->
@@ -203,7 +203,7 @@
                                                                 href="./produtos.php">Verão</a></li>
                                                         <li class="dropdown-list-item"><a
                                                                 class="dropdown-item dropdown-link-all"
-                                                                href="./produtos.php">Ver todas</a></li>
+                                                                href="./produtos.php?id_categoria=3">Ver todas</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->
@@ -220,7 +220,7 @@
                                                                 href="./produtos.php">Corrida</a></li>
                                                         <li class="dropdown-list-item"><a
                                                                 class="dropdown-item dropdown-link-all"
-                                                                href="./produtos.php">Ver todas</a></li>
+                                                                href="./produtos.php?id_categoria=5">Ver todas</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->

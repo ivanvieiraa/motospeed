@@ -74,19 +74,24 @@ session_start();
 
                         </ol>
                     </nav>
-                    <h1 class="fw-bold fs-3 mb-2">Produtos
-                        (
-                        <?php
-                        include('ligacao.php');
+                    <?php
+                    include('ligacao.php');
 
-                        $sql = "SELECT COUNT(*) as produtos FROM produtos WHERE status =1";
-                        $result = mysqli_query($con, $sql);
-                        $row = mysqli_fetch_array($result);
-                        $produtos = $row[0];
-                        echo $produtos;
-                        ?>)
-                    </h1>
-                    <p class="m-0 text-muted small">Páginas 1 a 9 de 121</p>
+                    // Verifica se a categoria está definida na URL
+                    if (isset($_GET['id_categoria'])) {
+                        $id_categoria = $_GET['id_categoria'];
+                        $sql_count = "SELECT COUNT(*) as total_produtos FROM produtos WHERE status = 1 AND id_categoria = $id_categoria";
+                    } else {
+                        // Se não houver categoria definida, contar todos os produtos com status = 1
+                        $sql_count = "SELECT COUNT(*) as total_produtos FROM produtos WHERE status = 1";
+                    }
+                    // Executa a consulta SQL para contar produtos
+                    $result_count = mysqli_query($con, $sql_count);
+                    $row_count = mysqli_fetch_assoc($result_count);
+                    $total_produtos = $row_count['total_produtos'];
+                    ?>
+                    <!-- Exibir a contagem de produtos -->
+                    <h1 class="fw-bold fs-3 mb-2">Produtos (<?php echo $total_produtos; ?>)</h1>
                 </div>
                 <div class="d-flex justify-content-end align-items-center mt-4 mt-lg-0 flex-column flex-md-row">
 
@@ -109,19 +114,42 @@ session_start();
 
             <div class="row g-4">
                 <?php
-                $sqlProd = "SELECT DISTINCT 
-                        p.id_prod,
-                        p.nome_prod,
-                        c.nome_categoria,
-                        m.nome_marca,
-                        p.preco_prod,
-                        p.foto_prod,
-                        p.desc_prod
-                        FROM 
-                        produtos p
-                        INNER JOIN categorias c ON p.id_categoria = c.id_categoria
-                        INNER JOIN marcas m ON p.id_marca = m.id_marca
-                        WHERE status = 1";
+                if (isset($_GET['id_categoria'])) {
+                    $id_categoria = $_GET['id_categoria'];
+                    $sqlProd = "SELECT DISTINCT 
+                    p.id_prod,
+                    p.nome_prod,
+                    c.nome_categoria,
+                    m.nome_marca,
+                    p.preco_prod,
+                    p.foto_prod,
+                    p.desc_prod
+                FROM 
+                    produtos p
+                INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                INNER JOIN marcas m ON p.id_marca = m.id_marca
+                WHERE status = 1 AND c.id_categoria = $id_categoria";
+                } else {
+                    $sqlProd = "SELECT DISTINCT 
+                    p.id_prod,
+                    p.nome_prod,
+                    c.nome_categoria,
+                    m.nome_marca,
+                    p.preco_prod,
+                    p.foto_prod,
+                    p.desc_prod
+                FROM 
+                    produtos p
+                INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                INNER JOIN marcas m ON p.id_marca = m.id_marca
+                WHERE status = 1";
+                }
+
+                if (!empty($_GET['marcas'])) {
+                    $marcas_selecionadas = implode(",", $_GET['marcas']);
+                    $sqlProd .= " AND m.id_marca IN ($marcas_selecionadas)";
+                }
+                
                 $result2 = mysqli_query($con, $sqlProd);
                 if (mysqli_num_rows($result2) > 0) {
                     while ($row2 = mysqli_fetch_assoc($result2)) {
@@ -149,94 +177,10 @@ session_start();
                         </div>
                 <?php
                     }
+                } else {
+                    echo '<p style=text-align:center;>Não existem produtos para mostrar</p>';
                 }
                 ?>
-                <!-- <div class="col-12 col-sm-4 col-lg-3">
-                    <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
-                        <div class="card-img position-relative">
-                            <div class="card-badges">
-                                <span class="badge badge-card"><span class="f-w-2 f-h-2 bg-danger rounded-circle d-block me-1"></span>
-                                    Promoção</span>
-                            </div>
-                            <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
-                            <picture class="position-relative overflow-hidden d-block bg-light">
-                                <img class="w-100 img-fluid position-relative z-index-10" title="" src="./assets/images/products/product-1.jpg" alt="">
-                            </picture>
-                            <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
-                                <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i> Adicionar ao
-                                    carrinho</button>
-                            </div>
-                        </div>
-                        <div class="card-body px-0">
-                            <a class="text-decoration-none link-cover" href="./prod.php">Air Jordan 1</a>
-                            <small class="text-muted d-block">4 colours, 10 sizes</small>
-                            <p class="mt-2 mb-0 small"><s class="text-muted">329.99€</s> <span class="text-danger">198.66€</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-4 col-lg-3">
-                    <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
-                        <div class="card-img position-relative">
-                            <div class="card-badges">
-                                <span class="badge badge-card"><span class="f-w-2 f-h-2 bg-success rounded-circle d-block me-1"></span> Novo</span>
-                            </div>
-                            <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
-                            <picture class="position-relative overflow-hidden d-block bg-light">
-                                <img class="w-100 img-fluid position-relative z-index-10" title="" src="./assets/images/products/product-2.jpg" alt="">
-                            </picture>
-                            <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
-                                <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i> Adicionar ao
-                                    carrinho</button>
-                            </div>
-                        </div>
-                        <div class="card-body px-0">
-                            <a class="text-decoration-none link-cover" href="./prod.php">Nike ZoomX Vaporfly</a>
-                            <small class="text-muted d-block">2 colours, 4 sizes</small>
-                            <p class="mt-2 mb-0 small">275.45€</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-4 col-lg-3">
-                    <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
-                        <div class="card-img position-relative">
-                            <div class="card-badges">
-                                <span class="badge badge-card"><span class="f-w-2 f-h-2 bg-secondary rounded-circle d-block me-1"></span> Sem
-                                    stock</span>
-                            </div>
-                            <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
-                            <picture class="position-relative overflow-hidden d-block bg-light">
-                                <img class="w-100 img-fluid position-relative z-index-10" title="" src="./assets/images/products/product-3.jpg" alt="">
-                            </picture>
-                        </div>
-                        <div class="card-body px-0">
-                            <a class="text-decoration-none link-cover" href="./prod.php">Nike Blazer Mid
-                                &#x27;77</a>
-                            <small class="text-muted d-block">5 colours, 6 sizes</small>
-                            <p class="mt-2 mb-0 small text-muted">Sem stock</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-4 col-lg-3">
-                    <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
-                        <div class="card-img position-relative">
-                            <div class="card-badges">
-                            </div>
-                            <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
-                            <picture class="position-relative overflow-hidden d-block bg-light">
-                                <img class="w-100 img-fluid position-relative z-index-10" title="" src="./assets/images/products/product-4.jpg" alt="">
-                            </picture>
-                            <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
-                                <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i> Adicionar ao
-                                    carrinho</button>
-                            </div>
-                        </div>
-                        <div class="card-body px-0">
-                            <a class="text-decoration-none link-cover" href="./prod.php">Nike Air Force 1</a>
-                            <small class="text-muted d-block">6 colours, 9 sizes</small>
-                            <p class="mt-2 mb-0 small">$425.85</p>
-                        </div>
-                    </div>
-                </div> -->
             </div>
             <!-- / Products-->
 
@@ -262,10 +206,8 @@ session_start();
         </div>
         <div class="offcanvas-body">
             <div class="d-flex flex-column justify-content-between w-100 h-100">
-
                 <!-- Filters-->
                 <div>
-
                     <!-- Price Filter -->
                     <div class="py-4 widget-filter widget-filter-price border-top">
                         <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-price" role="button" aria-expanded="true" aria-controls="filter-modal-price">
@@ -301,8 +243,8 @@ session_start();
                                         while ($rowMarcas = mysqli_fetch_assoc($resultMarcas)) {
                                     ?>
                                             <div class="form-group form-check-custom mb-1">
-                                                <input type="checkbox" class="form-check-input">
-                                                <label class="form-check-label fw-normal text-body flex-grow-1 d-flex align-items-center">
+                                                <input type="checkbox" class="form-check-input marca-checkbox" id="marca_<?php echo $rowMarcas['id_marca']; ?>" value="<?php echo $rowMarcas['id_marca']; ?>">
+                                                <label class="form-check-label fw-normal text-body flex-grow-1 d-flex align-items-center" for="marca_<?php echo $rowMarcas['id_marca']; ?>">
                                                     <?php echo $rowMarcas['nome_marca']; ?>
                                                 </label>
                                             </div>

@@ -1,3 +1,39 @@
+<?php
+session_start();
+
+// Função para calcular o subtotal do carrinho
+function calcularSubtotal($carrinho)
+{
+    $subtotal = 0;
+    foreach ($carrinho as $produto) {
+        $subtotal += $produto['preco'] * $produto['quantidade'];
+    }
+    return $subtotal;
+}
+
+// Definir opções de envio
+$opcoesEnvio = [
+    'levantamento' => 0.00,
+    'padrao' => 4.99,
+    'rapido' => 9.99
+];
+
+// Verificar se a opção de envio foi selecionada
+if (isset($_POST['envio'])) {
+    $opcaoEnvioSelecionada = $_POST['envio'];
+    $custoEnvio = $opcoesEnvio[$opcaoEnvioSelecionada];
+} else {
+    // Definir opção de envio padrão
+    $opcaoEnvioSelecionada = 'padrao';
+    $custoEnvio = $opcoesEnvio[$opcaoEnvioSelecionada];
+}
+
+// Calcular subtotal
+$subTotal = calcularSubtotal($_SESSION['carrinho']);
+
+// Calcular total
+$total = $subTotal + $custoEnvio;
+?>
 <!doctype html>
 <html lang="en">
 
@@ -14,9 +50,7 @@
 
     <!-- Custom Google Fonts-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon/apple-touch-icon.png">
@@ -50,7 +84,7 @@
 </head>
 
 <body class="">
-    <?php include ("navbar.php"); ?>
+    <?php include("navbar.php"); ?>
     <!-- Main Section-->
     <section class="mt-0  vh-lg-100">
         <!-- Page Content Goes Here -->
@@ -66,14 +100,13 @@
                         </a>
                         <!-- / Logo-->
                         <nav class="d-none d-md-block">
-                            <ul
-                                class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
+                            <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
                                 <li class="me-4"><a class="nav-link-checkout " href="./cart.php">Carrinho</a></li>
-                                <li class="me-4"><a class="nav-link-checkout " href="./checkout.php">Checkout</a>
+                                <li class="me-4"><a class="nav-link-checkout " href="./checkout.php?cart=true">Checkout</a>
                                 </li>
-                                <li class="me-4"><a class="nav-link-checkout active" href="./checkout-shipping.php">Envio</a>
+                                <li class="me-4"><a class="nav-link-checkout active" href="./checkout-shipping.php?cart=true">Envio</a>
                                 </li>
-                                <li><a class="nav-link-checkout nav-link-last " href="./checkout-payment.php">Método de
+                                <li><a class="nav-link-checkout nav-link-last " href="./checkout-payment.php?cart=true">Método de
                                         pagamento</a></li>
                             </ul>
                         </nav>
@@ -83,24 +116,22 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <div class="d-flex justify-content-start align-items-center">
                                         <span class="text-muted small me-2 f-w-36 fw-bolder">Dados de</span>
-                                        <span class="small"><?php echo $_SESSION['email'];?></span>
+                                        <span class="small"><?php echo $_SESSION['email']; ?></span>
                                     </div>
-                                    <a href="./checkout.php" class="text-muted small" role="button">Alterar</a>
+                                    <a href="./checkout.php?cart=true" class="text-muted small" role="button">Alterar</a>
                                 </li>
                             </ul><!-- / Checkout Information Summary-->
 
                             <!-- Checkout Panel Information-->
                             <h3 class="fs-5 fw-bolder mb-4 border-bottom pb-4">Método de envio</h3>
-                            <?php 
+                            <?php
                             $levantamento = 0.00;
                             $padrao = 4.99;
                             $rapido = 9.99;
                             ?>
                             <!-- Shipping Option-->
-                            <div
-                                class="form-check form-group form-check-custom form-radio-custom form-radio-highlight mb-3">
-                                <input class="form-check-input" type="radio" name="checkoutShippingMethod"
-                                    id="checkoutShippingMethodOne" checked>
+                            <div class="form-check form-group form-check-custom form-radio-custom form-radio-highlight mb-3">
+                                <input class="form-check-input" type="radio" name="checkoutShippingMethod" id="checkoutShippingMethodOne" value="levantamento" checked>
                                 <label class="form-check-label" for="checkoutShippingMethodOne">
                                     <span class="d-flex justify-content-between align-items-start">
                                         <span>
@@ -113,10 +144,8 @@
                             </div>
 
                             <!-- Shipping Option-->
-                            <div
-                                class="form-check form-group form-check-custom form-radio-custom form-radio-highlight mb-3">
-                                <input class="form-check-input" type="radio" name="checkoutShippingMethod"
-                                    id="checkoutShippingMethodThree">
+                            <div class="form-check form-group form-check-custom form-radio-custom form-radio-highlight mb-3">
+                                <input class="form-check-input" type="radio" name="checkoutShippingMethod" id="checkoutShippingMethodThree" value="padrao">
                                 <label class="form-check-label" for="checkoutShippingMethodThree">
                                     <span class="d-flex justify-content-between align-items-start">
                                         <span>
@@ -129,10 +158,8 @@
                             </div>
 
                             <!-- Shipping Option-->
-                            <div
-                                class="form-check form-group form-check-custom form-radio-custom form-radio-highlight mb-3">
-                                <input class="form-check-input" type="radio" name="checkoutShippingMethod"
-                                    id="checkoutShippingMethodTwo">
+                            <div class="form-check form-group form-check-custom form-radio-custom form-radio-highlight mb-3">
+                                <input class="form-check-input" type="radio" name="checkoutShippingMethod" id="checkoutShippingMethodTwo" value="rapido">
                                 <label class="form-check-label" for="checkoutShippingMethodTwo">
                                     <span class="d-flex justify-content-between align-items-start">
                                         <span>
@@ -143,16 +170,38 @@
                                     </span>
                                 </label>
                             </div>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    const opcoesEnvio = <?php echo json_encode($opcoesEnvio); ?>;
+                                    const custoEnvioElement = document.getElementById('custoEnvio');
+                                    const totalElement = document.getElementById('total');
 
-                            
+                                    // Função para atualizar o custo de envio e o total
+                                    function atualizarCustoEnvioETotal(valor) {
+                                        const custoEnvio = parseFloat(opcoesEnvio[valor]);
+                                        custoEnvioElement.textContent = custoEnvio.toFixed(2) + '€';
+                                        const subTotal = <?php echo json_encode($subTotal); ?>;
+                                        const total = subTotal + custoEnvio;
+                                        totalElement.textContent = total.toFixed(2) + '€';
+                                    }
 
-                            <div
-                                class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
-                                <a href="./checkout.php"
-                                    class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0"
-                                    role="button">Voltar para o checkout</a>
-                                <a href="./checkout-payment.php" class="btn btn-dark w-100 w-md-auto"
-                                    role="button">Proceder para pagamento</a>
+                                    const inputsEnvio = document.querySelectorAll('input[name="checkoutShippingMethod"]');
+                                    inputsEnvio.forEach(function(input) {
+                                        input.addEventListener("change", function() {
+                                            atualizarCustoEnvioETotal(this.value);
+                                        });
+                                    });
+
+                                    // Inicializar o custo de envio com a opção padrão
+                                    // Use document.querySelector para selecionar o input de envio padrão e obter o seu valor
+                                    const opcaoEnvioPadrao = document.querySelector('input[name="checkoutShippingMethod"]:checked').value;
+                                    atualizarCustoEnvioETotal(opcaoEnvioPadrao);
+                                });
+                            </script>
+
+                            <div class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
+                                <a href="./checkout.php?cart=true" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Voltar para o checkout</a>
+                                <a href="./checkout-payment.php?subtotal=<?php echo $subTotal; ?>&custoEnvio=<?php echo $custoEnvio; ?>&total=<?php echo $total; ?>" class="btn btn-dark w-100 w-md-auto" role="button">Proceder para pagamento</a>
                             </div>
                         </div>
                     </div>
@@ -161,56 +210,51 @@
                     <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
                         <div class="pb-3">
                             <!-- Cart Item-->
-                            <div class="row mx-0 py-4 g-0 border-bottom">
-                                <div class="col-2 position-relative">
-                                    <span class="checkout-item-qty">3</span>
-                                    <picture class="d-block border">
-                                        <img class="img-fluid" src="./assets/images/products/product-cart-1.jpg"
-                                            alt="HTML Bootstrap Template by Pixel Rocket">
-                                    </picture>
-                                </div>
-                                <div class="col-9 offset-1">
-                                    <div>
-                                        <h6 class="justify-content-between d-flex align-items-start mb-2">
-                                            Nike Air VaporMax 2021
-                                            <i class="ri-close-line ms-3"></i>
-                                        </h6>
-                                        <span class="d-block text-muted fw-bolder text-uppercase fs-9">Tamanho: 9 / Quantidade:
-                                            1</span>
-                                    </div>
-                                    <p class="fw-bolder text-end text-muted m-0">85.00€</p>
-                                </div>
-                            </div> <!-- / Cart Item-->
-                            <!-- Cart Item-->
-                            <div class="row mx-0 py-4 g-0 border-bottom">
-                                <div class="col-2 position-relative">
-                                    <span class="checkout-item-qty">3</span>
-                                    <picture class="d-block border">
-                                        <img class="img-fluid" src="./assets/images/products/product-cart-2.jpg"
-                                            alt="HTML Bootstrap Template by Pixel Rocket">
-                                    </picture>
-                                </div>
-                                <div class="col-9 offset-1">
-                                    <div>
-                                        <h6 class="justify-content-between d-flex align-items-start mb-2">
-                                            Nike ZoomX Vaporfly
-                                            <i class="ri-close-line ms-3"></i>
-                                        </h6>
-                                        <span class="d-block text-muted fw-bolder text-uppercase fs-9">Tamanho: 11 / Quantidade:
-                                            1</span>
-                                    </div>
-                                    <p class="fw-bolder text-end text-muted m-0">125.00€</p>
-                                </div>
-                            </div> <!-- / Cart Item-->
+                            <?php
+                            // Verifica se há dados do carrinho na URL
+                            if (isset($_GET['cart']) && $_GET['cart'] == "true") {
+                                // Verifica se a sessão do carrinho está definida e se há produtos no carrinho
+                                if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
+                                    $carrinho = $_SESSION['carrinho'];
+
+                                    // Loop através dos produtos no carrinho
+                                    foreach ($carrinho as $produto) {
+                                        // Aqui você pode exibir os dados do produto na seção de resumo do pedido
+                                        echo '<!-- Cart Item-->
+                                            <div class="row mx-0 py-4 g-0 border-bottom">
+                                                <div class="col-2 position-relative">
+                                                <picture class="d-block border">
+                                                    <img class="img-fluid" src="' . $produto['foto'] . '">
+                                                </picture>
+                                                </div>
+                                                <div class="col-9 offset-1">
+                                                <div>
+                                                    <h6 class="justify-content-between d-flex align-items-start mb-2">
+                                                    ' . $produto['nome'] . '
+                                                    </h6>
+                                                    <span class="d-block text-muted fw-bolder text-uppercase fs-9">Tamanho: ' . $produto['tamanho'] . ' / Quantidade: ' . $produto['quantidade'] . '</span>
+                                                </div>
+                                                <p class="fw-bolder text-end text-muted m-0">' . $produto['preco'] . '€</p>
+                                                </div>
+                                             </div> <!-- / Cart Item-->';
+                                    }
+                                } else {
+                                    // Se não houver produtos no carrinho, exiba uma mensagem indicando isso
+                                    echo '<p>O seu carrinho está vazio.</p>';
+                                }
+                            }
+                            ?>
+                            <!-- / Cart Item-->
                         </div>
                         <div class="py-4 border-bottom">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <p class="m-0 fw-bolder fs-6">Subtotal</p>
-                                <p class="m-0 fs-6 fw-bolder">422.99€</p>
+                                <p class="m-0 fs-6 fw-bolder"><?php echo number_format($subTotal, 2); ?>€</p>
                             </div>
                             <div class="d-flex justify-content-between align-items-center ">
                                 <p class="m-0 fw-bolder fs-6">Envio</p>
-                                <p class="m-0 fs-6 fw-bolder">8.95€</p>
+                                <!-- Adicione um ID para exibir o custo de envio -->
+                                <p id="custoEnvio" class="m-0 fs-6 fw-bolder"><?php echo number_format($custoEnvio, 2); ?>€</p>
                             </div>
                         </div>
                         <div class="py-4 border-bottom">
@@ -219,12 +263,8 @@
                                     <p class="m-0 fw-bold fs-5">Total</p>
                                     <span class="text-muted small">IVA incluído</span>
                                 </div>
-                                <p class="m-0 fs-5 fw-bold">422.99€</p>
-                            </div>
-                        </div>
-                        <div class="py-4">
-                            <div class="input-group mb-0">
-                                <input type="text" class="form-control" placeholder="Nenhum cupão aplicado" readonly>
+                                <!-- Adicione um ID para exibir o total -->
+                                <p id="total" class="m-0 fs-5 fw-bold"><?php echo number_format($total, 2); ?>€</p>
                             </div>
                         </div>
                     </div>

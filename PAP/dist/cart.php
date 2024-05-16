@@ -72,17 +72,6 @@
                         }
                         ?>
                         <!-- / Logo-->
-                        <nav class="d-none d-md-block">
-                            <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
-                                <li class="me-4"><a class="nav-link-checkout active" href="./cart.php">Carrinho</a></li>
-                                <li class="me-4"><a class="nav-link-checkout " href="./checkout.php">Checkout</a>
-                                </li>
-                                <li class="me-4"><a class="nav-link-checkout " href="./checkout-shipping.php">Envio</a>
-                                </li>
-                                <li><a class="nav-link-checkout nav-link-last " href="./checkout-payment.php">Método de
-                                        pagamento</a></li>
-                            </ul>
-                        </nav>
                         <div class="mt-5">
                             <h3 class="fs-5 fw-bolder mb-0 border-bottom pb-4">Carrinho</h3>
                             <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
@@ -92,9 +81,21 @@
                                         // Verifica se a sessão do carrinho está definida e se há produtos no carrinho
                                         if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
                                             $carrinho = $_SESSION['carrinho'];
-                                            // Loop através dos produtos no carrinho
-                                            foreach ($carrinho as $produto) {
-                                                echo '<!-- Cart Item-->
+                                        ?>
+                                            <nav class="d-none d-md-block">
+                                                <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
+                                                    <li class="me-4"><a class="nav-link-checkout active" href="./cart.php">Carrinho</a></li>
+                                                    <li class="me-4"><a class="nav-link-checkout " href="./checkout.php?cart=true">Checkout</a>
+                                                    </li>
+                                                    <li class="me-4"><a class="nav-link-checkout " href="./checkout-shipping.php?cart=true">Envio</a>
+                                                    </li>
+                                                    <li><a class="nav-link-checkout nav-link-last " href="./checkout-payment.php?cart=true">Método de
+                                                            pagamento</a></li>
+                                                </ul>
+                                            </nav><?php
+                                                    // Loop através dos produtos no carrinho
+                                                    foreach ($carrinho as $produto) {
+                                                        echo '<!-- Cart Item-->
                                                         <tr>
                                                             <td>
                                                                 <div class="row mx-0 py-4 g-0 border-bottom">
@@ -116,39 +117,53 @@
                                                                 </div> <!-- / Cart Item-->
                                                             </td>
                                                         </tr>';
-                                            }
-                                        } else {
-                                            // Se não houver produtos no carrinho, exibe uma mensagem indicando isso
-                                            echo '<td colspan="3">Não há produtos no carrinho.</td>';
-                                        }
-                                        ?>
+                                                    }
+                                                } else {
+                                                    // Se não houver produtos no carrinho, exibe uma mensagem indicando isso
+                                                    echo '<td colspan="3">O seu carrinho está vazio</td>';
+                                                }
+                                                    ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-5 bg-light pt-lg-10 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
-                    <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
-                        <div class="pb-4 border-bottom">
-                            <div class="d-flex flex-column flex-md-row justify-content-md-between mb-4 mb-md-2">
-                                <div>
-                                    <p class="m-0 fw-bold fs-5">Total</p>
-                                    <span class="text-muted small">IVA incluído</span>
+                <?php if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) { ?>
+                    <div class="col-12 col-lg-5 bg-light pt-lg-10 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
+                        <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
+                            <div class="pb-4 border-bottom">
+                                <div class="d-flex flex-column flex-md-row justify-content-md-between mb-4 mb-md-2">
+                                    <div>
+                                        <p class="m-0 fw-bold fs-5">Total</p>
+                                        <span class="text-muted small">IVA incluído</span>
+                                    </div>
+                                    <?php
+                                    // Inicializa o total como zero
+                                    $total = 0;
+
+                                    // Verifica se a sessão do carrinho está definida e se há produtos no carrinho
+                                    if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
+                                        $carrinho = $_SESSION['carrinho'];
+                                        // Loop através dos produtos no carrinho
+                                        foreach ($carrinho as $produto) {
+                                            // Calcula o subtotal do produto (preço * quantidade)
+                                            $subtotal = $produto['preco'] * $produto['quantidade'];
+                                            // Adiciona o subtotal ao total
+                                            $total += $subtotal;
+                                        }
+                                    }
+
+                                    // Exibe o total formatado
+                                    echo '<p class="m-0 fs-5 fw-bold">' . number_format($total, 2) . '€</p>';
+                                    ?>
+                                    <!-- <p class="m-0 fs-5 fw-bold">422.99€</p> -->
                                 </div>
-                                <p class="m-0 fs-5 fw-bold">422.99€</p>
                             </div>
+                            <a href="./checkout.php?cart=true" class="btn btn-dark w-100 text-center" role="button">Proceder para checkout</a>
                         </div>
-                        <div class="py-4">
-                            <div class="input-group mb-0">
-                                <input type="text" class="form-control" placeholder="Introduza um cupão">
-                                <button class="btn btn-secondary btn-sm px-4">Aplicar</button>
-                            </div>
-                        </div>
-                        <a href="./checkout.php" class="btn btn-dark w-100 text-center" role="button">Proceder para
-                            checkout</a>
                     </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
         <!-- /Page Content -->

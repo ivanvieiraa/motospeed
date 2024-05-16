@@ -1,5 +1,5 @@
 <?php
-include ("ligacao.php");
+include("ligacao.php");
 session_start();
 
 ?>
@@ -19,9 +19,7 @@ session_start();
 
     <!-- Custom Google Fonts-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 
@@ -62,7 +60,7 @@ session_start();
 
     <!-- Navbar -->
     <!-- Navbar -->
-    <?php include ('navbar.php'); ?>
+    <?php include('navbar.php'); ?>
     <!-- / Navbar--> <!-- / Navbar-->
 
     <!-- Main Section-->
@@ -71,16 +69,11 @@ session_start();
         <div class="container-fluid">
             <!-- Homepage Intro-->
             <div class="position-relative row my-lg-7 pt-5 pt-lg-0 g-8">
-                <div class="bg-text bottom-0 start-0 end-0" data-aos="fade-up">
-                    <h2 class="bg-text-title opacity-10"><span class="text-outline-dark">Moto</span>speed</h2>
-                </div>
                 <div class="col-12 col-md-6 position-relative z-index-20 mb-7 mb-lg-0" data-aos="fade-right">
                     <p class="text-muted title-small">sobre nós</p>
                     <h3 class="display-3 fw-bold mb-5"><span class="text-outline-dark">Motospeed</span> - Material de
                         proteção para motociclistas</h3>
-                    <p class="lead">A Motospeed é uma grande empresa que trabalha com as melhores marcas do mercado como a <a
-                            href="./produtos.php">Alpinestars</a>, <a href="./produtos.php">Dainese</a>, <a
-                            href="./produtos.php">Scorpion</a>, <a href="./produtos.php">AGV</a> e muitas mais...</p>
+                    <p class="lead">A Motospeed é uma grande empresa que trabalha com as melhores marcas do mercado como a <a href="./produtos.php">Alpinestars</a>, <a href="./produtos.php">Dainese</a>, <a href="./produtos.php">Scorpion</a>, <a href="./produtos.php">AGV</a> e muitas mais...</p>
                     <p class="lead">Trabalhamos arduamente todos os dias em busca de oferecer aos nossos clientes as
                         melhores marcas e produtos do mercado.</p>
                     <p class="lead">Priorizamos sempre os clientes, de modo a consquistar a melhor confiança alguma vez
@@ -89,19 +82,42 @@ session_start();
                 </div>
                 <div class="col-12 col-md-6 position-relative z-index-20 pe-0" data-aos="fade-left">
                     <picture class="w-50 d-block position-relative z-index-10 border border-white border-4 shadow-lg">
-                        <img class="img-fluid" src="./assets/images/banners/yzf.jpg"
-                            alt="HTML Bootstrap Template by Pixel Rocket">
+                        <img class="img-fluid" src="./assets/images/banners/yzf.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
                     </picture>
-                    <picture
-                        class="w-60 d-block me-8 mt-n10 shadow-lg border border-white border-4 position-relative z-index-20 ms-auto">
-                        <img class="img-fluid" src="./assets/images/banners/r6.jpeg"
-                            alt="HTML Bootstrap Template by Pixel Rocket">
+                    <picture class="w-60 d-block me-8 mt-n10 shadow-lg border border-white border-4 position-relative z-index-20 ms-auto">
+                        <img class="img-fluid" src="./assets/images/banners/r6.jpeg" alt="HTML Bootstrap Template by Pixel Rocket">
                     </picture>
-                    <picture
-                        class="w-50 d-block me-8 mt-n7 shadow-lg border border-white border-4 position-absolute top-0 end-0 z-index-0 ">
-                        <img class="img-fluid" src="./assets/images/banners/cross.jpg"
-                            alt="HTML Bootstrap Template by Pixel Rocket">
+                    <picture class="w-50 d-block me-8 mt-n7 shadow-lg border border-white border-4 position-absolute top-0 end-0 z-index-0 ">
+                        <img class="img-fluid" src="./assets/images/banners/cross.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
                     </picture>
+                </div>
+            </div>
+            <div class="position-relative row my-lg-7 pt-5 pt-lg-0 g-8">
+                <div class="bg-text bottom-0 start-0 end-0" data-aos="fade-up">
+                    <h2 class="bg-text-title opacity-10"><span class="text-outline-dark"></span>Suporte</h2>
+                </div>
+                <div class="col-12 col-md-6 position-relative z-index-20 mb-7 mb-lg-0" data-aos="fade-right">
+                    <p class="text-muted title-small">suporte</p>
+                    <h3 class="display-3 fw-bold mb-5"><span class="text-outline-dark"></span>Entre em contacto connosco</h3>
+                    <form name="support" action="suporte.php" method="POST" onsubmit="return validateForm()" novalidate>
+                        <div class="form-group">
+                            <label for="support-email" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="support-email" id="support-email" placeholder="Introduza o seu email" oninput="clearErrorMessage('email-error')">
+                            <span id="email-error" class="error-message"></span>
+                            <label for="support-msg" class="form-label">Mensagem</label>
+                            <textarea name="support-img" id="support-img" placeholder="Escreva a sua mensagem" oninput="clearErrorMessage('msg-error')"></textarea>
+                            <span id="msg-error" class="error-message"></span>
+                            <?php
+                            // Verifica se a mensagem de erro está definida na sessão
+                            if (isset($_SESSION['mensagem'])) {
+                                echo '<div class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
+                                // Limpa a mensagem de erro da sessão após exibi-la
+                                unset($_SESSION['mensagem']);
+                            }
+                            ?>
+                        </div>
+                        <button type="submit" class="btn btn-dark d-block w-100 my-4">Enviar mensagem</button>
+                    </form>
                 </div>
             </div>
             <!-- / Homepage Intro-->
@@ -112,7 +128,7 @@ session_start();
     <!-- / Main Section-->
 
     <!-- Footer -->
-    <?php include ("footer.php"); ?>
+    <?php include("footer.php"); ?>
 
 
     <!-- Theme JS -->

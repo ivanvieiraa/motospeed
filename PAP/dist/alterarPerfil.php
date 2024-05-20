@@ -51,6 +51,8 @@ if (mysqli_num_rows($runEmail) > 0 && $_POST['email'] != $_SESSION['email']) {
         $_SESSION['apelido'] = $apelido;
         $_SESSION['email'] = $email;
         $_SESSION['pass'] = $pass_new;
+        $_SESSION['morada'] = $morada;
+        $_SESSION['codigop'] = $codigop;
         $_SESSION['mensagem'] = "Perfil atualizado com sucesso !";
 
         if ($_FILES['foto']['size'] > 0 && $_FILES['foto']['error'] == 0) {
@@ -89,6 +91,8 @@ if (mysqli_num_rows($runEmail) > 0 && $_POST['email'] != $_SESSION['email']) {
         $_SESSION['nome'] = $nome;
         $_SESSION['apelido'] = $apelido;
         $_SESSION['email'] = $email;
+        $_SESSION['morada'] = $morada;
+        $_SESSION['codigop'] = $codigop;
         $_SESSION['mensagem'] = "Perfil atualizado com sucesso !";
 
         if ($_FILES['foto']['size'] > 0 && $_FILES['foto']['error'] == 0) {

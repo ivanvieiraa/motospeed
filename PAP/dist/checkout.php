@@ -88,7 +88,7 @@ include("ligacao.php");
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="firstNameBilling" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="firstNameBilling" placeholder="" value="<?php echo $_SESSION['nome']; ?>" required="">
+                    <input type="text" class="form-control" id="firstNameBilling" placeholder="" value="<?php echo $_SESSION['nome']; ?>" required="" readonly>
                   </div>
                 </div>
 
@@ -96,7 +96,7 @@ include("ligacao.php");
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="lastNameBilling" class="form-label">Apelido</label>
-                    <input type="text" class="form-control" id="lastNameBilling" placeholder="" value="<?php echo $_SESSION['apelido']; ?>" required="">
+                    <input type="text" class="form-control" id="lastNameBilling" placeholder="" value="<?php echo $_SESSION['apelido']; ?>" required="" readonly>
                   </div>
                 </div>
 
@@ -104,7 +104,7 @@ include("ligacao.php");
                 <div class="col-12">
                   <div class="form-group">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" value="<?php echo $_SESSION['email']; ?>">
+                    <input type="email" class="form-control" id="email" value="<?php echo $_SESSION['email']; ?>" readonly>
                   </div>
 
                 </div>
@@ -117,7 +117,7 @@ include("ligacao.php");
                 <div class="col-12">
                   <div class="form-group">
                     <label for="address" class="form-label">Morada</label>
-                    <input type="text" class="form-control" id="address" placeholder="" value="<?php $_SESSION['morada']; ?>" required="">
+                    <input type="text" class="form-control" id="address" placeholder="" value="<?php echo $_SESSION['morada']; ?>" required="">
                   </div>
                 </div>
 
@@ -126,7 +126,7 @@ include("ligacao.php");
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="zip" class="form-label">Código postal</label>
-                    <input type="text" class="form-control" id="zip" placeholder="" required="">
+                    <input type="text" class="form-control" id="zip" placeholder="" value="<?php echo $_SESSION['codigop']; ?>" required="">
                   </div>
                 </div>
               </div>

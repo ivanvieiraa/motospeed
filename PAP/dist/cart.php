@@ -89,8 +89,6 @@
                                                     </li>
                                                     <li class="me-4"><a class="nav-link-checkout " href="./checkout-shipping.php?cart=true">Envio</a>
                                                     </li>
-                                                    <li><a class="nav-link-checkout nav-link-last " href="./checkout-payment.php?cart=true">Método de
-                                                            pagamento</a></li>
                                                 </ul>
                                             </nav><?php
                                                     // Loop através dos produtos no carrinho

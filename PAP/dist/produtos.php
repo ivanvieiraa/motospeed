@@ -170,7 +170,6 @@ session_start();
                                 </div>
                                 <div class="card-body px-0">
                                     <a class="text-decoration-none link-cover" href="./prod.php?id_prod=<?= $row2['id_prod'] ?>"><?= $row2['nome_prod']; ?></a>
-                                    <small class="text-muted d-block">9 tamanhos disponíveis</small>
                                     <p class="mt-2 mb-0 large"><?= $row2['preco_prod']; ?>€</p>
                                 </div>
                             </div>

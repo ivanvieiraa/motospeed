@@ -106,8 +106,6 @@ $total = $subTotal + $custoEnvio;
                                 </li>
                                 <li class="me-4"><a class="nav-link-checkout active" href="./checkout-shipping.php?cart=true">Envio</a>
                                 </li>
-                                <li><a class="nav-link-checkout nav-link-last " href="./checkout-payment.php?cart=true">Método de
-                                        pagamento</a></li>
                             </ul>
                         </nav>
                         <div class="mt-5">
@@ -124,11 +122,7 @@ $total = $subTotal + $custoEnvio;
 
                             <!-- Checkout Panel Information-->
                             <h3 class="fs-5 fw-bolder mb-4 border-bottom pb-4">Método de envio</h3>
-                            <?php
-                            $levantamento = 0.00;
-                            $padrao = 4.99;
-                            $rapido = 9.99;
-                            ?>
+
                             <!-- Shipping Option-->
                             <div class="form-check form-group form-check-custom form-radio-custom form-radio-highlight mb-3">
                                 <input class="form-check-input" type="radio" name="checkoutShippingMethod" id="checkoutShippingMethodOne" value="levantamento" checked>
@@ -136,7 +130,7 @@ $total = $subTotal + $custoEnvio;
                                     <span class="d-flex justify-content-between align-items-start">
                                         <span>
                                             <span class="mb-0 fw-bolder d-block">Levantamento na loja</span>
-                                            <small class="fw-bolder">Será notificado quando a sua encomenda chegar à nossa loja</small>
+                                           <small class="fw-bolder">7 dias úteis para efetuar o levantamento</small>
                                         </span>
                                         <span class="small fw-bolder text-uppercase">Grátis</span>
                                     </span>
@@ -201,7 +195,7 @@ $total = $subTotal + $custoEnvio;
 
                             <div class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
                                 <a href="./checkout.php?cart=true" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Voltar para o checkout</a>
-                                <a href="./checkout-payment.php?subtotal=<?php echo $subTotal; ?>&custoEnvio=<?php echo $custoEnvio; ?>&total=<?php echo $total; ?>" class="btn btn-dark w-100 w-md-auto" role="button">Proceder para pagamento</a>
+                                <a href="./checkout-payment.php?subtotal=<?php echo $subTotal; ?>&custoEnvio=<?php echo $custoEnvio; ?>&total=<?php echo $total; ?>" class="btn btn-dark w-100 w-md-auto" role="button">Finalizar compra</a>
                             </div>
                         </div>
                     </div>

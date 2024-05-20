@@ -148,8 +148,6 @@
                                                         <li class="dropdown-list-item"><a class="dropdown-item"
                                                                 href="./produtos.php">Motocross</a>
                                                         </li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Abertos</a></li>
                                                         <li class="dropdown-list-item"><a
                                                                 class="dropdown-item dropdown-link-all"
                                                                 href="./produtos.php?id_categoria=1">Ver todos</a></li>
@@ -165,8 +163,7 @@
                                                                 href="./produtos.php">Cabedal</a></li>
                                                         <li class="dropdown-list-item"><a class="dropdown-item"
                                                                 href="./produtos.php">Tecido</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Verão</a></li>
+
                                                         <li class="dropdown-list-item"><a
                                                                 class="dropdown-item dropdown-link-all"
                                                                 href="./produtos.php?id_categoria=2">Ver todos</a></li>
@@ -182,8 +179,7 @@
                                                                 href="./produtos.php">Cabedal</a></li>
                                                         <li class="dropdown-list-item"><a class="dropdown-item"
                                                                 href="./produtos.php">Tecido</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Verão</a></li>
+
                                                         <li class="dropdown-list-item"><a
                                                                 class="dropdown-item dropdown-link-all"
                                                                 href="./produtos.php?id_categoria=4">Ver todas</a></li>
@@ -199,8 +195,7 @@
                                                                 href="./produtos.php">Cabedal</a></li>
                                                         <li class="dropdown-list-item"><a class="dropdown-item"
                                                                 href="./produtos.php">Tecido</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Verão</a></li>
+
                                                         <li class="dropdown-list-item"><a
                                                                 class="dropdown-item dropdown-link-all"
                                                                 href="./produtos.php?id_categoria=3">Ver todas</a></li>
@@ -216,8 +211,6 @@
                                                                 href="./produtos.php">Cabedal</a></li>
                                                         <li class="dropdown-list-item"><a class="dropdown-item"
                                                                 href="./produtos.php">Tecido</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Corrida</a></li>
                                                         <li class="dropdown-list-item"><a
                                                                 class="dropdown-item dropdown-link-all"
                                                                 href="./produtos.php?id_categoria=5">Ver todas</a></li>

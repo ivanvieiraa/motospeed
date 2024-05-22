@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2024 at 04:30 PM
+-- Generation Time: May 22, 2024 at 07:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,7 +77,8 @@ INSERT INTO `marcas` (`id_marca`, `nome_marca`) VALUES
 (3, 'AGV'),
 (4, 'Dainese'),
 (6, 'Shoei'),
-(7, 'Shark');
+(7, 'Shark'),
+(9, 'Armure');
 
 -- --------------------------------------------------------
 
@@ -107,13 +108,23 @@ INSERT INTO `produtos` (`id_prod`, `nome_prod`, `preco_prod`, `desc_prod`, `foto
 (5, 'AGV Pista GP RR', 1499, 'Capacete Agv Pista GP RR E2206 Futuro Carbonio Forgiato. O novo Pista GP RR é homologado de acordo com os regulamentos de corrida da FIM e os novos regulamentos ECE 22.06. A Pista GP RR Futuro Carbonio Forgiato foi fabricada com carcaça e asa PRO Spoiler em carbono forjado exclusivo e detalhes na cor Elettro Iridium. A estrutura de carbono forjado com acabamento fosco torna cada concha e cada PRO Spoiler uma peça única. Os detalhes e a tela na cor exclusiva Elettro Iridium são inspirados na potência silenciosa e limpa do futuro da mobilidade.', 'uploads/produtos/agv-pista.png', 3, 1, '2024-05-09 22:11:19', '2024-05-11 12:42:01', 1),
 (8, 'Shark Race-R PRO', 695, 'Capacete Shark Race-R Pro GP 06 Blank Matte Black . Shark evolui seu capacete mais esportivo e equipa o novo Race-R Pro GP 06 com os novos regulamentos ECE 22.06. A casca externa feita com estrutura COVA (fibra de carbono e aramida) oferece excelente desempenho aerodinâmico. Ele tem o recorde de velocidade na MotoGP capturado em 363,6 km/h! O spoiler traseiro destaca-se por melhorar o desempenho aerodinâmico e a estabilidade em alta velocidade. Este é o capacete topo de gama, fruto da experiência da Shark nos mais altos escalões de competição (MotoGP e SBK) com mais de 250 pódios.', 'uploads/produtos/shark.png', 7, 1, '2024-05-09 22:19:50', '2024-05-09 22:20:13', 1),
 (9, 'DAINESE AVRO 4 ', 495.99, 'Casaco de pele Dainese Avro 4 Preto Mate / Branco. Casaco desportivo confeccionado em pele bovina de primeira qualidade; destaca-se pelo seu conforto, segurança e design. Possui proteções certificadas nos ombros e cotovelos e inserções de alumínio nos ombros.', 'uploads/produtos/dainese-avro4.png', 4, 2, '2024-05-11 13:33:39', '2024-05-11 15:28:02', 1),
-(10, 'DAINESE ELETTRICA AIR', 149.99, ' Jaqueta de verão com forro térmico desmontável. Confeccionada em tecido D-Synth 350, dispõe de forro térmico desmontável para ser usada inclusive durante os dias mais frios. Incorpora proteções compostas desmontáveis certificadas em ombros e cotovelos. ', 'uploads/produtos/dainese-elettrica.png', 4, 2, '2024-05-11 14:50:45', '2024-05-11 15:27:58', 0),
+(10, 'DAINESE ELETTRICA AIR', 149.99, ' Jaqueta de verão com forro térmico desmontável. Confeccionada em tecido D-Synth 350, dispõe de forro térmico desmontável para ser usada inclusive durante os dias mais frios. Incorpora proteções compostas desmontáveis certificadas em ombros e cotovelos. ', 'uploads/produtos/dainese-elettrica.png', 4, 2, '2024-05-11 14:50:45', '2024-05-14 18:42:50', 1),
 (11, 'SHOEI VFX-WR 06', 539, '. O capacete Shoei VFX-WR 06 é o capacete Off-Road de sucesso que possui a homologação ECE 22-06 junto com avanços tecnológicos e alto desempenho. O capacete VFX-WR 06 caracteriza-se por ser muito leve, resistente e por incorporar o sistema MEDS (Movement Energy Distribution System) que reduz significativamente a energia transmitida ao capacete em caso de impacto. ', 'uploads/produtos/vfc-wr.png', 6, 1, '2024-05-11 14:53:48', '2024-05-11 14:56:02', 1),
 (12, 'SHARK Vairal Anger', 259, 'Capacete Shark Varial Anger Preto / Azul / Fúcsia. Fabricado em fibra de vidro, o Varial combina um design agressivo, com detalhes e acabamentos de primeira qualidade.', 'uploads/produtos/varial-anger.png', 7, 1, '2024-05-11 14:55:31', '2024-05-11 14:56:04', 1),
 (13, 'AGV X70 FLAKE ', 129, 'Capacete AGV X70 Grey (coleção Legends ). A Agv inventou o capacete a jato de fibra em 1954. O X70 foi projetado no mesmo formato e cores, mas com a tecnologia AGV atual. Caracteriza-se por oferecer uma concha limpa e arredondada e detalhes vintage.', 'uploads/produtos/X70-flake.png', 3, 1, '2024-05-11 14:59:45', '2024-05-11 14:59:48', 1),
 (14, 'SHOEI J-CRUISE 2', 425.99, 'O J-Cruise 2 é mais moderno e seguro, e dispõe de um sistema de ventilação e de alguns acolchoados interiores totalmente evoluídos.', 'uploads/produtos/shoei-j-cruise2.png', 6, 1, '2024-05-11 15:02:00', NULL, 1),
 (15, 'SCORPION EXO-230 SR', 150, 'Capacete Scorpion Exo-230 SR Azul Escuro / Branco. Capacete Jet com design moderno, muito prático e funcional para uso urbano. Feito de policarbonato avançado, possui uma grande viseira transparente com predisposição para Pinlock (não incluído) e acolchoamento interno Kwikwick C muito confortável.', 'uploads/produtos/exo-230-sr.png', 2, 1, '2024-05-11 15:03:24', '2024-05-11 15:20:10', 1),
-(16, 'ALPINESTARS SUPERTECH S-M8', 420, 'Capacete Alpinestars Supertech S-M8 Radium 2 Preto / Branco. Capacete Alpinestars SM-8 incorpora os últimos avanços tecnológicos e caracteriza-se por ser muito leve, confortável e arejado.', 'uploads/produtos/supertech-sm8.webp', 1, 1, '2024-05-11 15:03:35', '2024-05-11 15:06:45', 1);
+(16, 'ALPINESTARS SUPERTECH S-M8', 420, 'Capacete Alpinestars Supertech S-M8 Radium 2 Preto / Branco. Capacete Alpinestars SM-8 incorpora os últimos avanços tecnológicos e caracteriza-se por ser muito leve, confortável e arejado.', 'uploads/produtos/supertech-sm8.webp', 1, 1, '2024-05-11 15:03:35', '2024-05-11 15:06:45', 1),
+(17, 'ALPINESTARS STELLA', 449.9, 'Alpinestars Kira V2 Lady Couro Jaqueta Preto . Jaqueta esportiva com estampa feminina em couro de primeira qualidade. Possui painéis extensíveis estrategicamente colocados para oferecer o máximo de flexibilidade e conforto. Ele incorpora um forro térmico removível e entradas de ar com zíper para se adaptar a diferentes condições climáticas.', 'uploads/produtos/alpine-stella.webp', 1, 2, '2024-05-20 21:55:06', NULL, 1),
+(18, 'ARMURE HAMO', 220, ' Jaqueta esportiva em couro bovino e tecido elástico. Possui forro térmico removível e entradas de ar com zíper para se adaptar às adversidades do clima. Incorpora proteções substituíveis nos ombros e cotovelos e controles deslizantes externos. ', 'uploads/produtos/armure-hamo.webp', 9, 2, '2024-05-20 21:56:51', NULL, 1),
+(19, 'ARMUR MACK', 114.99, 'Armure Mack Jaqueta impermeável para senhora ivory. Jaqueta versátil estilo touring com ajuste específico para mulheres que incorpora uma membrana totalmente impermeável, forro térmico removível e entradas de ar para se adaptar perfeitamente a todos os tipos de condições climáticas.', 'uploads/produtos/armure-mack.webp', 9, 2, '2024-05-20 21:58:21', NULL, 1),
+(20, 'DAINESE ENERGYCA', 320, 'Jaqueta Dainese Energyca Air Tex Preto / Vermelho fluo. Casaco ventilado com um design agressivo, feito de uma combinação de tecido Cordura Comfort muito resistente e grandes painéis de tecido de malha. Possui uma membrana corta-vento removível para se adaptar perfeitamente às condições climáticas de cada momento. ', 'uploads/produtos/dainese-energyca.webp', 4, 2, '2024-05-20 21:59:57', NULL, 1),
+(21, 'DAINESE IMPETO', 125, 'Luva de pele de punho longo, que oferece uma ótima proteção e conforto. São fabricadas a partir de pele de cabra, e têm protetor de espuma de poliuretano nas dobradiças do punho. Destacam-se por oferecer um excelente conforto, sensibilidade e ajuste.', 'uploads/produtos/dainese-impeto.webp', 4, 4, '2024-05-20 22:06:54', NULL, 1),
+(22, 'DAINESE IMPETO', 95, 'Luva de pele de punho longo, que oferece uma ótima proteção e conforto. São fabricadas a partir de pele de cabra, e têm protetor de espuma de poliuretano nas dobradiças do punho. ', 'uploads/produtos/dainese-impetoo.webp', 4, 4, '2024-05-20 22:07:59', NULL, 1),
+(23, 'ALPINESTARS SMX-1', 80, 'Luvas Alpinestars SMX-1 Air V2 Preto / Branco. Luvas curtas de design agressivo confeccionadas em combinação de pele e malha 3D. Estão equipados com a inovadora proteção de carbono da Alpinestars nas dobradiças do punho e reforços em áreas críticas. ', 'uploads/produtos/apline-smx.webp', 1, 4, '2024-05-20 22:08:52', NULL, 1),
+(24, 'ALPINESTARS TOURER', 100.99, 'Luvas Alpinestars Tourer W-7 V2 Drystar Pretas . Luvas impermeáveis e isoladas para uso Touring no inverno e em baixas temperaturas. Confeccionada em mix de couro e tecido Softshell para maior durabilidade e conforto. A membrana impermeável Drystar® oferece respirabilidade e evita a entrada de água e, juntamente com o duplo isolamento Thinsulate™, oferece excelente proteção contra o frio.', 'uploads/produtos/alpine-tourer.webp', 1, 4, '2024-05-20 22:10:57', NULL, 1),
+(25, 'ARMURE KERR', 40, 'Armure Kerr Vented Lady Gloves Preto. Luvas curtas com ajuste específico para mulher, feitas de uma combinação de pele de cabra e malha de poliéster. Eles incorporam proteções de TPU nas articulações.', 'uploads/produtos/armure-kerr.webp', 9, 4, '2024-05-20 22:12:01', NULL, 1),
+(26, 'DAINESE UNRULY', 116.99, 'Luvas Dainese Unruly Ergo-Tek Preto / Vermelho. A construção das costas em malha sem costuras oferece grande elasticidade e liberdade de movimentos, que se combinam com os elevados níveis de segurança garantidos pela proteção dos nós dos dedos com tecnologia Ergo-Tek, concebida para garantir a total mobilidade da mão ao proteger os mais áreas expostas.', 'uploads/produtos/dainese-unruly.webp', 4, 4, '2024-05-20 22:14:28', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -176,7 +187,57 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (16, 'M', 200),
 (16, 'S', 200),
 (16, 'XL', 200),
-(16, 'XS', 20);
+(16, 'XS', 20),
+(17, 'L', 20),
+(17, 'M', 30),
+(17, 'S', 50),
+(17, 'XL', 150),
+(17, 'XS', 600),
+(18, 'L', 120),
+(18, 'M', 120),
+(18, 'S', 120),
+(18, 'XL', 120),
+(18, 'XS', 120),
+(19, 'L', 200),
+(19, 'M', 200),
+(19, 'S', 200),
+(19, 'XL', 200),
+(19, 'XS', 200),
+(20, 'L', 150),
+(20, 'M', 800),
+(20, 'S', 1200),
+(20, 'XL', 600),
+(20, 'XS', 200),
+(21, 'L', 200),
+(21, 'M', 200),
+(21, 'S', 200),
+(21, 'XL', 300),
+(21, 'XS', 500),
+(22, 'L', 150),
+(22, 'M', 100),
+(22, 'S', 25),
+(22, 'XL', 300),
+(22, 'XS', 500),
+(23, 'L', 400),
+(23, 'M', 200),
+(23, 'S', 140),
+(23, 'XL', 70),
+(23, 'XS', 52),
+(24, 'L', 100),
+(24, 'M', 100),
+(24, 'S', 100),
+(24, 'XL', 100),
+(24, 'XS', 100),
+(25, 'L', 100),
+(25, 'M', 100),
+(25, 'S', 100),
+(25, 'XL', 100),
+(25, 'XS', 100),
+(26, 'L', 40),
+(26, 'M', 40),
+(26, 'S', 40),
+(26, 'XL', 40),
+(26, 'XS', 40);
 
 -- --------------------------------------------------------
 
@@ -313,13 +374,13 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT for table `marcas`
 --
 ALTER TABLE `marcas`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id_prod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_prod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `users`

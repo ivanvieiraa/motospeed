@@ -102,9 +102,9 @@ $total = $subTotal + $custoEnvio;
                         <nav class="d-none d-md-block">
                             <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
                                 <li class="me-4"><a class="nav-link-checkout " href="./cart.php">Carrinho</a></li>
-                                <li class="me-4"><a class="nav-link-checkout " href="./checkout.php?cart=true">Checkout</a>
+                                <li class="me-4"><a class="nav-link-checkout " href="./checkout.php">Checkout</a>
                                 </li>
-                                <li class="me-4"><a class="nav-link-checkout active" href="./checkout-shipping.php?cart=true">Envio</a>
+                                <li class="me-4"><a class="nav-link-checkout active" href="./checkout-shipping.php">Envio</a>
                                 </li>
                             </ul>
                         </nav>
@@ -116,7 +116,7 @@ $total = $subTotal + $custoEnvio;
                                         <span class="text-muted small me-2 f-w-36 fw-bolder">Dados de</span>
                                         <span class="small"><?php echo $_SESSION['email']; ?></span>
                                     </div>
-                                    <a href="./checkout.php?cart=true" class="text-muted small" role="button">Alterar</a>
+                                    <a href="./checkout.php" class="text-muted small" role="button">Alterar</a>
                                 </li>
                             </ul><!-- / Checkout Information Summary-->
 
@@ -130,7 +130,7 @@ $total = $subTotal + $custoEnvio;
                                     <span class="d-flex justify-content-between align-items-start">
                                         <span>
                                             <span class="mb-0 fw-bolder d-block">Levantamento na loja</span>
-                                           <small class="fw-bolder">7 dias úteis para efetuar o levantamento</small>
+                                            <small class="fw-bolder">7 dias úteis para efetuar o levantamento</small>
                                         </span>
                                         <span class="small fw-bolder text-uppercase">Grátis</span>
                                     </span>
@@ -192,53 +192,43 @@ $total = $subTotal + $custoEnvio;
                                     atualizarCustoEnvioETotal(opcaoEnvioPadrao);
                                 });
                             </script>
-
-                            <div class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
-                                <a href="./checkout.php?cart=true" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Voltar para o checkout</a>
-                                <a href="./checkout-payment.php?subtotal=<?php echo $subTotal; ?>&custoEnvio=<?php echo $custoEnvio; ?>&total=<?php echo $total; ?>" class="btn btn-dark w-100 w-md-auto" role="button">Finalizar compra</a>
-                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-lg-5 bg-light pt-lg-10 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
                     <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
                         <div class="pb-3">
-                            <!-- Cart Item-->
                             <?php
-                            // Verifica se há dados do carrinho na URL
-                            if (isset($_GET['cart']) && $_GET['cart'] == "true") {
-                                // Verifica se a sessão do carrinho está definida e se há produtos no carrinho
-                                if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
-                                    $carrinho = $_SESSION['carrinho'];
+                            if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
+                                $carrinho = $_SESSION['carrinho'];
 
-                                    // Loop através dos produtos no carrinho
-                                    foreach ($carrinho as $produto) {
-                                        // Aqui você pode exibir os dados do produto na seção de resumo do pedido
-                                        echo '<!-- Cart Item-->
-                                            <div class="row mx-0 py-4 g-0 border-bottom">
-                                                <div class="col-2 position-relative">
-                                                <picture class="d-block border">
-                                                    <img class="img-fluid" src="' . $produto['foto'] . '">
-                                                </picture>
-                                                </div>
-                                                <div class="col-9 offset-1">
-                                                <div>
-                                                    <h6 class="justify-content-between d-flex align-items-start mb-2">
-                                                    ' . $produto['nome'] . '
-                                                    </h6>
-                                                    <span class="d-block text-muted fw-bolder text-uppercase fs-9">Tamanho: ' . $produto['tamanho'] . ' / Quantidade: ' . $produto['quantidade'] . '</span>
-                                                </div>
-                                                <p class="fw-bolder text-end text-muted m-0">' . $produto['preco'] . '€</p>
-                                                </div>
-                                             </div> <!-- / Cart Item-->';
-                                    }
-                                } else {
-                                    // Se não houver produtos no carrinho, exiba uma mensagem indicando isso
-                                    echo '<p>O seu carrinho está vazio.</p>';
+                                // Loop através dos produtos no carrinho
+                                foreach ($carrinho as $produto) {
+                                    // Aqui você pode exibir os dados do produto na seção de resumo do pedido
+                                    echo '<!-- Cart Item-->
+              <div class="row mx-0 py-4 g-0 border-bottom">
+                <div class="col-2 position-relative">
+                  <picture class="d-block border">
+                    <img class="img-fluid" src="' . $produto['foto'] . '">
+                  </picture>
+                </div>
+                <div class="col-9 offset-1">
+                  <div>
+                    <h6 class="justify-content-between d-flex align-items-start mb-2">
+                      ' . $produto['nome'] . '
+                    </h6>
+                    <span class="d-block text-muted fw-bolder text-uppercase fs-9">Tamanho: ' . $produto['tamanho'] . ' / Quantidade: ' . $produto['quantidade'] . '</span>
+                  </div>
+                  <p class="fw-bolder text-end text-muted m-0">' . $produto['preco'] . '€</p>
+                </div>
+              </div> <!-- / Cart Item-->';
                                 }
+                            } else {
+                                // Se não houver produtos no carrinho, exiba uma mensagem indicando isso
+                                echo '<p>O seu carrinho está vazio.</p>';
                             }
+
                             ?>
-                            <!-- / Cart Item-->
                         </div>
                         <div class="py-4 border-bottom">
                             <div class="d-flex justify-content-between align-items-center mb-2">
@@ -261,6 +251,7 @@ $total = $subTotal + $custoEnvio;
                                 <p id="total" class="m-0 fs-5 fw-bold"><?php echo number_format($total, 2); ?>€</p>
                             </div>
                         </div>
+                        <a href="./checkout-payment.php?subtotal=<?php echo $subTotal; ?>&custoEnvio=<?php echo $custoEnvio; ?>&total=<?php echo $total; ?>" class="btn btn-dark w-100 text-center" role="button">Finalizar compra</a>
                     </div>
                 </div>
             </div>

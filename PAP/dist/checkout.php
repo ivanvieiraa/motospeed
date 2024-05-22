@@ -72,7 +72,7 @@ include("ligacao.php");
                 <li class="me-4"><a class="nav-link-checkout " href="./cart.php">Carrinho</a></li>
                 <li class="me-4"><a class="nav-link-checkout active" href="./checkout.php">Checkout</a>
                 </li>
-                <li class="me-4"><a class="nav-link-checkout " href="./checkout-shipping.php?cart=true">Envio</a>
+                <li class="me-4"><a class="nav-link-checkout " href="./checkout-shipping.php">Envio</a>
                 </li>
               </ul>
             </nav>
@@ -86,7 +86,7 @@ include("ligacao.php");
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="firstNameBilling" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="firstNameBilling" placeholder="" value="<?php echo $_SESSION['nome']; ?>" required="" readonly>
+                    <input type="text" class="form-control" id="firstNameBilling" placeholder="" value="<?php echo $_SESSION['nome']; ?>" readonly>
                   </div>
                 </div>
 
@@ -94,7 +94,7 @@ include("ligacao.php");
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="lastNameBilling" class="form-label">Apelido</label>
-                    <input type="text" class="form-control" id="lastNameBilling" placeholder="" value="<?php echo $_SESSION['apelido']; ?>" required="" readonly>
+                    <input type="text" class="form-control" id="lastNameBilling" placeholder="" value="<?php echo $_SESSION['apelido']; ?>" readonly>
                   </div>
                 </div>
 
@@ -115,7 +115,7 @@ include("ligacao.php");
                 <div class="col-12">
                   <div class="form-group">
                     <label for="address" class="form-label">Morada</label>
-                    <input type="text" class="form-control" id="address" placeholder="" value="<?php echo $_SESSION['morada']; ?>" required="">
+                    <input type="text" class="form-control" id="address" placeholder="Insira uma morada" value="<?php echo $_SESSION['morada']; ?>">
                   </div>
                 </div>
 
@@ -124,33 +124,26 @@ include("ligacao.php");
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="zip" class="form-label">Código postal</label>
-                    <input type="text" class="form-control" id="zip" placeholder="" value="<?php echo $_SESSION['codigop']; ?>" required="">
+                    <input type="text" class="form-control" id="zip" placeholder="Insira um código postal" value="<?php echo $_SESSION['codigop']; ?>">
                   </div>
                 </div>
               </div>
-
-              <div class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
-                <a href="./cart.php" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Voltar para carrinho</a>
-                <a href="./checkout-shipping.php?cart=true" class="btn btn-dark w-100 w-md-auto" role="button">Proceder para envio</a>
-              </div>
+              <!-- <div class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
+              </div> -->
             </div>
           </div>
         </div>
         <div class="col-12 col-lg-5 bg-light pt-lg-10 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
           <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
             <div class="pb-3">
-              <!-- Cart Item-->
               <?php
-              // Verifica se há dados do carrinho na URL
-              if (isset($_GET['cart']) && $_GET['cart'] == "true") {
-                // Verifica se a sessão do carrinho está definida e se há produtos no carrinho
-                if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
-                  $carrinho = $_SESSION['carrinho'];
+              if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
+                $carrinho = $_SESSION['carrinho'];
 
-                  // Loop através dos produtos no carrinho
-                  foreach ($carrinho as $produto) {
-                    // Aqui você pode exibir os dados do produto na seção de resumo do pedido
-                    echo '<!-- Cart Item-->
+                // Loop através dos produtos no carrinho
+                foreach ($carrinho as $produto) {
+                  // Aqui você pode exibir os dados do produto na seção de resumo do pedido
+                  echo '<!-- Cart Item-->
               <div class="row mx-0 py-4 g-0 border-bottom">
                 <div class="col-2 position-relative">
                   <picture class="d-block border">
@@ -167,14 +160,13 @@ include("ligacao.php");
                   <p class="fw-bolder text-end text-muted m-0">' . $produto['preco'] . '€</p>
                 </div>
               </div> <!-- / Cart Item-->';
-                  }
-                } else {
-                  // Se não houver produtos no carrinho, exiba uma mensagem indicando isso
-                  echo '<p>O seu carrinho está vazio.</p>';
                 }
+              } else {
+                // Se não houver produtos no carrinho, exiba uma mensagem indicando isso
+                echo '<p>O seu carrinho está vazio.</p>';
               }
+
               ?>
-              <!-- / Cart Item-->
             </div>
             <div class="py-4 border-bottom">
               <div class="d-flex justify-content-between">
@@ -201,8 +193,11 @@ include("ligacao.php");
                 // Exibe o total formatado
                 echo '<p class="m-0 fs-5 fw-bold">' . number_format($total, 2) . '€</p>';
                 ?>
+                
               </div>
+              
             </div>
+            <a href="./checkout-shipping.php" class="btn btn-dark w-100 text-center" role="button">Proceder para envio</a>
           </div>
         </div>
       </div>

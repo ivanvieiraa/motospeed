@@ -55,7 +55,7 @@
         <!-- Page Content Goes Here -->
         <div class="container">
             <div class="row g-0 vh-lg-100">
-                <div class="col-12 col-lg-7 pt-5 pt-lg-10">
+                <div class="col-lg-7 pt-5 pt-lg-10">
                     <div class="pe-lg-5">
                         <!-- Logo-->
                         <a class="navbar-brand fw-bold fs-3 flex-shrink-0 mx-0 px-0" href="./index.php">
@@ -63,6 +63,16 @@
                                 <img src="mstile-150x150.png" alt="" height="100px" width="100px">
                             </div>
                         </a>
+                        <!-- / Logo-->
+                        <nav class="d-none d-md-block">
+                            <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
+                                <li class="me-4"><a class="nav-link-checkout active " href="./cart.php">Carrinho</a></li>
+                                <li class="me-4"><a class="nav-link-checkout " href="./checkout.php">Checkout</a>
+                                </li>
+                                <li class="me-4"><a class="nav-link-checkout " href="./checkout-shipping.php">Envio</a>
+                                </li>
+                            </ul>
+                        </nav>
                         <?php
                         // Verifica se o parâmetro produto_adicionado está presente na URL e é igual a "true"
                         if (isset($_GET['produto_adicionado']) && $_GET['produto_adicionado'] == "true") {
@@ -74,7 +84,7 @@
                         <!-- / Logo-->
                         <div class="mt-5">
                             <h3 class="fs-5 fw-bolder mb-0 border-bottom pb-4">Carrinho</h3>
-                            <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+                            <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
                                 <table class="table2 align-middle">
                                     <tbody class="border-0">
                                         <?php
@@ -82,24 +92,16 @@
                                         if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
                                             $carrinho = $_SESSION['carrinho'];
                                         ?>
-                                            <nav class="d-none d-md-block">
-                                                <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
-                                                    <li class="me-4"><a class="nav-link-checkout active" href="./cart.php">Carrinho</a></li>
-                                                    <li class="me-4"><a class="nav-link-checkout " href="./checkout.php?cart=true">Checkout</a>
-                                                    </li>
-                                                    <li class="me-4"><a class="nav-link-checkout " href="./checkout-shipping.php?cart=true">Envio</a>
-                                                    </li>
-                                                </ul>
-                                            </nav><?php
-                                                    // Loop através dos produtos no carrinho
-                                                    foreach ($carrinho as $produto) {
-                                                        echo '<!-- Cart Item-->
+                                        <?php
+                                            // Loop através dos produtos no carrinho
+                                            foreach ($carrinho as $produto) {
+                                                echo '<!-- Cart Item-->
                                                         <tr>
                                                             <td>
                                                                 <div class="row mx-0 py-4 g-0 border-bottom">
                                                                     <div class="col-2 position-relative">
                                                                         <picture class="d-block border">
-                                                                            <img class="img-fluid" src="' . $produto['foto'] . '" alt="HTML Bootstrap Template by Pixel Rocket">
+                                                                            <img class="img-fluid" src="' . $produto['foto'] . '">
                                                                         </picture>
                                                                     </div>
                                                                     <div class="col-9 offset-1">
@@ -115,12 +117,12 @@
                                                                 </div> <!-- / Cart Item-->
                                                             </td>
                                                         </tr>';
-                                                    }
-                                                } else {
-                                                    // Se não houver produtos no carrinho, exibe uma mensagem indicando isso
-                                                    echo '<td colspan="3">O seu carrinho está vazio</td>';
-                                                }
-                                                    ?>
+                                            }
+                                        } else {
+                                            // Se não houver produtos no carrinho, exibe uma mensagem indicando isso
+                                            echo '<td colspan="3">O seu carrinho está vazio</td>';
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -158,7 +160,7 @@
                                     <!-- <p class="m-0 fs-5 fw-bold">422.99€</p> -->
                                 </div>
                             </div>
-                            <a href="./checkout.php?cart=true" class="btn btn-dark w-100 text-center" role="button">Proceder para checkout</a>
+                            <a href="./checkout.php" class="btn btn-dark w-100 text-center" role="button">Proceder para checkout</a>
                         </div>
                     </div>
                 <?php } ?>

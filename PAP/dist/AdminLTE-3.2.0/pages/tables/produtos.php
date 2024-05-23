@@ -38,6 +38,75 @@
         .alert.hide {
             opacity: 0;
         }
+
+        /* Styles for the modal */
+        .modal-title {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+        }
+
+        .modal-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .modal-text {
+            text-align: center;
+        }
+
+        .modal-button {
+            background-color: #D19C97;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .modal-button:hover {
+            background-color: #EDF1FF;
+            color: #1C1C1C;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ccc;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
     </style>
 </head>
 
@@ -181,7 +250,13 @@
                                         echo "<td style='text-align:left'><img style='border-radius:50%' src='../../../" . $row['foto_prod'] . "' width='50px' height='50px'></td>";
                                         echo "<td style='text-align:left'>" . ($row["nome_prod"] ? $row["nome_prod"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
                                         echo "<td style='text-align:left'>" . ($row["preco_prod"] ? number_format($row["preco_prod"], 2, ',', '.') . '€' : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                                        echo "<td style='text-align:left'>" . ($row["desc_prod"] ? $row["desc_prod"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        echo "<td style='text-align:left'>";
+                                        echo "<div class='description-cell'>";
+                                        echo "<span class='short-desc'>" . htmlspecialchars(substr($row['desc_prod'], 0, 40)) . "...</span>";
+                                        echo "<span class='full-desc' style='display: none;'>" . htmlspecialchars($row['desc_prod']) . "</span>";
+                                        echo "<button class='btn btn-link show-more-btn'>Ver Mais</button>";
+                                        echo "</div>";
+                                        echo "</td>";
                                         echo "<td style='text-align:left'>" . ($row["nome_marca"] ? $row["nome_marca"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
                                         echo "<td style='text-align:left'>" . ($row["nome_categoria"] ? $row["nome_categoria"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
                                         echo "<td style='text-align:left'>" . ($row["criado_a"] ? $row["criado_a"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
@@ -234,6 +309,14 @@
         </aside>
         <!-- /.control-sidebar -->
     </div>
+    <!-- Modal for "Ver Mais" -->
+    <div id="viewMoreModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2 class="modal-title">Descrição Completa</h2>
+            <p class="modal-text" id="viewMoreText"></p>
+        </div>
+    </div>
     <!-- ./wrapper -->
 
     <!-- jQuery -->
@@ -278,6 +361,89 @@
         });
         $(document).ready(function() {
             $('#example2').DataTable();
+        });
+    </script>
+    <script>
+        // Obter o elemento modal
+        var modal = document.getElementById("deleteModal");
+
+        // Obter o botão que abre o modal
+        var deleteLinks = document.getElementsByClassName("delete-link");
+
+        // Obter o elemento <span> que fecha o modal
+        var span = document.getElementsByClassName("modal-close")[0];
+
+        // Quando o usuário clica em um link de eliminação, abrir o modal
+        for (var i = 0; i < deleteLinks.length; i++) {
+            deleteLinks[i].onclick = function() {
+                modal.style.display = "block";
+                var id_prod = this.getAttribute("data-id_prod");
+                var confirmBtn = document.getElementById("confirmDeleteBtn");
+                confirmBtn.onclick = function() {
+                    // Redirecionar para o script de eliminação com o ID como parâmetro
+                    window.location.href = "eliminar_prod.php?id_prod=" + id_prod;
+                };
+            }
+        }
+
+        // Quando o usuário clica em <span> (x), fechar o modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Quando o usuário clica em qualquer lugar fora do modal, fechar o modal
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function previewImage(event) {
+            var input = event.target;
+            var preview = document.getElementById('imagem-preview');
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var showMoreBtns = document.querySelectorAll('.show-more-btn');
+            var viewMoreModal = document.getElementById("viewMoreModal");
+            var viewMoreText = document.getElementById("viewMoreText");
+
+            showMoreBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var container = this.parentElement;
+                    var fullDesc = container.querySelector('.full-desc').textContent;
+
+                    // Atualizar o conteúdo do modal "Ver Mais"
+                    viewMoreText.textContent = fullDesc;
+
+                    // Exibir o modal "Ver Mais"
+                    viewMoreModal.style.display = "block";
+                });
+            });
+
+            // Adicionar a lógica para fechar o modal "Ver Mais"
+            var viewMoreModalClose = document.querySelector("#viewMoreModal .modal-close");
+            viewMoreModalClose.onclick = function() {
+                viewMoreModal.style.display = "none";
+            };
+
+            // Adicionar a lógica para fechar o modal "Ver Mais" ao clicar fora do modal
+            window.onclick = function(event) {
+                if (event.target == viewMoreModal) {
+                    viewMoreModal.style.display = "none";
+                }
+            };
         });
     </script>
 </body>

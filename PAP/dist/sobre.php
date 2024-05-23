@@ -108,17 +108,25 @@ session_start();
                 <div class="col-12 col-md-6 position-relative z-index-20 mb-7 mb-lg-0" data-aos="fade-right">
                     <p class="text-muted title-small">suporte</p>
                     <h3 class="display-3 fw-bold mb-5"><span class="text-outline-dark"></span>Entre em contacto connosco</h3>
+                    <?php
+                    
+                    ?>
                     <form name="support" action="suporte.php" method="POST" onsubmit="return validateForm()" novalidate>
                         <div class="form-group">
-                            <label for="support-email" class="form-label">Email</label>
-                            <input type="email" class="form-control" name="support-email" id="support-email" placeholder="Introduza o seu email" oninput="clearErrorMessage('email-error')">
-                            <span id="email-error" class="error-message"></span>
-                            <label for="support-assunto" class="form-label">Assunto</label>
-                            <input type="text" class="form-control" name="support-assunto" id="support-assunto" placeholder="Introduza o assunto" oninput="clearErrorMessage('assunto-error')">
-                            <span id="assunto-error" class="error-message"></span>
-                            <label for="support-msg" class="form-label">Mensagem</label>
-                            <textarea name="support-img" id="support-img" placeholder="Escreva a sua mensagem" oninput="clearErrorMessage('msg-error')"></textarea>
-                            <span id="msg-error" class="error-message"></span>
+                            <label for="support-email" class="form-label">Email
+                                <span id="email-error" class="error-message" style="color: red;"></span>
+                            </label>
+                            <input type="email" class="form-control" name="support-email" id="support-email" placeholder="Introduza o seu email" oninput="clearErrorMessage('email-error')"> <br>
+
+                            <label for="support-assunto" class="form-label">Assunto
+                                <span id="assunto-error" class="error-message" style="color: red;"></span>
+                            </label>
+                            <input type="text" class="form-control" name="support-assunto" id="support-assunto" placeholder="Introduza o assunto" oninput="clearErrorMessage('assunto-error')"><br>
+
+                            <label for="support-msg" class="form-label">Mensagem
+                                <span id="msg-error" class="error-message" style="color: red;"></span>
+                            </label>
+                            <textarea name="support-msg" id="support-msg" placeholder="Escreva a sua mensagem" oninput="clearErrorMessage('msg-error')" class="form-control"></textarea><br>
                         </div>
                         <button type="submit" class="btn btn-dark d-block w-100 my-4">Enviar mensagem</button>
                     </form>
@@ -141,6 +149,65 @@ session_start();
 
     <!-- Theme JS -->
     <script src="./assets/js/theme.bundle.js"></script>
+    <script>
+        // Função para limpar mensagens de erro
+        function clearErrorMessage(id) {
+            document.getElementById(id).textContent = '';
+        }
+
+        // Função para exibir mensagens de erro
+        function showErrorMessage(id, message) {
+            document.getElementById(id).textContent = `* ${message}`;
+        }
+
+        // Função para validar o formulário
+        function validateForm() {
+            let isValid = true;
+
+            // Validação do campo de email
+            const email = document.getElementById('support-email').value;
+            const emailError = document.getElementById('email-error');
+            if (!email) {
+                showErrorMessage('email-error', 'O campo de email é obrigatório.');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showErrorMessage('email-error', 'Por favor, insira um email válido.');
+                isValid = false;
+            } else {
+                clearErrorMessage('email-error');
+            }
+
+            // Validação do campo de assunto
+            const assunto = document.getElementById('support-assunto').value;
+            const assuntoError = document.getElementById('assunto-error');
+            if (!assunto) {
+                showErrorMessage('assunto-error', 'O campo de assunto é obrigatório.');
+                isValid = false;
+            } else {
+                clearErrorMessage('assunto-error');
+            }
+
+            // Validação do campo de mensagem
+            const mensagem = document.getElementById('support-msg').value;
+            const mensagemError = document.getElementById('msg-error');
+            if (!mensagem) {
+                showErrorMessage('msg-error', 'O campo de mensagem é obrigatório.');
+                isValid = false;
+            } else {
+                clearErrorMessage('msg-error');
+            }
+
+            return isValid;
+        }
+
+        // Função para validar o formato do email
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+    </script>
+
+
 </body>
 
 </html>

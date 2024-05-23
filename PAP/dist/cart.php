@@ -64,15 +64,6 @@
                             </div>
                         </a>
                         <!-- / Logo-->
-                        <nav class="d-none d-md-block">
-                            <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
-                                <li class="me-4"><a class="nav-link-checkout active " href="./cart.php">Carrinho</a></li>
-                                <li class="me-4"><a class="nav-link-checkout " href="./checkout.php">Checkout</a>
-                                </li>
-                                <li class="me-4"><a class="nav-link-checkout " href="./checkout-shipping.php">Envio</a>
-                                </li>
-                            </ul>
-                        </nav>
                         <?php
                         // Verifica se o parâmetro produto_adicionado está presente na URL e é igual a "true"
                         if (isset($_GET['produto_adicionado']) && $_GET['produto_adicionado'] == "true") {

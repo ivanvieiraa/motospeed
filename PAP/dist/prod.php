@@ -177,13 +177,13 @@ $id_prod = $_GET['id_prod'];
                                         <form id="formAddToCart" action="adicionar_ao_carrinho.php" method="POST">
                                             <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
                                                 <div class="form-check-option2 form-check-rounded">
-                                                    <input type="number" name="quantidade" value="1">
+                                                    <input type="number" name="quantidade" value="1" min="1" onchange="checkQuantity(this)">
                                                 </div>
                                             </div>
                                             <button id="btnAddToCart" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Adicionar ao carrinho</button>
 
                                             <input type="hidden" name="id_prod" value="<?= $id_prod ?>">
-                                            <input type="hidden" name="tamanho" id="tamanhoSelecionado" value="M"> <!-- Campo oculto para o tamanho -->
+                                            <input type="hidden" name="tamanho" id="tamanhoSelecionado"> <!-- Campo oculto para o tamanho -->
                                         </form>
                                         <script>
                                             document.getElementById('btnAddToCart').addEventListener('click', function(event) {
@@ -270,6 +270,16 @@ $id_prod = $_GET['id_prod'];
 
     <!-- Theme JS -->
     <script src="./assets/js/theme.bundle.js"></script>
+    <script>
+        function checkQuantity(input) {
+            // Verifica se o valor é um número positivo
+            if (isNaN(input.value) || Number(input.value) <= 0) {
+                // Se não for, define o valor como 1
+                input.value = "1";
+            }
+        }
+    </script>
+
 </body>
 
 </html>

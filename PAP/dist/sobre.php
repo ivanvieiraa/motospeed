@@ -108,28 +108,33 @@ session_start();
                 <div class="col-12 col-md-6 position-relative z-index-20 mb-7 mb-lg-0" data-aos="fade-right">
                     <p class="text-muted title-small">suporte</p>
                     <h3 class="display-3 fw-bold mb-5"><span class="text-outline-dark"></span>Entre em contacto connosco</h3>
-                    <?php
-                    
-                    ?>
-                    <form name="support" action="suporte.php" method="POST" onsubmit="return validateForm()" novalidate>
-                        <div class="form-group">
-                            <label for="support-email" class="form-label">Email
-                                <span id="email-error" class="error-message" style="color: red;"></span>
-                            </label>
-                            <input type="email" class="form-control" name="support-email" id="support-email" placeholder="Introduza o seu email" oninput="clearErrorMessage('email-error')"> <br>
+                    <div id="form-section">
+                        <?php
+                        if (isset($_SESSION['mensagem'])) {
+                            echo '<div class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
+                            unset($_SESSION['mensagem']);
+                        }
+                        ?>
+                        <form name="support" action="suporte.php" method="POST" onsubmit="return validateForm()" novalidate>
+                            <div class="form-group">
+                                <label for="support-email" class="form-label">Email
+                                    <span id="email-error" class="error-message" style="color: red;"></span>
+                                </label>
+                                <input type="email" class="form-control" name="support-email" id="support-email" placeholder="Introduza o seu email" oninput="clearErrorMessage('email-error')"> <br>
 
-                            <label for="support-assunto" class="form-label">Assunto
-                                <span id="assunto-error" class="error-message" style="color: red;"></span>
-                            </label>
-                            <input type="text" class="form-control" name="support-assunto" id="support-assunto" placeholder="Introduza o assunto" oninput="clearErrorMessage('assunto-error')"><br>
+                                <label for="support-assunto" class="form-label">Assunto
+                                    <span id="assunto-error" class="error-message" style="color: red;"></span>
+                                </label>
+                                <input type="text" class="form-control" name="support-assunto" id="support-assunto" placeholder="Introduza o assunto" oninput="clearErrorMessage('assunto-error')"><br>
 
-                            <label for="support-msg" class="form-label">Mensagem
-                                <span id="msg-error" class="error-message" style="color: red;"></span>
-                            </label>
-                            <textarea name="support-msg" id="support-msg" placeholder="Escreva a sua mensagem" oninput="clearErrorMessage('msg-error')" class="form-control"></textarea><br>
-                        </div>
-                        <button type="submit" class="btn btn-dark d-block w-100 my-4">Enviar mensagem</button>
-                    </form>
+                                <label for="support-msg" class="form-label">Mensagem
+                                    <span id="msg-error" class="error-message" style="color: red;"></span>
+                                </label>
+                                <textarea name="support-msg" id="support-msg" placeholder="Escreva a sua mensagem" oninput="clearErrorMessage('msg-error')" class="form-control"></textarea><br>
+                            </div>
+                            <button type="submit" class="btn btn-dark d-block w-100 my-4">Enviar mensagem</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <!-- / Homepage Intro-->
@@ -206,6 +211,19 @@ session_start();
             return re.test(email);
         }
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (window.location.hash) {
+                const element = document.querySelector(window.location.hash);
+                if (element) {
+                    element.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    </script>
+
 
 
 </body>

@@ -1,6 +1,6 @@
 <?php
 include("ligacao.php");
-
+session_start();
 // Verificar se o formulário foi submetido
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obter os dados do formulário
@@ -12,7 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO suporte (email, assunto, mensagem) VALUES ('$email', '$assunto', '$mensagem')";
 
     if (mysqli_query($con, $sql)) {
-        echo "Mensagem enviada com sucesso!";
+        $_SESSION['mensagem'] = "Mensagem enviada com sucesso !";
+        header('Location: sobre.php#form-section');
     } else {
         echo "Erro: " . $sql . "<br>" . mysqli_error($con);
     }

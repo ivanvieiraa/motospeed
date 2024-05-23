@@ -93,8 +93,17 @@ session_start();
                 </div>
             </div>
             <div class="position-relative row my-lg-7 pt-5 pt-lg-0 g-8">
-                <div class="bg-text bottom-0 start-0 end-0" data-aos="fade-up">
-                    <h2 class="bg-text-title opacity-10"><span class="text-outline-dark"></span>Suporte</h2>
+
+                <div class="col-12 col-md-6 position-relative z-index-20 pe-0" data-aos="fade-left">
+                    <picture class="w-50 d-block position-relative z-index-10 border border-white border-4 shadow-lg">
+                        <img class="img-fluid" src="./assets/images/banners/yzf.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                    </picture>
+                    <picture class="w-60 d-block me-8 mt-n10 shadow-lg border border-white border-4 position-relative z-index-20 ms-auto">
+                        <img class="img-fluid" src="./assets/images/banners/r6.jpeg" alt="HTML Bootstrap Template by Pixel Rocket">
+                    </picture>
+                    <picture class="w-50 d-block me-8 mt-n7 shadow-lg border border-white border-4 position-absolute top-0 end-0 z-index-0 ">
+                        <img class="img-fluid" src="./assets/images/banners/cross.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                    </picture>
                 </div>
                 <div class="col-12 col-md-6 position-relative z-index-20 mb-7 mb-lg-0" data-aos="fade-right">
                     <p class="text-muted title-small">suporte</p>
@@ -104,17 +113,12 @@ session_start();
                             <label for="support-email" class="form-label">Email</label>
                             <input type="email" class="form-control" name="support-email" id="support-email" placeholder="Introduza o seu email" oninput="clearErrorMessage('email-error')">
                             <span id="email-error" class="error-message"></span>
+                            <label for="support-assunto" class="form-label">Assunto</label>
+                            <input type="text" class="form-control" name="support-assunto" id="support-assunto" placeholder="Introduza o assunto" oninput="clearErrorMessage('assunto-error')">
+                            <span id="assunto-error" class="error-message"></span>
                             <label for="support-msg" class="form-label">Mensagem</label>
                             <textarea name="support-img" id="support-img" placeholder="Escreva a sua mensagem" oninput="clearErrorMessage('msg-error')"></textarea>
                             <span id="msg-error" class="error-message"></span>
-                            <?php
-                            // Verifica se a mensagem de erro está definida na sessão
-                            if (isset($_SESSION['mensagem'])) {
-                                echo '<div class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
-                                // Limpa a mensagem de erro da sessão após exibi-la
-                                unset($_SESSION['mensagem']);
-                            }
-                            ?>
                         </div>
                         <button type="submit" class="btn btn-dark d-block w-100 my-4">Enviar mensagem</button>
                     </form>

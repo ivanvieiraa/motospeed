@@ -994,8 +994,7 @@ button:focus:not(:focus-visible) {
 button,
 input,
 optgroup,
-select,
-textarea {
+select {
     margin: 0;
     font-family: inherit;
     font-size: inherit;
@@ -1043,7 +1042,26 @@ button:not(:disabled) {
 }
 
 textarea {
-    resize: vertical
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    resize: vertical;
+}
+
+textarea:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 fieldset {
@@ -2954,6 +2972,7 @@ progress {
     border-bottom-width: 1px;
     box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg)
 }
+
 .table2>:not(caption)>*>* {
     padding: .5rem;
     background-color: var(--bs-table-bg);

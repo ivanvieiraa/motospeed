@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 22, 2024 at 07:45 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Tempo de geração: 23-Maio-2024 às 16:32
+-- Versão do servidor: 10.4.32-MariaDB
+-- versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `motospeed`
+-- Banco de dados: `motospeed`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categorias`
+-- Estrutura da tabela `categorias`
 --
 
 CREATE TABLE `categorias` (
@@ -33,7 +33,7 @@ CREATE TABLE `categorias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `categorias`
+-- Extraindo dados da tabela `categorias`
 --
 
 INSERT INTO `categorias` (`id_categoria`, `nome_categoria`) VALUES
@@ -46,7 +46,7 @@ INSERT INTO `categorias` (`id_categoria`, `nome_categoria`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detalhe_venda`
+-- Estrutura da tabela `detalhe_venda`
 --
 
 CREATE TABLE `detalhe_venda` (
@@ -59,7 +59,7 @@ CREATE TABLE `detalhe_venda` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `marcas`
+-- Estrutura da tabela `marcas`
 --
 
 CREATE TABLE `marcas` (
@@ -68,7 +68,7 @@ CREATE TABLE `marcas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `marcas`
+-- Extraindo dados da tabela `marcas`
 --
 
 INSERT INTO `marcas` (`id_marca`, `nome_marca`) VALUES
@@ -83,7 +83,7 @@ INSERT INTO `marcas` (`id_marca`, `nome_marca`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produtos`
+-- Estrutura da tabela `produtos`
 --
 
 CREATE TABLE `produtos` (
@@ -100,7 +100,7 @@ CREATE TABLE `produtos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `produtos`
+-- Extraindo dados da tabela `produtos`
 --
 
 INSERT INTO `produtos` (`id_prod`, `nome_prod`, `preco_prod`, `desc_prod`, `foto_prod`, `id_marca`, `id_categoria`, `criado_a`, `alterado_a`, `status`) VALUES
@@ -109,7 +109,7 @@ INSERT INTO `produtos` (`id_prod`, `nome_prod`, `preco_prod`, `desc_prod`, `foto
 (8, 'Shark Race-R PRO', 695, 'Capacete Shark Race-R Pro GP 06 Blank Matte Black . Shark evolui seu capacete mais esportivo e equipa o novo Race-R Pro GP 06 com os novos regulamentos ECE 22.06. A casca externa feita com estrutura COVA (fibra de carbono e aramida) oferece excelente desempenho aerodinâmico. Ele tem o recorde de velocidade na MotoGP capturado em 363,6 km/h! O spoiler traseiro destaca-se por melhorar o desempenho aerodinâmico e a estabilidade em alta velocidade. Este é o capacete topo de gama, fruto da experiência da Shark nos mais altos escalões de competição (MotoGP e SBK) com mais de 250 pódios.', 'uploads/produtos/shark.png', 7, 1, '2024-05-09 22:19:50', '2024-05-09 22:20:13', 1),
 (9, 'DAINESE AVRO 4 ', 495.99, 'Casaco de pele Dainese Avro 4 Preto Mate / Branco. Casaco desportivo confeccionado em pele bovina de primeira qualidade; destaca-se pelo seu conforto, segurança e design. Possui proteções certificadas nos ombros e cotovelos e inserções de alumínio nos ombros.', 'uploads/produtos/dainese-avro4.png', 4, 2, '2024-05-11 13:33:39', '2024-05-11 15:28:02', 1),
 (10, 'DAINESE ELETTRICA AIR', 149.99, ' Jaqueta de verão com forro térmico desmontável. Confeccionada em tecido D-Synth 350, dispõe de forro térmico desmontável para ser usada inclusive durante os dias mais frios. Incorpora proteções compostas desmontáveis certificadas em ombros e cotovelos. ', 'uploads/produtos/dainese-elettrica.png', 4, 2, '2024-05-11 14:50:45', '2024-05-14 18:42:50', 1),
-(11, 'SHOEI VFX-WR 06', 539, '. O capacete Shoei VFX-WR 06 é o capacete Off-Road de sucesso que possui a homologação ECE 22-06 junto com avanços tecnológicos e alto desempenho. O capacete VFX-WR 06 caracteriza-se por ser muito leve, resistente e por incorporar o sistema MEDS (Movement Energy Distribution System) que reduz significativamente a energia transmitida ao capacete em caso de impacto. ', 'uploads/produtos/vfc-wr.png', 6, 1, '2024-05-11 14:53:48', '2024-05-11 14:56:02', 1),
+(11, 'SHOEI VFX-WR 06', 539, 'O capacete Shoei VFX-WR 06 é o capacete Off-Road de sucesso que possui a homologação ECE 22-06 junto com avanços tecnológicos e alto desempenho. O capacete VFX-WR 06 caracteriza-se por ser muito leve, resistente e por incorporar o sistema MEDS (Movement Energy Distribution System) que reduz significativamente a energia transmitida ao capacete em caso de impacto. ', 'uploads/produtos/vfc-wr.png', 6, 1, '2024-05-11 14:53:48', '2024-05-23 14:49:58', 1),
 (12, 'SHARK Vairal Anger', 259, 'Capacete Shark Varial Anger Preto / Azul / Fúcsia. Fabricado em fibra de vidro, o Varial combina um design agressivo, com detalhes e acabamentos de primeira qualidade.', 'uploads/produtos/varial-anger.png', 7, 1, '2024-05-11 14:55:31', '2024-05-11 14:56:04', 1),
 (13, 'AGV X70 FLAKE ', 129, 'Capacete AGV X70 Grey (coleção Legends ). A Agv inventou o capacete a jato de fibra em 1954. O X70 foi projetado no mesmo formato e cores, mas com a tecnologia AGV atual. Caracteriza-se por oferecer uma concha limpa e arredondada e detalhes vintage.', 'uploads/produtos/X70-flake.png', 3, 1, '2024-05-11 14:59:45', '2024-05-11 14:59:48', 1),
 (14, 'SHOEI J-CRUISE 2', 425.99, 'O J-Cruise 2 é mais moderno e seguro, e dispõe de um sistema de ventilação e de alguns acolchoados interiores totalmente evoluídos.', 'uploads/produtos/shoei-j-cruise2.png', 6, 1, '2024-05-11 15:02:00', NULL, 1),
@@ -129,7 +129,7 @@ INSERT INTO `produtos` (`id_prod`, `nome_prod`, `preco_prod`, `desc_prod`, `foto
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produtos_tamanhos`
+-- Estrutura da tabela `produtos_tamanhos`
 --
 
 CREATE TABLE `produtos_tamanhos` (
@@ -139,7 +139,7 @@ CREATE TABLE `produtos_tamanhos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `produtos_tamanhos`
+-- Extraindo dados da tabela `produtos_tamanhos`
 --
 
 INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
@@ -242,7 +242,22 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tamanhos`
+-- Estrutura da tabela `suporte`
+--
+
+CREATE TABLE `suporte` (
+  `id_suporte` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `assunto` varchar(255) NOT NULL,
+  `mensagem` longtext NOT NULL,
+  `criado_a` datetime DEFAULT current_timestamp(),
+  `atualizado_a` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tamanhos`
 --
 
 CREATE TABLE `tamanhos` (
@@ -250,7 +265,7 @@ CREATE TABLE `tamanhos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `tamanhos`
+-- Extraindo dados da tabela `tamanhos`
 --
 
 INSERT INTO `tamanhos` (`tamanho`) VALUES
@@ -263,7 +278,7 @@ INSERT INTO `tamanhos` (`tamanho`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Estrutura da tabela `users`
 --
 
 CREATE TABLE `users` (
@@ -283,18 +298,18 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Extraindo dados da tabela `users`
 --
 
 INSERT INTO `users` (`id_user`, `nome`, `apelido`, `email`, `pass`, `data_nasc`, `foto`, `morada`, `codigop`, `adm`, `criado_a`, `alterado_a`, `status`) VALUES
 (49, 'Admin', 'Admin', 'motospeed2024@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '0000-00-00', 'uploads/users/mstile-150x150.png', '', '', 1, '2024-04-28 21:50:28', '2024-05-08 17:02:13', 1),
-(50, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', '2c42e5cf1cdbafea04ed267018ef1511', '2006-10-07', 'uploads/users/default.png', '', '', 0, '2024-04-28 22:05:41', '2024-05-08 16:13:08', 1),
-(52, 'Ariana', 'Cunha', 'arianacunha@gmail.com', 'd41d8cd98f00b204e9800998ecf8427e', '0000-00-00', 'uploads/users/default.png', '', '', 0, '2024-05-08 16:28:31', '2024-05-08 16:28:44', 1);
+(50, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', '5788e2b0db1849bbe8ce4f21f63471b6', '2006-10-07', 'uploads/users/default.png', '', '', 0, '2024-04-28 22:05:41', '2024-05-23 14:58:56', 1),
+(52, 'Ariana', 'Cunha', 'arianacunha@gmail.com', 'd41d8cd98f00b204e9800998ecf8427e', '0000-00-00', 'uploads/users/default.png', '', '', 0, '2024-05-08 16:28:31', '2024-05-23 14:58:59', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vendas`
+-- Estrutura da tabela `vendas`
 --
 
 CREATE TABLE `vendas` (
@@ -305,30 +320,30 @@ CREATE TABLE `vendas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `categorias`
+-- Índices para tabela `categorias`
 --
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id_categoria`);
 
 --
--- Indexes for table `detalhe_venda`
+-- Índices para tabela `detalhe_venda`
 --
 ALTER TABLE `detalhe_venda`
   ADD KEY `id_venda` (`id_venda`),
   ADD KEY `id_prod` (`id_prod`);
 
 --
--- Indexes for table `marcas`
+-- Índices para tabela `marcas`
 --
 ALTER TABLE `marcas`
   ADD PRIMARY KEY (`id_marca`);
 
 --
--- Indexes for table `produtos`
+-- Índices para tabela `produtos`
 --
 ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id_prod`),
@@ -336,90 +351,102 @@ ALTER TABLE `produtos`
   ADD KEY `id_categoria` (`id_categoria`);
 
 --
--- Indexes for table `produtos_tamanhos`
+-- Índices para tabela `produtos_tamanhos`
 --
 ALTER TABLE `produtos_tamanhos`
   ADD PRIMARY KEY (`id_prod`,`tamanho`);
 
 --
--- Indexes for table `tamanhos`
+-- Índices para tabela `suporte`
+--
+ALTER TABLE `suporte`
+  ADD PRIMARY KEY (`id_suporte`);
+
+--
+-- Índices para tabela `tamanhos`
 --
 ALTER TABLE `tamanhos`
   ADD PRIMARY KEY (`tamanho`);
 
 --
--- Indexes for table `users`
+-- Índices para tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- Indexes for table `vendas`
+-- Índices para tabela `vendas`
 --
 ALTER TABLE `vendas`
   ADD PRIMARY KEY (`id_venda`),
   ADD KEY `id_user` (`id_user`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `categorias`
+-- AUTO_INCREMENT de tabela `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `marcas`
+-- AUTO_INCREMENT de tabela `marcas`
 --
 ALTER TABLE `marcas`
   MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `produtos`
+-- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
   MODIFY `id_prod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT de tabela `suporte`
+--
+ALTER TABLE `suporte`
+  MODIFY `id_suporte` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
--- AUTO_INCREMENT for table `vendas`
+-- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
   MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Restrições para despejos de tabelas
 --
 
 --
--- Constraints for table `detalhe_venda`
+-- Limitadores para a tabela `detalhe_venda`
 --
 ALTER TABLE `detalhe_venda`
   ADD CONSTRAINT `detalhe_venda_ibfk_1` FOREIGN KEY (`id_venda`) REFERENCES `vendas` (`id_venda`),
   ADD CONSTRAINT `detalhe_venda_ibfk_2` FOREIGN KEY (`id_prod`) REFERENCES `produtos` (`id_prod`);
 
 --
--- Constraints for table `produtos`
+-- Limitadores para a tabela `produtos`
 --
 ALTER TABLE `produtos`
   ADD CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`id_marca`) REFERENCES `marcas` (`id_marca`),
   ADD CONSTRAINT `produtos_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`);
 
 --
--- Constraints for table `produtos_tamanhos`
+-- Limitadores para a tabela `produtos_tamanhos`
 --
 ALTER TABLE `produtos_tamanhos`
   ADD CONSTRAINT `fk_id_prod` FOREIGN KEY (`id_prod`) REFERENCES `produtos` (`id_prod`) ON DELETE CASCADE;
 
 --
--- Constraints for table `vendas`
+-- Limitadores para a tabela `vendas`
 --
 ALTER TABLE `vendas`
   ADD CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);

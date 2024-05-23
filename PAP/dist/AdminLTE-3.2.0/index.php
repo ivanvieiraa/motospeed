@@ -1,10 +1,10 @@
-<?php
-session_start();
-if($_SESSION['adm'] != 1){
-  header('Location: ../index.php');
-}
+1<?php
+  session_start();
+  if ($_SESSION['adm'] != 1) {
+    header('Location: ../index.php');
+  }
 
-?>
+  ?>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -18,8 +18,7 @@ if($_SESSION['adm'] != 1){
   <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon/favicon-16x16.png">
   <link rel="mask-icon" href="./assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -112,6 +111,15 @@ if($_SESSION['adm'] != 1){
                 </li>
               </ul>
             </li>
+            <li class="nav-item menu-closed">
+              <a href="./pages/tables/suporte.php" class="nav-link ">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                  Suporte
+                </p>
+              </a>
+            </li>
+
         </nav>
         <!-- /.sidebar-menu -->
       </div>
@@ -149,7 +157,7 @@ if($_SESSION['adm'] != 1){
                 <div class="inner">
                   <h3>
                     <?php
-                    include ("../ligacao.php");
+                    include("../ligacao.php");
                     $sqlProd = "SELECT COUNT(*) FROM produtos";
                     $resultProd = mysqli_query($con, $sqlProd);
                     $rowProd = mysqli_fetch_array($resultProd);
@@ -172,7 +180,7 @@ if($_SESSION['adm'] != 1){
                 <div class="inner">
                   <h3>
                     <?php
-                    include ("../ligacao.php");
+                    include("../ligacao.php");
                     $sqlMarcass = "SELECT COUNT(*) FROM marcas";
                     $resultMarca = mysqli_query($con, $sqlMarcass);
                     $rowMarca = mysqli_fetch_array($resultMarca);
@@ -209,7 +217,7 @@ if($_SESSION['adm'] != 1){
                 <div class="inner">
                   <h3>
                     <?php
-                    include ("../ligacao.php");
+                    include("../ligacao.php");
                     $sql = "SELECT COUNT(*) FROM users";
                     $result = mysqli_query($con, $sql);
                     $row = mysqli_fetch_array($result);
@@ -664,29 +672,25 @@ if($_SESSION['adm'] != 1){
                   </div>
                 </div>
                 <div class="card-body">
-                  <canvas class="chart" id="line-chart"
-                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                  <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer bg-transparent">
                   <div class="row">
                     <div class="col-4 text-center">
-                      <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                        data-fgColor="#39CCCC">
+                      <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
 
                       <div class="text-white">Mail-Orders</div>
                     </div>
                     <!-- ./col -->
                     <div class="col-4 text-center">
-                      <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
-                        data-fgColor="#39CCCC">
+                      <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgColor="#39CCCC">
 
                       <div class="text-white">Online</div>
                     </div>
                     <!-- ./col -->
                     <div class="col-4 text-center">
-                      <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                        data-fgColor="#39CCCC">
+                      <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
 
                       <div class="text-white">In-Store</div>
                     </div>
@@ -710,8 +714,7 @@ if($_SESSION['adm'] != 1){
                   <div class="card-tools">
                     <!-- button with a dropdown -->
                     <div class="btn-group">
-                      <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"
-                        data-offset="-52">
+                      <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
                         <i class="fas fa-bars"></i>
                       </button>
                       <div class="dropdown-menu" role="menu">

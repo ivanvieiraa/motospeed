@@ -110,6 +110,14 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item menu-closed">
+              <a href="./suporte.php" class="nav-link ">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                  Suporte
+                </p>
+              </a>
+            </li>
         </nav>
         <!-- /.sidebar-menu -->
       </div>

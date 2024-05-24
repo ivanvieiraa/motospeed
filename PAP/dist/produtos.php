@@ -103,10 +103,9 @@ session_start();
 
                     <!-- Sort Options-->
                     <select class="form-select form-select-sm border-0 bg-light p-3 pe-5 lh-1 fs-7">
-                        <option selected>Ordenar por</option>
+                        <option selected>Ordenar por preço</option>
                         <option value="1">Crescente</option>
                         <option value="2">Decrescente</option>
-                        <option value="3">Nome</option>
                     </select>
                     <!-- / Sort Options-->
                 </div>
@@ -149,7 +148,6 @@ session_start();
                     $marcas_selecionadas = implode(",", $_GET['marcas']);
                     $sqlProd .= " AND m.id_marca IN ($marcas_selecionadas)";
                 }
-                
                 $result2 = mysqli_query($con, $sqlProd);
                 if (mysqli_num_rows($result2) > 0) {
                     while ($row2 = mysqli_fetch_assoc($result2)) {
@@ -164,8 +162,7 @@ session_start();
                                         <img class="w-100 img-fluid position-relative z-index-10" title="" src="<?= $row2['foto_prod']; ?>" alt="">
                                     </picture>
                                     <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
-                                        <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i> Adicionar ao
-                                            carrinho</button>
+                                        <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i>Ver detalhe do produto</button>
                                     </div>
                                 </div>
                                 <div class="card-body px-0">
@@ -256,37 +253,35 @@ session_start();
                         </div>
                     </div>
                     <!-- / Brands Filter -->
-                    <!-- Sizes Filter -->
+                    <!-- Brands Filter -->
                     <div class="py-4 widget-filter border-top">
-                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-sizes" role="button" aria-expanded="false" aria-controls="filter-modal-sizes">
-                            Tamanhos
+                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-category" role="button" aria-expanded="true" aria-controls="filter-modal-category">
+                            Categorias
                         </a>
-                        <div id="filter-modal-sizes" class="collapse show">
-                            <div class="filter-options mt-3">
-                                <?php
-                                $sqlTamanhos = "SELECT * FROM tamanhos";
-                                $resultTamanhos = mysqli_query($con, $sqlTamanhos);
-                                if (mysqli_num_rows($resultTamanhos) > 0)
-                                    while ($rowTamanhos = mysqli_fetch_assoc($resultTamanhos)) {
-                                ?>
-
-                                    <div class="form-group d-inline-block mr-2 mb-2 form-check-bg form-check-custom">
-                                        <input type="checkbox" class="form-check-bg-input" id="filter-sizes-modal-0">
-                                        <label class="form-check-label fw-normal" for="filter-sizes-modal-0">
-                                            <?php echo $rowTamanhos['tamanho']; ?>
-                                        </label>
-                                    </div>
-                                <?php
-
+                        <div id="filter-modal-category" class="collapse show">
+                            <div class="simplebar-wrapper">
+                                <div class="filter-options" data-pixr-simplebar>
+                                    <?php
+                                    $sqlCategorias = "SELECT * FROM categorias";
+                                    $resultCategorias = mysqli_query($con, $sqlCategorias);
+                                    if (mysqli_num_rows($resultCategorias) > 0) {
+                                        while ($rowCategorias = mysqli_fetch_assoc($resultCategorias)) {
+                                    ?>
+                                            <div class="form-group form-check-custom mb-1">
+                                                <input type="checkbox" class="form-check-input categoria-checkbox" id="categoria_<?php echo $rowCategorias['id_categoria']; ?>" value="<?php echo $rowCategorias['id_categoria']; ?>">
+                                                <label class="form-check-label fw-normal text-body flex-grow-1 d-flex align-items-center" for="categoria_<?php echo $rowCategorias['id_categoria']; ?>">
+                                                    <?php echo $rowCategorias['nome_categoria']; ?>
+                                                </label>
+                                            </div>
+                                    <?php
+                                        }
                                     }
-
-                                ?>
-
-
+                                    ?>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- / Sizes Filter -->
+                    <!-- / Brands Filter -->
                 </div>
                 <!-- / Filters-->
 

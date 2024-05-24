@@ -10,7 +10,7 @@ if(isset($_GET['produto_id'])) {
         // Loop através dos produtos no carrinho
         foreach($_SESSION['carrinho'] as $indice => $produto) {
             // Se o ID do produto no carrinho for igual ao ID do produto a ser removido
-            if($produto['id'] == $produto_id) {
+            if($produto['id_prod'] == $produto_id) {
                 // Remove o produto do carrinho
                 unset($_SESSION['carrinho'][$indice]);
                 // Redireciona de volta para a página do carrinho

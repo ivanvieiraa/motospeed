@@ -1,9 +1,6 @@
 <?php
 include("ligacao.php");
 session_start();
-$total = $_GET['total'];
-$subtotal = $_GET['subtotal'];
-$custoEnvio = $_GET['custoEnvio']
 ?>
 <!doctype html>
 <html lang="en">
@@ -83,16 +80,16 @@ $custoEnvio = $_GET['custoEnvio']
             <div class="mt-5">
               <h3 class="fs-5 fw-bolder mb-4 border-bottom pb-4" style="color: green;">Compra efetuada com sucesso !</h3>
               <div class="row">
-                
+
                 <div class="col-12">
                   <h5 class="justify-content-between d-flex align-items-start mb-2">
                     Dados do cliente:
                   </h5>
                   <br>
-                  <p><?=$_SESSION['nome']?> <?=$_SESSION['apelido']?></p>
-                  <p><?=$_SESSION['morada']?></p>
-                  <p><?=$_SESSION['codigop']?></p>
-                  
+                  <p><?= $_SESSION['nome'] ?> <?= $_SESSION['apelido'] ?></p>
+                  <p><?= $_SESSION['morada'] ?></p>
+                  <p><?= $_SESSION['codigop'] ?></p>
+
                 </div>
               </div>
               <div class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
@@ -105,14 +102,14 @@ $custoEnvio = $_GET['custoEnvio']
         <div class="col-12 col-lg-5 bg-light pt-lg-10 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
           <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
             <div class="pb-3">
-           <?php 
-           if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
-                  $carrinho = $_SESSION['carrinho'];
+              <?php
+              if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
+                $carrinho = $_SESSION['carrinho'];
 
-                  // Loop através dos produtos no carrinho
-                  foreach ($carrinho as $produto) {
-                    // Aqui você pode exibir os dados do produto na seção de resumo do pedido
-                    echo '<!-- Cart Item-->
+                // Loop através dos produtos no carrinho
+                foreach ($carrinho as $produto) {
+                  // Aqui você pode exibir os dados do produto na seção de resumo do pedido
+                  echo '<!-- Cart Item-->
               <div class="row mx-0 py-4 g-0 border-bottom">
                 <div class="col-2 position-relative">
                   <picture class="d-block border">
@@ -129,22 +126,20 @@ $custoEnvio = $_GET['custoEnvio']
                   <p class="fw-bolder text-end text-muted m-0">' . $produto['preco'] . '€</p>
                 </div>
               </div> <!-- / Cart Item-->';
-                  }
-                } else {
-                  // Se não houver produtos no carrinho, exiba uma mensagem indicando isso
-                  echo '<p>O seu carrinho está vazio.</p>';
                 }
-              
+              } else {
+                // Se não houver produtos no carrinho, exiba uma mensagem indicando isso
+                echo '<p>O seu carrinho está vazio.</p>';
+              }
+
               ?>
             </div>
             <div class="py-4 border-bottom">
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <p class="m-0 fw-bolder fs-6">Subtotal</p>
-                <p class="m-0 fs-6 fw-bolder"><?= $subtotal ?>€</p>
               </div>
               <div class="d-flex justify-content-between align-items-center ">
                 <p class="m-0 fw-bolder fs-6">Envio</p>
-                <p class="m-0 fs-6 fw-bolder"><?= $custoEnvio ?>€</p>
               </div>
             </div>
             <div class="py-4 border-bottom">
@@ -153,7 +148,6 @@ $custoEnvio = $_GET['custoEnvio']
                   <p class="m-0 fw-bold fs-5">Total</p>
                   <span class="text-muted small">IVA incluído</span>
                 </div>
-                <p class="m-0 fs-5 fw-bold"><?= $total ?>€</p>
               </div>
             </div>
             <div class="py-4">

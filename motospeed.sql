@@ -430,7 +430,8 @@ ALTER TABLE `vendas`
 --
 ALTER TABLE `detalhe_venda`
   ADD CONSTRAINT `detalhe_venda_ibfk_1` FOREIGN KEY (`id_venda`) REFERENCES `vendas` (`id_venda`),
-  ADD CONSTRAINT `detalhe_venda_ibfk_2` FOREIGN KEY (`id_prod`) REFERENCES `produtos` (`id_prod`);
+  ADD CONSTRAINT `detalhe_venda_ibfk_2` FOREIGN KEY (`id_prod`) REFERENCES `produtos` (`id_prod`),
+  ADD UNIQUE(`id_venda`);
 
 --
 -- Limitadores para a tabela `produtos`
@@ -455,3 +456,9 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+ALTER TABLE `detalhe_venda` 
+ADD CONSTRAINT `fk_id_venda` 
+FOREIGN KEY (`id_venda`) 
+REFERENCES `vendas` (`id_venda`) 
+ON DELETE CASCADE;

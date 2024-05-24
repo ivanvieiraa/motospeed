@@ -24,7 +24,7 @@ if (isset($_POST['envio'])) {
     $custoEnvio = $opcoesEnvio[$opcaoEnvioSelecionada];
 } else {
     // Definir opção de envio padrão
-    $opcaoEnvioSelecionada = 'padrao';
+    $opcaoEnvioSelecionada = 'levantamento';
     $custoEnvio = $opcoesEnvio[$opcaoEnvioSelecionada];
 }
 
@@ -169,6 +169,7 @@ $total = $subTotal + $custoEnvio;
                                     const opcoesEnvio = <?php echo json_encode($opcoesEnvio); ?>;
                                     const custoEnvioElement = document.getElementById('custoEnvio');
                                     const totalElement = document.getElementById('total');
+                                    const totalInputElement = document.getElementById('totalInput');
 
                                     // Função para atualizar o custo de envio e o total
                                     function atualizarCustoEnvioETotal(valor) {
@@ -177,6 +178,7 @@ $total = $subTotal + $custoEnvio;
                                         const subTotal = <?php echo json_encode($subTotal); ?>;
                                         const total = subTotal + custoEnvio;
                                         totalElement.textContent = total.toFixed(2) + '€';
+                                        totalInputElement.value = total.toFixed(2); // Atualiza o valor do campo input
                                     }
 
                                     const inputsEnvio = document.querySelectorAll('input[name="checkoutShippingMethod"]');
@@ -248,10 +250,17 @@ $total = $subTotal + $custoEnvio;
                                     <span class="text-muted small">IVA incluído</span>
                                 </div>
                                 <!-- Adicione um ID para exibir o total -->
-                                <p id="total" class="m-0 fs-5 fw-bold"><?php echo number_format($total, 2); ?>€</p>
+                                <p id="total" class="m-0 fs-5 fw-bold"><?php echo $total; ?>€</p>
                             </div>
                         </div>
-                        <a href="./checkout-payment.php?subtotal=<?php echo $subTotal; ?>&custoEnvio=<?php echo $custoEnvio; ?>&total=<?php echo $total; ?>" class="btn btn-dark w-100 text-center" role="button">Finalizar compra</a>
+                        <form method="post" action="finalizarcompra.php">
+                            <!-- Adicione os campos ocultos para enviar os dados necessários -->
+                            <input type="hidden" name="subtotal" value="<?php echo $subTotal; ?>">
+                            <input type="hidden" name="custoEnvio" value="<?php echo $custoEnvio; ?>">
+                            <input type="hidden" name="total" id="totalInput" value="<?php echo $total; ?>">
+                            <!-- Adicione outros campos do formulário, se necessário -->
+                            <button type="submit" class="btn btn-dark w-100 text-center">Finalizar compra</button>
+                        </form>
                     </div>
                 </div>
             </div>

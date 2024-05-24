@@ -37,6 +37,8 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+  <script src="https://kit.fontawesome.com/d5954f6b26.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -113,7 +115,7 @@
             </li>
             <li class="nav-item menu-closed">
               <a href="./pages/tables/suporte.php" class="nav-link ">
-                <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fa-solid fa-phone"></i>
                 <p>
                   Suporte
                 </p>

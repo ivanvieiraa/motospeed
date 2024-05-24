@@ -178,8 +178,8 @@
                             </ul>
                         </li>
                         <li class="nav-item menu-closed">
-                            <a href="./suporte.php" class="nav-link ">
-                                <i class="nav-icon fas fa-table"></i>
+                            <a href="./suporte.php" class="nav-link">
+                                <i class="nav-icon fa-solid fa-phone"></i>
                                 <p>
                                     Suporte
                                 </p>

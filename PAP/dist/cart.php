@@ -63,6 +63,12 @@
                                 <img src="mstile-150x150.png" alt="" height="100px" width="100px">
                             </div>
                         </a>
+                        <nav class="d-none d-md-block">
+                            <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
+                                <li class="me-4"><a class="nav-link-checkout active" href="./cart.php">Carrinho</a></li>
+                                </li>
+                            </ul>
+                        </nav>
                         <!-- / Logo-->
                         <?php
                         // Verifica se o parâmetro produto_adicionado está presente na URL e é igual a "true"
@@ -97,10 +103,10 @@
                                                                     </div>
                                                                     <div class="col-9 offset-1">
                                                                         <div>
-                                                                            <h6 class="justify-content-between d-flex align-items-start mb-2">
+                                                                            <a style="text-decoration: none;" href="prod.php?id_prod=' . $produto['id_prod'] . '"><h6 class="justify-content-between d-flex align-items-start mb-2">
                                                                                 ' . $produto['nome'] . '
-                                                                                <a style="text-decoration:none;" href="remover_do_carrinho.php?produto_id=' . $produto['id'] . '" >  <i class="ri-close-line ms-3"></i> </a>
-                                                                            </h6>
+                                                                                <a style="text-decoration:none;" href="remover_do_carrinho.php?produto_id=' . $produto['id_prod'] . '" >  <i class="ri-close-line ms-3"></i> </a>
+                                                                            </h6></a>
                                                                             <span class="d-block text-muted fw-bolder text-uppercase fs-9">Tamanho: ' . $produto['tamanho'] . ' / Quantidade: ' . $produto['quantidade'] . '</span>
                                                                         </div>
                                                                         <p class="fw-bolder text-end text-muted m-0">' . $produto['preco'] . '€</p>

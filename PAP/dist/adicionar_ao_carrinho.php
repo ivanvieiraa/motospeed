@@ -19,7 +19,7 @@ if(isset($_POST['id_prod']) && isset($_POST['quantidade'])) {
 
         // Cria um array com os detalhes do produto
         $produto = array(
-            'id' => $id_prod,
+            'id_prod' => $id_prod,
             'nome' => $rowProd['nome_prod'],
             'preco' => $rowProd['preco_prod'],
             'foto' => $rowProd['foto_prod'],

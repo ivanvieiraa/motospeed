@@ -1,7 +1,5 @@
-<?php
-session_start();
-include("ligacao.php");
-?>
+<?php session_start();
+include("ligacao.php"); ?>
 <!doctype html>
 <html lang="en">
 
@@ -49,6 +47,15 @@ include("ligacao.php");
   <!-- Page Title -->
   <title>Motospeed | Checkout</title>
 
+  <style>
+    .is-invalid {
+      border-color: red;
+    }
+
+    .is-invalid::placeholder {
+      color: red;
+    }
+  </style>
 </head>
 
 <body class="">
@@ -72,64 +79,60 @@ include("ligacao.php");
                 <li class="me-4"><a class="nav-link-checkout " href="./cart.php">Carrinho</a></li>
                 <li class="me-4"><a class="nav-link-checkout active" href="./checkout.php">Checkout</a>
                 </li>
-                <li class="me-4"><a class="nav-link-checkout " href="./checkout-shipping.php">Envio</a>
-                </li>
               </ul>
             </nav>
             <div class="mt-5">
-              <!-- Checkout Panel Information-->
-              <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-4">
-                <h3 class="fs-5 fw-bolder m-0 lh-1">Informações pessoais</h3>
-              </div>
-              <div class="row">
-                <!-- First Name-->
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="firstNameBilling" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="firstNameBilling" placeholder="" value="<?php echo $_SESSION['nome']; ?>" readonly>
+              <form id="checkout-form">
+                <!-- Checkout Panel Information-->
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-4">
+                  <h3 class="fs-5 fw-bolder m-0 lh-1">Informações pessoais</h3>
+                </div>
+                <div class="row">
+                  <!-- First Name-->
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="firstNameBilling" class="form-label">Nome</label>
+                      <input type="text" class="form-control" id="firstNameBilling" placeholder="Insira um nome" value="<?php echo $_SESSION['nome']; ?>" required>
+                    </div>
+                  </div>
+
+                  <!-- Last Name-->
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="lastNameBilling" class="form-label">Apelido</label>
+                      <input type="text" class="form-control" id="lastNameBilling" placeholder="Insira um apelido" value="<?php echo $_SESSION['apelido']; ?>" required>
+                    </div>
+                  </div>
+
+                  <!-- Email-->
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="email" class="form-label">Email</label>
+                      <input type="email" class="form-control" placeholder="Insira um email" id="email" value="<?php echo $_SESSION['email']; ?>" required>
+                    </div>
                   </div>
                 </div>
 
-                <!-- Last Name-->
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="lastNameBilling" class="form-label">Apelido</label>
-                    <input type="text" class="form-control" id="lastNameBilling" placeholder="" value="<?php echo $_SESSION['apelido']; ?>" readonly>
-                  </div>
-                </div>
+                <h3 class="fs-5 mt-5 fw-bolder mb-4 border-bottom pb-4">Dados de envio</h3>
+                <div class="row">
 
-                <!-- Email-->
-                <div class="col-12">
-                  <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" value="<?php echo $_SESSION['email']; ?>" readonly>
+                  <!-- Address-->
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="address" class="form-label">Morada</label>
+                      <input type="text" class="form-control" id="address" placeholder="Insira uma morada" value="<?php echo $_SESSION['morada']; ?>" required>
+                    </div>
                   </div>
 
-                </div>
-              </div>
-
-              <h3 class="fs-5 mt-5 fw-bolder mb-4 border-bottom pb-4">Dados de envio</h3>
-              <div class="row">
-
-                <!-- Address-->
-                <div class="col-12">
-                  <div class="form-group">
-                    <label for="address" class="form-label">Morada</label>
-                    <input type="text" class="form-control" id="address" placeholder="Insira uma morada" value="<?php echo $_SESSION['morada']; ?>">
+                  <!-- Post Code-->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="zip" class="form-label">Código postal</label>
+                      <input type="text" class="form-control" id="zip" placeholder="Insira um código postal" value="<?php echo $_SESSION['codigop']; ?>" required>
+                    </div>
                   </div>
                 </div>
-
-
-                <!-- Post Code-->
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="zip" class="form-label">Código postal</label>
-                    <input type="text" class="form-control" id="zip" placeholder="Insira um código postal" value="<?php echo $_SESSION['codigop']; ?>">
-                  </div>
-                </div>
-              </div>
-              <!-- <div class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
-              </div> -->
+              </form>
             </div>
           </div>
         </div>
@@ -193,11 +196,9 @@ include("ligacao.php");
                 // Exibe o total formatado
                 echo '<p class="m-0 fs-5 fw-bold">' . number_format($total, 2) . '€</p>';
                 ?>
-                
               </div>
-              
             </div>
-            <a href="./checkout-shipping.php" class="btn btn-dark w-100 text-center" role="button">Proceder para envio</a>
+            <button href="./checkout-shipping.php" id="proceed-to-shipping" class="btn btn-dark w-100 text-center">Proceder para envio</button>
           </div>
         </div>
       </div>
@@ -206,15 +207,83 @@ include("ligacao.php");
   </section>
   <!-- / Main Section-->
 
-
   <!-- Theme JS -->
   <!-- Vendor JS -->
   <script src="./assets/js/vendor.bundle.js"></script>
 
   <!-- Theme JS -->
   <script src="./assets/js/theme.bundle.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('checkout-form');
+      const inputs = form.querySelectorAll('input[required]');
+      const proceedButton = document.getElementById('proceed-to-shipping');
 
+      proceedButton.addEventListener('click', function(event) {
+        let isValid = true;
 
+        inputs.forEach(input => {
+          if (!input.checkValidity()) {
+            isValid = false;
+            input.classList.add('is-invalid');
+          } else {
+            input.classList.remove('is-invalid');
+          }
+        });
+
+        // Validar se o campo de e-mail é um e-mail válido
+        const emailInput = document.getElementById('email');
+        const email = emailInput.value.trim(); // Remover espaços em branco do início e do fim
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expressão regular para validar o e-mail
+
+        if (!emailRegex.test(email)) {
+          isValid = false;
+          emailInput.classList.add('is-invalid');
+        } else {
+          emailInput.classList.remove('is-invalid');
+        }
+
+        // Validar se o campo de código postal contém um formato válido de Portugal
+        const zipInput = document.getElementById('zip');
+        const zip = zipInput.value.trim(); // Remover espaços em branco do início e do fim
+        const zipRegex = /^\d{4}-\d{3}$/; // Expressão regular para validar o formato XXXX-XXX
+
+        if (!zipRegex.test(zip)) {
+          isValid = false;
+          zipInput.classList.add('is-invalid');
+          const errorMessage = document.createElement('div');
+          errorMessage.classList.add('invalid-feedback');
+          errorMessage.textContent = 'Código postal inválido';
+          zipInput.parentNode.appendChild(errorMessage);
+        } else {
+          zipInput.classList.remove('is-invalid');
+          const errorMessage = zipInput.parentNode.querySelector('.invalid-feedback');
+          if (errorMessage) {
+            errorMessage.parentNode.removeChild(errorMessage);
+          }
+        }
+
+        if (isValid) {
+          window.location.href = proceedButton.getAttribute('href');
+        }
+
+        event.preventDefault(); // Prevenir o comportamento padrão do botão de envio
+      });
+
+      // Remover a classe 'is-invalid' quando o usuário digitar algo em um campo
+      inputs.forEach(input => {
+        input.addEventListener('input', function() {
+          if (input.checkValidity()) {
+            input.classList.remove('is-invalid');
+            const errorMessage = input.parentNode.querySelector('.invalid-feedback');
+            if (errorMessage) {
+              errorMessage.parentNode.removeChild(errorMessage);
+            }
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

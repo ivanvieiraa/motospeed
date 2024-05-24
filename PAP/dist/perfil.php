@@ -1,5 +1,5 @@
 <?php
-include ("ligacao.php");
+include("ligacao.php");
 session_start();
 
 // Verificar se o usuário está logado
@@ -36,9 +36,7 @@ $user_data = mysqli_fetch_assoc($result);
 
     <!-- Custom Google Fonts-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Favicon -->
@@ -113,7 +111,7 @@ $user_data = mysqli_fetch_assoc($result);
 <body>
 
     <!-- Navbar -->
-    <?php include ('navbar.php'); ?>
+    <?php include('navbar.php'); ?>
     <!-- / Navbar -->
 
     <!-- Main Section-->
@@ -125,11 +123,9 @@ $user_data = mysqli_fetch_assoc($result);
                     <div class="card-body box-profile">
                         <div class="text-center">
                             <div>
-                                <label class="editFoto" for="inputFoto"
-                                    style="cursor: pointer; position: relative; display: inline-block;">
+                                <label class="editFoto" for="inputFoto" style="cursor: pointer; position: relative; display: inline-block;">
                                     <!-- Imagem de perfil -->
-                                    <img id="imagem-preview" src="<?php echo $user_data['foto']; ?>" width="250px"
-                                        height="250px" style="border-radius: 50%;" alt="Foto">
+                                    <img id="imagem-preview" src="<?php echo $user_data['foto']; ?>" width="250px" height="250px" style="border-radius: 50%;" alt="Foto">
 
                                     <!-- Sobreposições -->
                                     <div class="overlay"></div>
@@ -139,8 +135,7 @@ $user_data = mysqli_fetch_assoc($result);
                                     <div class="editText">Alterar foto</div>
 
                                     <!-- Input de arquivo oculto -->
-                                    <input type="file" name="foto" id="inputFoto" style="display: none;"
-                                        accept=".jpg, .jpeg, .png, .webp" onchange="previewImage(event)">
+                                    <input type="file" name="foto" id="inputFoto" style="display: none;" accept=".jpg, .jpeg, .png, .webp" onchange="previewImage(event)">
                                 </label>
 
                             </div>
@@ -158,63 +153,48 @@ $user_data = mysqli_fetch_assoc($result);
                                 <div class="alert alert-danger" role="alert">
                                     <?php echo $_SESSION['mensagem']; ?>
                                 </div>
-                                <?php unset($_SESSION['mensagem']);
+                            <?php unset($_SESSION['mensagem']);
                             } else if ($_SESSION['mensagem'] == "Perfil atualizado com sucesso !") { ?>
-                                    <div class="alert alert-success" role="alert">
+                                <div class="alert alert-success" role="alert">
                                     <?php echo $_SESSION['mensagem']; ?>
-                                    </div>
-                                <?php unset($_SESSION['mensagem']);
-                            } else if ($_SESSION['mensagem'] == "A idade mínima é 16") { ?>
-                                <div class="alert alert-danger" role="alert">
-                                <?php echo $_SESSION['mensagem']; ?>
                                 </div>
                             <?php unset($_SESSION['mensagem']);
-                        } ?>
-                    <?php } ?>
+                            } else if ($_SESSION['mensagem'] == "A idade mínima é 16") { ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <?php echo $_SESSION['mensagem']; ?>
+                                </div>
+                            <?php unset($_SESSION['mensagem']);
+                            } ?>
+                        <?php } ?>
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
-                                <b>Nome</b> <input type="text" name="nome" class="form-control"
-                                    value="<?php echo htmlspecialchars($user_data['nome']); ?>" required
-                                    placeholder="Insira o seu nome">
+                                <b>Nome</b> <input type="text" name="nome" class="form-control" value="<?php echo htmlspecialchars($user_data['nome']); ?>" required placeholder="Insira o seu nome">
                             </li>
                             <li class="list-group-item">
-                                <b>Apelido</b> <input type="text" name="apelido" class="form-control"
-                                    value="<?php echo htmlspecialchars($user_data['apelido']); ?>" required
-                                    placeholder="Insira o seu apelido">
+                                <b>Apelido</b> <input type="text" name="apelido" class="form-control" value="<?php echo htmlspecialchars($user_data['apelido']); ?>" required placeholder="Insira o seu apelido">
                             </li>
                             <li class="list-group-item">
-                                <b>Email</b> <input type="email" name="email" class="form-control"
-                                    value="<?php echo htmlspecialchars($user_data['email']); ?>" required
-                                    placeholder="Insira o seu email">
+                                <b>Email</b> <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user_data['email']); ?>" required placeholder="Insira o seu email">
                             </li>
                             <li class="list-group-item">
                                 <b>Data de Nascimento</b>
                                 <?php
                                 $readonly = (!empty($user_data['data_nasc']) && $user_data['data_nasc'] != "0000-00-00") ? 'readonly' : '';
                                 ?>
-                                <input type="date" name="data" class="form-control"
-                                    value="<?php echo htmlspecialchars($user_data['data_nasc']); ?>"
-                                    placeholder="Insira a data de Nascimento" <?php echo $readonly; ?>>
+                                <input type="date" name="data" class="form-control" value="<?php echo htmlspecialchars($user_data['data_nasc']); ?>" placeholder="Insira a data de Nascimento" <?php echo $readonly; ?>>
 
                             </li>
                             <li class="list-group-item">
-                                <b>Morada</b> <input type="text" name="morada" class="form-control"
-                                    value="<?php echo htmlspecialchars($user_data['morada']); ?>"
-                                    placeholder="Insira a sua morada">
+                                <b>Morada</b> <input type="text" name="morada" class="form-control" value="<?php echo htmlspecialchars($user_data['morada']); ?>" placeholder="Insira a sua morada">
                             </li>
                             <li class="list-group-item">
-                                <b>Código Postal</b> <input type="text" name="codp" class="form-control"
-                                    value="<?php echo htmlspecialchars($user_data['codigop']); ?>"
-                                    placeholder="Insira o seu código postal">
+                                <b>Código Postal</b> <input type="text" name="codp" class="form-control" value="<?php echo htmlspecialchars($user_data['codigop']); ?>" placeholder="Insira o seu código postal">
                             </li>
                             <li class="list-group-item">
-                                <b>Password</b> <input type="password" name="password" class="form-control"
-                                    value="<?php echo htmlspecialchars($user_data['pass']); ?>" required
-                                    placeholder="Insira a sua password">
+                                <b>Password</b> <input type="password" name="password" class="form-control" value="<?php echo htmlspecialchars($user_data['pass']); ?>" required placeholder="Insira a sua password">
                             </li>
                         </ul>
-                        <button type="submit"
-                            class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Atualizar perfil</button>
+                        <button type="submit" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Atualizar perfil</button>
             </form>
         </div>
         </div>
@@ -224,7 +204,7 @@ $user_data = mysqli_fetch_assoc($result);
     <!-- / Main Section -->
 
     <!-- Footer -->
-    <?php include ("footer.php"); ?>
+    <?php include("footer.php"); ?>
 
     <!-- Vendor JS -->
     <script src="./assets/js/vendor.bundle.js"></script>
@@ -241,7 +221,7 @@ $user_data = mysqli_fetch_assoc($result);
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     preview.src = e.target.result;
                 }
 
@@ -249,6 +229,55 @@ $user_data = mysqli_fetch_assoc($result);
             }
         }
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.forms['alterarPerfil'];
+            const zipInput = form.elements['codp'];
+            const initialZipValue = zipInput.value.trim(); // Valor inicial do campo de código postal
+
+            form.addEventListener('submit', function(event) {
+                // Verificar se o valor do campo mudou
+                if (zipInput.value.trim() !== initialZipValue) {
+                    let isValid = true;
+
+                    // Validar o código postal
+                    const zip = zipInput.value.trim();
+                    const zipRegex = /^\d{4}-\d{3}$/;
+
+                    if (!zipRegex.test(zip)) {
+                        isValid = false;
+                        zipInput.classList.add('is-invalid');
+                        const errorMessage = document.createElement('div');
+                        errorMessage.classList.add('invalid-feedback');
+                        errorMessage.textContent = 'Código postal inválido';
+                        zipInput.parentNode.appendChild(errorMessage);
+                    } else {
+                        zipInput.classList.remove('is-invalid');
+                        const errorMessage = zipInput.parentNode.querySelector('.invalid-feedback');
+                        if (errorMessage) {
+                            errorMessage.parentNode.removeChild(errorMessage);
+                        }
+                    }
+
+                    if (!isValid) {
+                        event.preventDefault(); // Prevenir o envio do formulário se houver erros de validação
+                    }
+                }
+            });
+
+            // Remover a classe 'is-invalid' quando o usuário digitar algo no campo
+            zipInput.addEventListener('input', function() {
+                if (zipInput.checkValidity()) {
+                    zipInput.classList.remove('is-invalid');
+                    const errorMessage = zipInput.parentNode.querySelector('.invalid-feedback');
+                    if (errorMessage) {
+                        errorMessage.parentNode.removeChild(errorMessage);
+                    }
+                }
+            });
+        });
+    </script>
+
 
 </body>
 

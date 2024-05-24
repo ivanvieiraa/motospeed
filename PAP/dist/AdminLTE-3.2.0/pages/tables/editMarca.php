@@ -185,6 +185,14 @@ session_start();
                         </li>
                     </ul>
                     </li>
+                    <li class="nav-item menu-closed">
+                        <a href="./pages/tables/suporte.php" class="nav-link ">
+                            <i class="nav-icon fa-solid fa-phone"></i>
+                            <p>
+                                Suporte
+                            </p>
+                        </a>
+                    </li>
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
@@ -255,10 +263,10 @@ session_start();
                             }
                             ?>
                             <form action="updateMarca.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-                            <input type="hidden" name="id_marca" value="<?php echo $id_marca; ?>">
+                                <input type="hidden" name="id_marca" value="<?php echo $id_marca; ?>">
 
                                 <label for="nome">Nome:</label>
-                                <input type="text" name="nome" id="nome" value="<?=$row['nome_marca']?>" oninput="clearErrorMessage('nome-error')"><br>
+                                <input type="text" name="nome" id="nome" value="<?= $row['nome_marca'] ?>" oninput="clearErrorMessage('nome-error')"><br>
                                 <span id="nome-error" class="error-message"></span><br>
 
                                 <input type="submit" value="Criar">

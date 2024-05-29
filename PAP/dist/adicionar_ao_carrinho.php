@@ -42,7 +42,10 @@ if(isset($_POST['id_prod']) && isset($_POST['quantidade'])) {
         }
 
         // Redireciona para a página do carrinho
-        header("Location: cart.php?produto_adicionado=true");
+        if(!isset($_SESSION['id_user']))
+            header("Location: login_form.php");
+        else
+            header("Location: cart.php?produto_adicionado=true");
         exit;
     } else {
         // Se o produto não foi encontrado no banco de dados, redireciona para a página de produtos

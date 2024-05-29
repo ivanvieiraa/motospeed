@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23-Maio-2024 às 16:32
+-- Tempo de geração: 29-Maio-2024 às 10:10
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -55,6 +55,16 @@ CREATE TABLE `detalhe_venda` (
   `quantidade` int(11) NOT NULL,
   `preco_uni` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `detalhe_venda`
+--
+
+INSERT INTO `detalhe_venda` (`id_venda`, `id_prod`, `quantidade`, `preco_uni`) VALUES
+(5, 2, 1, 199.99),
+(5, 23, 2, 80),
+(6, 23, 2, 80),
+(6, 2, 1, 199.99);
 
 -- --------------------------------------------------------
 
@@ -250,9 +260,17 @@ CREATE TABLE `suporte` (
   `email` varchar(255) NOT NULL,
   `assunto` varchar(255) NOT NULL,
   `mensagem` longtext NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
   `criado_a` datetime DEFAULT current_timestamp(),
   `atualizado_a` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `suporte`
+--
+
+INSERT INTO `suporte` (`id_suporte`, `email`, `assunto`, `mensagem`, `status`, `criado_a`, `atualizado_a`) VALUES
+(1, 'tiagoneto381@gmail.com', 'Conta desativada', 'Tentei fazer login e a minha conta foi desativada', 0, '2024-05-29 08:56:02', '2024-05-29 08:59:39');
 
 -- --------------------------------------------------------
 
@@ -318,6 +336,14 @@ CREATE TABLE `vendas` (
   `data_venda` date NOT NULL,
   `total` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `vendas`
+--
+
+INSERT INTO `vendas` (`id_venda`, `id_user`, `data_venda`, `total`) VALUES
+(5, 49, '2024-05-28', 364.98),
+(6, 50, '2024-05-29', 364.98);
 
 --
 -- Índices para tabelas despejadas
@@ -407,7 +433,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `suporte`
 --
 ALTER TABLE `suporte`
-  MODIFY `id_suporte` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_suporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `users`
@@ -419,7 +445,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restrições para despejos de tabelas
@@ -431,7 +457,7 @@ ALTER TABLE `vendas`
 ALTER TABLE `detalhe_venda`
   ADD CONSTRAINT `detalhe_venda_ibfk_1` FOREIGN KEY (`id_venda`) REFERENCES `vendas` (`id_venda`),
   ADD CONSTRAINT `detalhe_venda_ibfk_2` FOREIGN KEY (`id_prod`) REFERENCES `produtos` (`id_prod`),
-  ADD UNIQUE(`id_venda`);
+  ADD CONSTRAINT `fk_id_venda` FOREIGN KEY (`id_venda`) REFERENCES `vendas` (`id_venda`) ON DELETE CASCADE;
 
 --
 -- Limitadores para a tabela `produtos`
@@ -456,9 +482,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-ALTER TABLE `detalhe_venda` 
-ADD CONSTRAINT `fk_id_venda` 
-FOREIGN KEY (`id_venda`) 
-REFERENCES `vendas` (`id_venda`) 
-ON DELETE CASCADE;

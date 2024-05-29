@@ -186,9 +186,11 @@
                                         echo "<td style='text-align:left'>" . $row["email"]; "</td>";
                                         echo "<td style='text-align:left'>" . $row["criado_a"]; "</td>";
                                         if ($row['status'] == 0)
-                                            echo "<td style='text-align:left; color:red;'>Não resolvido</td>";
+                                            echo "<td style='text-align:left; color:red; font-weight: bold;'>Não resolvido</td>";
                                         if ($row['status'] == 1)
-                                            echo "<td style='text-align:left; color:green;'>Resolvido</td>";
+                                            echo "<td style='text-align:left; color:green; font-weight: bold;'>Resolvido</td>";
+                                        if ($row['status'] == 2)
+                                            echo "<td style='text-align:left; color:orange; font-weight: bold;'>Em análise</td>";
                                         echo "<td><i class='fa-solid fa-eye'></i></td>";
                                         echo "</tr>";
                                     }

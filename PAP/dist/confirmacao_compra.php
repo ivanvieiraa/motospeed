@@ -94,7 +94,7 @@ session_start();
               </div>
               <div class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <a href="./checkout-shipping.php" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Voltar para envio</a>
-                <a href="./pedidos.php" class="btn btn-dark w-100 w-md-auto" role="button">Ver histórico de pedidos</a>
+                <a href="./pedidos.php" class="btn btn-dark w-100 w-md-auto" role="button">Ver Histórico de compras</a>
               </div>
             </div>
           </div>

@@ -1,5 +1,12 @@
-<?php session_start();
-include("ligacao.php"); ?>
+<?php 
+session_start();
+include("ligacao.php");
+
+if(!isset($_SESSION)){
+  header('location:login_form.php');
+}
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -128,7 +135,7 @@ include("ligacao.php"); ?>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="zip" class="form-label">Código postal</label>
-                      <input type="text" class="form-control" id="zip" placeholder="Insira um código postal" value="<?php echo $_SESSION['codigop']; ?>" required>
+                      <input type="text" class="form-control" id="zip" placeholder="Ex:. 1985-234" value="<?php echo $_SESSION['codigop']; ?>" required>
                     </div>
                   </div>
                 </div>

@@ -8,7 +8,7 @@ if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "Foi enviado um ema
   // Limpa a mensagem de erro da sessão após exibi-la
   unset($_SESSION['mensagem']);
 } else {
-  if (isset($_SESSION['mensagem']) && ($_SESSION['mensagem'] != "Inicie sessão com a sua nova password !" || $_SESSION['mensagem'] == "A sua conta está desativada!" )) {
+  if (isset($_SESSION['mensagem']) && ($_SESSION['mensagem'] != "Inicie sessão com a sua nova password !" || $_SESSION['mensagem'] == "A sua conta está desativada! Para mais informações contacte o suporte" )) {
     echo '<div class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
     // Limpa a mensagem de erro da sessão após exibi-la
     unset($_SESSION['mensagem']);

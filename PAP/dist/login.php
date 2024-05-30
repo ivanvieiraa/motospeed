@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_num_rows($result) > 0) {
         $linha = mysqli_fetch_assoc($result);
         if ($linha['status'] == 0) {
-            $_SESSION['mensagem'] = "A sua conta está desativada!";
+            $_SESSION['mensagem'] = "A sua conta está desativada! Para mais informações contacte o suporte";
             header('location:login_form.php');
         }
         else {

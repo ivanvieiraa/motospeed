@@ -1,5 +1,5 @@
 <?php
-include ("ligacao.php");
+include("ligacao.php");
 session_start();
 
 // Verificar se o usuário está logado
@@ -19,6 +19,31 @@ if (!$result || mysqli_num_rows($result) == 0) {
 
 $user_data = mysqli_fetch_assoc($result);
 
+$sql_vendas = "
+    SELECT vendas.id_venda, vendas.data_venda, vendas.total, detalhe_venda.id_prod, detalhe_venda.quantidade, detalhe_venda.preco_uni, produtos.nome_prod
+    FROM vendas
+    INNER JOIN detalhe_venda ON vendas.id_venda = detalhe_venda.id_venda
+    INNER JOIN produtos ON detalhe_venda.id_prod = produtos.id_prod
+    WHERE vendas.id_user = $id_user
+    ORDER BY vendas.data_venda DESC";
+$result_vendas = mysqli_query($con, $sql_vendas);
+
+if (!$result_vendas) {
+    echo "Erro ao buscar vendas: " . mysqli_error($con);
+    exit();
+}
+
+// Organizar os dados das vendas em um array
+$vendas = [];
+while ($row = mysqli_fetch_assoc($result_vendas)) {
+    $vendas[$row['id_venda']]['data_venda'] = $row['data_venda'];
+    $vendas[$row['id_venda']]['total'] = $row['total'];
+    $vendas[$row['id_venda']]['produtos'][] = [
+        'nome_prod' => $row['nome_prod'],
+        'quantidade' => $row['quantidade'],
+        'preco_uni' => $row['preco_uni']
+    ];
+}
 ?>
 
 <!doctype html>
@@ -36,9 +61,7 @@ $user_data = mysqli_fetch_assoc($result);
 
     <!-- Custom Google Fonts-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Favicon -->
@@ -59,7 +82,7 @@ $user_data = mysqli_fetch_assoc($result);
 <body>
 
     <!-- Navbar -->
-    <?php include ('navbar.php'); ?>
+    <?php include('navbar.php'); ?>
     <!-- / Navbar -->
 
     <!-- Main Section-->
@@ -71,29 +94,62 @@ $user_data = mysqli_fetch_assoc($result);
                     <div class="card-body box-profile">
                         <div class="text-center">
                             <div>
-
-                                <img id="imagem-preview" src="<?php echo $user_data['foto']; ?>" width="250px"
-                                    height="250px" style="border-radius:50%" alt="Foto">
-
+                                <img id="imagem-preview" src="<?php echo $user_data['foto']; ?>" width="250px" height="250px" style="border-radius:50%" alt="Foto">
                             </div>
                         </div>
                         <h3 class="profile-username text-center">
                             <?php echo htmlspecialchars($user_data['nome']) . ' ' . htmlspecialchars($user_data['apelido']); ?>
                         </h3>
-                        <p class="text-muted text-center">Histório de pedidos</p>
+                        <p class="text-muted text-center">Histórico de compras</p>
                         <h1 class="fw-bold fs-3 mb-2 text-left">
-                            Histórico de pedidos 
-                            <a class="fw-bold fs-3 mb-2" href="logout.php" style="float:right;">Logout</a>
+                            Histórico de compras
                         </h1>
+                        <div class="table-responsive">
+                            <?php if (empty($vendas)) : ?>
+                                <p class="text-center">Não tem compras</p>
+                            <?php else : ?>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Nº de Venda</th>
+                                            <th>Data</th>
+                                            <th>Produtos</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço Unitário</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($vendas as $id_venda => $venda) : ?>
+                                            <?php foreach ($venda['produtos'] as $index => $produto) : ?>
+                                                <tr>
+                                                    <?php if ($index == 0) : ?>
+                                                        <td rowspan="<?php echo count($venda['produtos']); ?>"><?php echo htmlspecialchars($id_venda); ?></td>
+                                                        <td rowspan="<?php echo count($venda['produtos']); ?>"><?php echo htmlspecialchars($venda['data_venda']); ?></td>
+                                                    <?php endif; ?>
+                                                    <td><?php echo htmlspecialchars($produto['nome_prod']); ?></td>
+                                                    <td><?php echo htmlspecialchars($produto['quantidade']); ?></td>
+                                                    <td><?php echo htmlspecialchars(number_format($produto['preco_uni'], 2)); ?>€</td>
+                                                    <?php if ($index == 0) : ?>
+                                                        <td rowspan="<?php echo count($venda['produtos']); ?>"><?php echo htmlspecialchars(number_format($venda['total'], 2)); ?>€</td>
+                                                    <?php endif; ?>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
                 <!-- / Profile -->
+            </form>
         </div>
     </section>
     <!-- / Main Section -->
 
     <!-- Footer -->
-    <?php include ("footer.php"); ?>
+    <?php include("footer.php"); ?>
 
     <!-- Vendor JS -->
     <script src="./assets/js/vendor.bundle.js"></script>
@@ -110,7 +166,7 @@ $user_data = mysqli_fetch_assoc($result);
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     preview.src = e.target.result;
                 }
 

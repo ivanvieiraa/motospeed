@@ -206,10 +206,10 @@ session_start();
                 <div>
                     <!-- Price Filter -->
                     <div class="py-4 widget-filter widget-filter-price border-top">
-                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-price" role="button" aria-expanded="true" aria-controls="filter-modal-price">
+                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-price" role="button" aria-expanded="false" aria-controls="filter-modal-price">
                             Preço
                         </a>
-                        <div id="filter-modal-price" class="collapse show">
+                        <div id="filter-modal-price" class="collapse hide">
                             <div class="filter-price mt-6"></div>
                             <div class="d-flex justify-content-between align-items-center mt-7">
                                 <div class="input-group mb-0 me-2 border">
@@ -226,10 +226,10 @@ session_start();
                     <!-- / Price Filter -->
                     <!-- Brands Filter -->
                     <div class="py-4 widget-filter border-top">
-                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-brands" role="button" aria-expanded="true" aria-controls="filter-modal-brands">
+                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-brands" role="button" aria-expanded="false" aria-controls="filter-modal-brands">
                             Marcas
                         </a>
-                        <div id="filter-modal-brands" class="collapse show">
+                        <div id="filter-modal-brands" class="collapse hide">
                             <div class="simplebar-wrapper">
                                 <div class="filter-options" data-pixr-simplebar>
                                     <?php
@@ -255,10 +255,10 @@ session_start();
                     <!-- / Brands Filter -->
                     <!-- Brands Filter -->
                     <div class="py-4 widget-filter border-top">
-                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-category" role="button" aria-expanded="true" aria-controls="filter-modal-category">
+                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-category" role="button" aria-expanded="false" aria-controls="filter-modal-category">
                             Categorias
                         </a>
-                        <div id="filter-modal-category" class="collapse show">
+                        <div id="filter-modal-category" class="collapse hide">
                             <div class="simplebar-wrapper">
                                 <div class="filter-options" data-pixr-simplebar>
                                     <?php

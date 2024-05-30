@@ -146,7 +146,6 @@ $user_data = mysqli_fetch_assoc($result);
                         <p class="text-muted text-center">Informações</p>
                         <h1 class="fw-bold fs-3 mb-2 text-left">
                             Perfil do utilizador
-                            <a class="fw-bold fs-3 mb-2" href="logout.php" style="float:right;">Logout</a>
                         </h1>
                         <?php if (isset($_SESSION['mensagem'])) { ?>
                             <?php if ($_SESSION['mensagem'] == "Esse email já está registado !") { ?>

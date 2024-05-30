@@ -109,7 +109,7 @@ if (isset ($_SESSION['id_user'])) {
                         <h1 class="fw-bold fs-3 mb-2 text-left">
                             Perfil do admin |
                             <a class="fw-bold fs-3 mb-2" style="float:right" href="./AdminLTE-3.2.0">Dashboard</a>
-                            <a class="fw-bold fs-3 mb-2" style="float:center" href="logout.php">Logout</a>
+                            <a class="fw-bold fs-3 mb-2" style="float:center" href="logout.php">Log out</a>
                         </h1>
                         <?php
                     } else if ($_SESSION['admin'] == 0) { ?>
@@ -117,7 +117,7 @@ if (isset ($_SESSION['id_user'])) {
                             <p class="text-muted text-center">Informações</p>
                             <h1 class="fw-bold fs-3 mb-2 text-left">
                                 Perfil do utilizador
-                                <a class="fw-bold fs-3 mb-2" style="float:right" href="logout.php">Logout</a>
+                                <a class="fw-bold fs-3 mb-2" style="float:right" href="logout.php">Log out</a>
                             </h1>
                         <?php
                     }

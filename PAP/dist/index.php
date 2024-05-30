@@ -491,8 +491,8 @@ session_start();
                             class="position-absolute top-0 bottom-0 start-0 end-0 d-flex justify-content-center align-items-center z-index-20">
                             <div class="py-6 px-5 px-lg-10 text-center w-100">
                                 <h2 class="display-1 mb-3 fw-bold text-white"><span
-                                        class="text-outline-light">Promoções</span> Especiais</h2>
-                                <a href="./produtos.php" class="btn btn-psuedo text-white" role="button">ver promoções</a>
+                                        class="text-outline-light"></span>Suporte</h2>
+                                <a href="./sobre.php#form-section" class="btn btn-psuedo text-white" role="button">entrar em contacto</a>
                             </div>
                         </div>
                     </div>

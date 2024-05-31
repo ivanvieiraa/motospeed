@@ -176,7 +176,7 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                                                                     <h6 class="card-title"><?php echo htmlspecialchars($produto['nome_prod']); ?></h6>
                                                                     <p class="card-text">Quantidade: <?php echo htmlspecialchars($produto['quantidade']); ?></p>
                                                                     <p class="card-text">Tamanho: <?php echo htmlspecialchars($produto['tamanho']); ?></p>
-                                                                    <p class="card-text">Preço Unitário: <?php echo htmlspecialchars(number_format($produto['preco_uni'], 2)); ?>€</p>
+                                                                    <p class="card-text" style="" >Preço Unitário: <?php echo htmlspecialchars(number_format($produto['preco_uni'], 2)); ?>€</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -184,7 +184,7 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                <p class="text-end">Total do Pedido: <?php echo htmlspecialchars(number_format($venda['total'], 2)); ?>€</p>
+                                                <p class="text-end" style="font-weight: bold; font-size: large; color: green;">Total do Pedido: <?php echo htmlspecialchars(number_format($venda['total'], 2)); ?>€</p>
                                             </div>
                                         </div>
 

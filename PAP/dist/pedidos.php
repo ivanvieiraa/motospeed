@@ -103,7 +103,7 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
 
         /* Estilo para os cards dos pedidos */
         .pedido-card {
-            border: 2px solid black;
+            border: 2px solid lightgray;
             border-radius: 10px;
             /* Arredonda as bordas dos cards */
             transition: all 0.3s ease;

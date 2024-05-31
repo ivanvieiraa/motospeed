@@ -20,7 +20,7 @@ if (!$result || mysqli_num_rows($result) == 0) {
 $user_data = mysqli_fetch_assoc($result);
 
 $sql_vendas = "
-    SELECT vendas.id_venda, vendas.data_venda, vendas.total, detalhe_venda.id_prod, detalhe_venda.quantidade, detalhe_venda.preco_uni, produtos.nome_prod
+    SELECT vendas.id_venda, vendas.data_venda, vendas.total, detalhe_venda.id_prod, detalhe_venda.quantidade, detalhe_venda.tamanho, detalhe_venda.preco_uni, produtos.nome_prod
     FROM vendas
     INNER JOIN detalhe_venda ON vendas.id_venda = detalhe_venda.id_venda
     INNER JOIN produtos ON detalhe_venda.id_prod = produtos.id_prod
@@ -41,6 +41,7 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
     $vendas[$row['id_venda']]['produtos'][] = [
         'nome_prod' => $row['nome_prod'],
         'quantidade' => $row['quantidade'],
+        'tamanho' => $row['tamanho'],
         'preco_uni' => $row['preco_uni']
     ];
 }
@@ -115,6 +116,7 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                                             <th>Data</th>
                                             <th>Produtos</th>
                                             <th>Quantidade</th>
+                                            <th>Tamanho</th>
                                             <th>Preço Unitário</th>
                                             <th>Total</th>
                                         </tr>
@@ -129,6 +131,7 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                                                     <?php endif; ?>
                                                     <td><?php echo htmlspecialchars($produto['nome_prod']); ?></td>
                                                     <td><?php echo htmlspecialchars($produto['quantidade']); ?></td>
+                                                    <td><?php echo htmlspecialchars($produto['tamanho']); ?></td>
                                                     <td><?php echo htmlspecialchars(number_format($produto['preco_uni'], 2)); ?>€</td>
                                                     <?php if ($index == 0) : ?>
                                                         <td rowspan="<?php echo count($venda['produtos']); ?>"><?php echo htmlspecialchars(number_format($venda['total'], 2)); ?>€</td>

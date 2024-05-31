@@ -1,6 +1,24 @@
 <?php
 include("ligacao.php");
 session_start();
+
+// Verificar se o ID da venda foi passado
+if (!isset($_GET['id_venda'])) {
+  // Redirecionar para a página inicial ou mostrar uma mensagem de erro
+  header('location:index.php');
+  exit();
+}
+
+$id_venda = $_GET['id_venda'];
+
+// Obter os dados da venda
+$sql_venda = "SELECT * FROM vendas WHERE id_venda = '$id_venda'";
+$result_venda = mysqli_query($con, $sql_venda);
+$venda = mysqli_fetch_assoc($result_venda);
+
+// Obter os detalhes da venda
+$sql_detalhes = "SELECT dv.*, p.nome_prod, p.foto_prod FROM detalhe_venda dv JOIN produtos p ON dv.id_prod = p.id_prod WHERE dv.id_venda = '$id_venda'";
+$result_detalhes = mysqli_query($con, $sql_detalhes);
 ?>
 <!doctype html>
 <html lang="en">
@@ -60,23 +78,6 @@ session_start();
       <div class="row g-0 vh-lg-100">
         <div class="col-lg-7 pt-5 pt-lg-10">
           <div class="pe-lg-5">
-            <!-- Logo-->
-            <a class="navbar-brand fw-bold fs-3 flex-shrink-0 mx-0 px-0" href="./index.php">
-              <div class="d-flex align-items-center">
-                <img src="mstile-150x150.png" alt="" height="100px" width="100px">
-              </div>
-            </a>
-            <!-- / Logo-->
-            <nav class="d-none d-md-block">
-              <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
-                <li class="me-4"><a class="nav-link-checkout " href="./cart.php">Carrinho</a></li>
-                <li class="me-4"><a class="nav-link-checkout " href="./checkout.php">Checkout</a>
-                </li>
-                <li class="me-4"><a class="nav-link-checkout " href="./checkout-shipping.php">Envio</a>
-                </li>
-                <li><a class="nav-link-checkout nav-link-last active" href="./checkout-payment.php">Dados da compra</a></li>
-              </ul>
-            </nav>
             <div class="mt-5">
               <h3 class="fs-5 fw-bolder mb-4 border-bottom pb-4" style="color: green;">Compra efetuada com sucesso !</h3>
               <div class="row">
@@ -89,11 +90,10 @@ session_start();
                   <p><?= $_SESSION['nome'] ?> <?= $_SESSION['apelido'] ?></p>
                   <p><?= $_SESSION['morada'] ?></p>
                   <p><?= $_SESSION['codigop'] ?></p>
-
                 </div>
               </div>
               <div class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
-                <a href="./checkout-shipping.php" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Voltar para envio</a>
+                <a href="./produtos.php" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Continuar a comprar</a>
                 <a href="./pedidos.php" class="btn btn-dark w-100 w-md-auto" role="button">Ver Histórico de compras</a>
               </div>
             </div>
@@ -102,45 +102,34 @@ session_start();
         <div class="col-12 col-lg-5 bg-light pt-lg-10 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
           <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
             <div class="pb-3">
+              <h5 class="justify-content-between d-flex align-items-start mb-2 mt-4">
+                Detalhes da Compra:
+              </h5>
               <?php
-              if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
-                $carrinho = $_SESSION['carrinho'];
-
-                // Loop através dos produtos no carrinho
-                foreach ($carrinho as $produto) {
-                  // Aqui você pode exibir os dados do produto na seção de resumo do pedido
-                  echo '<!-- Cart Item-->
-              <div class="row mx-0 py-4 g-0 border-bottom">
-                <div class="col-2 position-relative">
-                  <picture class="d-block border">
-                    <img class="img-fluid" src="' . $produto['foto'] . '">
-                  </picture>
-                </div>
-                <div class="col-9 offset-1">
-                  <div>
-                    <h6 class="justify-content-between d-flex align-items-start mb-2">
-                      ' . $produto['nome'] . '
-                    </h6>
-                    <span class="d-block text-muted fw-bolder text-uppercase fs-9">Tamanho: ' . $produto['tamanho'] . ' / Quantidade: ' . $produto['quantidade'] . '</span>
-                  </div>
-                  <p class="fw-bolder text-end text-muted m-0">' . $produto['preco'] . '€</p>
-                </div>
-              </div> <!-- / Cart Item-->';
+              if (mysqli_num_rows($result_detalhes) > 0) {
+                while ($detalhe = mysqli_fetch_assoc($result_detalhes)) {
+                  echo '
+                      <div class="row mx-0 py-4 g-0 border-bottom">
+                        <div class="col-2 position-relative">
+                          <picture class="d-block border">
+                            <img class="img-fluid" src="' . $detalhe['foto_prod'] . '">
+                          </picture>
+                        </div>
+                        <div class="col-9 offset-1">
+                          <div>
+                            <h6 class="justify-content-between d-flex align-items-start mb-2">
+                              ' . $detalhe['nome_prod'] . '
+                            </h6>
+                            <span class="d-block text-muted fw-bolder text-uppercase fs-9">Tamanho: ' . $detalhe['tamanho'] . ' / Quantidade: ' . $detalhe['quantidade'] . '</span>
+                          </div>
+                          <p class="fw-bolder text-end text-muted m-0">' . $detalhe['preco_uni'] . '€</p>
+                        </div>
+                      </div>';
                 }
               } else {
-                // Se não houver produtos no carrinho, exiba uma mensagem indicando isso
-                echo '<p>O seu carrinho está vazio.</p>';
+                echo '<p>Nenhum detalhe de compra encontrado.</p>';
               }
-
               ?>
-            </div>
-            <div class="py-4 border-bottom">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <p class="m-0 fw-bolder fs-6">Subtotal</p>
-              </div>
-              <div class="d-flex justify-content-between align-items-center ">
-                <p class="m-0 fw-bolder fs-6">Envio</p>
-              </div>
             </div>
             <div class="py-4 border-bottom">
               <div class="d-flex justify-content-between">
@@ -148,6 +137,7 @@ session_start();
                   <p class="m-0 fw-bold fs-5">Total</p>
                   <span class="text-muted small">IVA incluído</span>
                 </div>
+                <p class="m-0 fw-bold fs-5"><?= $venda['total'] ?>€</p>
               </div>
             </div>
             <div class="py-4">

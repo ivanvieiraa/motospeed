@@ -27,8 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $id_prod = $produto['id_prod']; // Substitua pela coluna correta na tabela 'produtos'
             $quantidade = $produto['quantidade'];
             $preco_uni = $produto['preco'];
+            $tamanho = $produto['tamanho'];
 
-            $sql_detalhe_venda = "INSERT INTO detalhe_venda (id_venda, id_prod, quantidade, preco_uni) VALUES ('$id_venda', '$id_prod', '$quantidade', '$preco_uni')";
+            $sql_detalhe_venda = "INSERT INTO detalhe_venda (id_venda, id_prod, quantidade, tamanho, preco_uni) VALUES ('$id_venda', '$id_prod', '$quantidade', '$tamanho', '$preco_uni')";
             $result_detalhe_venda = mysqli_query($con, $sql_detalhe_venda);
             if (!$result_detalhe_venda) {
                 echo "Erro ao inserir detalhe da venda: " . mysqli_error($con);
@@ -40,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         unset($_SESSION['carrinho']);
 
         // Redirecionar para página de confirmação ou exibir mensagem de sucesso
-        header('location:confirmacao_compra.php');
+        header('location:confirmacao_compra.php?id_venda='.$id_venda.'');
         exit();
     } else {
         echo "Erro ao processar a compra: " . mysqli_error($con);
@@ -49,4 +50,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Fechar conexão
 mysqli_close($con);
-?>

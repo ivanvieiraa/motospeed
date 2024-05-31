@@ -1,5 +1,5 @@
 <?php
-include ('ligacao.php');
+include('ligacao.php');
 session_start();
 
 $mensagem_erro = isset($_SESSION['mensagem']) ? $_SESSION['mensagem'] : '';
@@ -41,6 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['pass'] = $pass;
             $_SESSION['adm'] = 0;
             $_SESSION['status'] = 1;
+            $_SESSION['morada'] = "";
+            $_SESSION['codigop'] = "";
             header('refresh:0;URL=index.php');
         } else {
             echo "Erro ao criar conta !";
@@ -48,4 +50,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 mysqli_close($con);
-?>

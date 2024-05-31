@@ -74,13 +74,6 @@ if(!isset($_SESSION)){
       <div class="row g-0 vh-lg-100">
         <div class="col-lg-7 pt-5 pt-lg-10">
           <div class="pe-lg-5">
-            <!-- Logo-->
-            <a class="navbar-brand fw-bold fs-3 flex-shrink-0 mx-0 px-0" href="./index.php">
-              <div class="d-flex align-items-center">
-                <img src="mstile-150x150.png" alt="" height="100px" width="100px">
-              </div>
-            </a>
-            <!-- / Logo-->
             <nav class="d-none d-md-block">
               <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
                 <li class="me-4"><a class="nav-link-checkout " href="./cart.php">Carrinho</a></li>
@@ -99,7 +92,7 @@ if(!isset($_SESSION)){
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="firstNameBilling" class="form-label">Nome</label>
-                      <input type="text" class="form-control" id="firstNameBilling" placeholder="Insira um nome" value="<?php echo $_SESSION['nome']; ?>" required>
+                      <input type="text" class="form-control" id="firstNameBilling" placeholder="Insira um nome" value="<?php echo $_SESSION['nome']; ?>" readonly>
                     </div>
                   </div>
 
@@ -107,7 +100,7 @@ if(!isset($_SESSION)){
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="lastNameBilling" class="form-label">Apelido</label>
-                      <input type="text" class="form-control" id="lastNameBilling" placeholder="Insira um apelido" value="<?php echo $_SESSION['apelido']; ?>" required>
+                      <input type="text" class="form-control" id="lastNameBilling" placeholder="Insira um apelido" value="<?php echo $_SESSION['apelido']; ?>" readonly>
                     </div>
                   </div>
 
@@ -115,7 +108,7 @@ if(!isset($_SESSION)){
                   <div class="col-12">
                     <div class="form-group">
                       <label for="email" class="form-label">Email</label>
-                      <input type="email" class="form-control" placeholder="Insira um email" id="email" value="<?php echo $_SESSION['email']; ?>" required>
+                      <input type="email" class="form-control" placeholder="Insira um email" id="email" value="<?php echo $_SESSION['email']; ?>" readonly>
                     </div>
                   </div>
                 </div>

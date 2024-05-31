@@ -105,10 +105,10 @@ session_start();
                         <img class="img-fluid" src="./assets/images/banners/cross.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
                     </picture>
                 </div>
-                <div class="col-12 col-md-6 position-relative z-index-20 mb-7 mb-lg-0" data-aos="fade-right">
+                <div class="col-12 col-md-6 position-relative z-index-20 mb-7 mb-lg-0" data-aos="fade-right" id="form-section">
                     <p class="text-muted title-small">suporte</p>
                     <h3 class="display-3 fw-bold mb-5"><span class="text-outline-dark"></span>Entre em contacto connosco</h3>
-                    <div id="form-section">
+                    <div>
                         <?php
                         if (isset($_SESSION['mensagem'])) {
                             echo '<div class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';

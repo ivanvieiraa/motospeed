@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 31-Maio-2024 às 11:10
+-- Tempo de geração: 31-Maio-2024 às 13:53
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -56,19 +56,6 @@ CREATE TABLE `detalhe_venda` (
   `tamanho` varchar(255) NOT NULL,
   `preco_uni` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `detalhe_venda`
---
-
-INSERT INTO `detalhe_venda` (`id_venda`, `id_prod`, `quantidade`, `tamanho`, `preco_uni`) VALUES
-(12, 2, 1, 'M', 199.99),
-(13, 23, 1, 'M', 80),
-(14, 26, 1, 'Xl', 116.99),
-(15, 2, 1, 'XS', 199.99),
-(16, 2, 1, 'M', 199.99),
-(17, 17, 1, 'M', 449.9),
-(17, 21, 1, 'M', 125);
 
 -- --------------------------------------------------------
 
@@ -343,18 +330,6 @@ CREATE TABLE `vendas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `vendas`
---
-
-INSERT INTO `vendas` (`id_venda`, `id_user`, `data_venda`, `total`) VALUES
-(12, 57, '2024-05-31', 204.98),
-(13, 57, '2024-05-31', 80),
-(14, 57, '2024-05-31', 126.98),
-(15, 57, '2024-05-31', 204.98),
-(16, 57, '2024-05-31', 199.99),
-(17, 57, '2024-05-31', 584.89);
-
---
 -- Índices para tabelas despejadas
 --
 
@@ -454,7 +429,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Restrições para despejos de tabelas

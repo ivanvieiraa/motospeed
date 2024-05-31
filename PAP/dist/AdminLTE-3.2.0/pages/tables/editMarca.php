@@ -185,14 +185,6 @@ session_start();
                         </li>
                     </ul>
                     </li>
-                    <li class="nav-item menu-closed">
-                        <a href="./pages/tables/suporte.php" class="nav-link ">
-                            <i class="nav-icon fa-solid fa-phone"></i>
-                            <p>
-                                Suporte
-                            </p>
-                        </a>
-                    </li>
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>

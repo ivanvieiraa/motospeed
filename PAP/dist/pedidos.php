@@ -20,12 +20,12 @@ if (!$result || mysqli_num_rows($result) == 0) {
 $user_data = mysqli_fetch_assoc($result);
 
 $sql_vendas = "
-    SELECT vendas.id_venda, vendas.data_venda, vendas.total, detalhe_venda.id_prod, detalhe_venda.quantidade, detalhe_venda.tamanho, detalhe_venda.preco_uni, produtos.nome_prod
+    SELECT vendas.id_venda, vendas.data_venda, vendas.total, detalhe_venda.id_prod, detalhe_venda.quantidade, detalhe_venda.tamanho, detalhe_venda.preco_uni, produtos.nome_prod, produtos.foto_prod
     FROM vendas
     INNER JOIN detalhe_venda ON vendas.id_venda = detalhe_venda.id_venda
     INNER JOIN produtos ON detalhe_venda.id_prod = produtos.id_prod
     WHERE vendas.id_user = $id_user
-    ORDER BY vendas.data_venda DESC";
+    ORDER BY vendas.id_venda DESC";
 $result_vendas = mysqli_query($con, $sql_vendas);
 
 if (!$result_vendas) {
@@ -42,7 +42,8 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
         'nome_prod' => $row['nome_prod'],
         'quantidade' => $row['quantidade'],
         'tamanho' => $row['tamanho'],
-        'preco_uni' => $row['preco_uni']
+        'preco_uni' => $row['preco_uni'],
+        'foto_prod' => $row['foto_prod'] // Adicionando a imagem do produto ao array
     ];
 }
 ?>
@@ -78,6 +79,56 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
+    <style>
+        /* Estilo para a tabela */
+        .table-responsive {
+            /* Remover a propriedade overflow-x */
+            overflow-x: hidden;
+        }
+
+        /* Outros estilos de tabela */
+        .table thead th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .table tbody td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Estilo para os cards dos pedidos */
+        .pedido-card {
+            border: 2px solid black;
+            border-radius: 10px;
+            /* Arredonda as bordas dos cards */
+            transition: all 0.3s ease;
+            /* Adiciona uma transição suave */
+        }
+
+        .pedido-card:hover {
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            /* Adiciona uma sombra ao passar o mouse */
+        }
+
+        /* Outros estilos vão aqui */
+        .card-body.produtos-list {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .card-body.produtos-list .row {
+            flex-wrap: nowrap;
+        }
+
+        .card-body.produtos-list .col-md-3 {
+            flex: 0 0 auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -107,39 +158,37 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                         </h1>
                         <div class="table-responsive">
                             <?php if (empty($vendas)) : ?>
-                                <p class="text-center">Não tem compras</p>
+                                <p class="text-center">O seu Histórico de compras irá aparecer aqui ! <br><br><a style="text-decoration: none;" href="./produtos.php">Comprar produtos</a></p>
                             <?php else : ?>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Nº de Venda</th>
-                                            <th>Data</th>
-                                            <th>Produtos</th>
-                                            <th>Quantidade</th>
-                                            <th>Tamanho</th>
-                                            <th>Preço Unitário</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($vendas as $id_venda => $venda) : ?>
-                                            <?php foreach ($venda['produtos'] as $index => $produto) : ?>
-                                                <tr>
-                                                    <?php if ($index == 0) : ?>
-                                                        <td rowspan="<?php echo count($venda['produtos']); ?>"><?php echo htmlspecialchars($id_venda); ?></td>
-                                                        <td rowspan="<?php echo count($venda['produtos']); ?>"><?php echo htmlspecialchars($venda['data_venda']); ?></td>
-                                                    <?php endif; ?>
-                                                    <td><?php echo htmlspecialchars($produto['nome_prod']); ?></td>
-                                                    <td><?php echo htmlspecialchars($produto['quantidade']); ?></td>
-                                                    <td><?php echo htmlspecialchars($produto['tamanho']); ?></td>
-                                                    <td><?php echo htmlspecialchars(number_format($produto['preco_uni'], 2)); ?>€</td>
-                                                    <?php if ($index == 0) : ?>
-                                                        <td rowspan="<?php echo count($venda['produtos']); ?>"><?php echo htmlspecialchars(number_format($venda['total'], 2)); ?>€</td>
-                                                    <?php endif; ?>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        <?php endforeach; ?>
-                                    </tbody>
+                                <table class="table table-bordered table-striped" style="overflow-x: hidden;">
+                                    <?php foreach ($vendas as $id_venda => $venda) : ?>
+                                        <div class="card mb-3 pedido-card"> <!-- Adicionando a classe pedido-card aqui -->
+                                            <div class="card-header">
+                                                <h5 class="card-title">Pedido #<?php echo htmlspecialchars($id_venda); ?> - <?php echo htmlspecialchars($venda['data_venda']); ?></h5>
+                                            </div>
+                                            <div class="card-body produtos-list">
+                                                <div class="row">
+                                                    <?php foreach ($venda['produtos'] as $produto) : ?>
+                                                        <div class="col-md-3">
+                                                            <div class="card">
+                                                                <img src="<?php echo $produto['foto_prod']; ?>" height="200px" width="200px" alt="<?php echo htmlspecialchars($produto['nome_prod']); ?>">
+                                                                <div class="card-body">
+                                                                    <h6 class="card-title"><?php echo htmlspecialchars($produto['nome_prod']); ?></h6>
+                                                                    <p class="card-text">Quantidade: <?php echo htmlspecialchars($produto['quantidade']); ?></p>
+                                                                    <p class="card-text">Tamanho: <?php echo htmlspecialchars($produto['tamanho']); ?></p>
+                                                                    <p class="card-text">Preço Unitário: <?php echo htmlspecialchars(number_format($produto['preco_uni'], 2)); ?>€</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <p class="text-end">Total do Pedido: <?php echo htmlspecialchars(number_format($venda['total'], 2)); ?>€</p>
+                                            </div>
+                                        </div>
+
+                                    <?php endforeach; ?>
                                 </table>
                             <?php endif; ?>
                         </div>
@@ -176,7 +225,26 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var cards = document.querySelectorAll(".pedido-card");
+            cards.forEach(function(card) {
+                var cardBody = card.querySelector(".card-body");
+                var produtos = cardBody.querySelectorAll(".col-md-3");
+                var produtosWidth = 0;
+                produtos.forEach(function(produto) {
+                    produtosWidth += produto.offsetWidth;
+                });
+
+                if (produtosWidth > cardBody.clientWidth) {
+                    cardBody.classList.add("produtos-list");
+                } else {
+                    cardBody.classList.remove("produtos-list");
+                }
+            });
+        });
     </script>
+
 
 </body>
 

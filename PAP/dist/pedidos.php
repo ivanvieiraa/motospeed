@@ -153,9 +153,6 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                             <?php echo htmlspecialchars($user_data['nome']) . ' ' . htmlspecialchars($user_data['apelido']); ?>
                         </h3>
                         <p class="text-muted text-center">Histórico de compras</p>
-                        <h1 class="fw-bold fs-3 mb-2 text-left">
-                            Histórico de compras
-                        </h1>
                         <div class="table-responsive">
                             <?php if (empty($vendas)) : ?>
                                 <p class="text-center">O seu Histórico de compras irá aparecer aqui ! <br><br><a href="./produtos.php">Comprar produtos</a></p>

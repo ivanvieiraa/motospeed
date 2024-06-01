@@ -135,7 +135,7 @@ $result_detalhes = mysqli_query($con, $sql_detalhes);
             <div class="py-4">
               <div class="input-group mb-0">
               </div>
-              <a href="./checkout.php?cart=true" class="btn btn-dark w-100 text-center" role="button">Emitir fatura</a>
+              <a href="generate_invoice.php?id_venda=<?= $id_venda ?>" class="btn btn-dark w-100 text-center" role="button">Emitir fatura</a>
             </div>
           </div>
         </div>

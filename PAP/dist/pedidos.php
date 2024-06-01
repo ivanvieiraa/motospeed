@@ -160,8 +160,18 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                                 <table class="table table-bordered table-striped" style="overflow-x: hidden;">
                                     <?php foreach ($vendas as $id_venda => $venda) : ?>
                                         <div class="card mb-3 pedido-card"> <!-- Adicionando a classe pedido-card aqui -->
-                                            <div class="card-header">
-                                                <h5 class="card-title">Pedido #<?php echo htmlspecialchars($id_venda); ?> - <?php echo htmlspecialchars($venda['data_venda']); ?></h5>
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <h5 class="card-title mb-0">
+                                                    Pedido #<?php echo htmlspecialchars($id_venda); ?> - <?php echo htmlspecialchars($venda['data_venda']); ?>
+                                                </h5>
+                                                <div class="d-flex align-items-center">
+                                                    <a style="text-decoration: none; color: orangered; font-weight: bold; font-size: large; margin-right: 20px;" href="generate_invoice.php?id_venda=<?= $id_venda ?>">
+                                                        Emitir fatura
+                                                    </a>
+                                                    <a style="color: green; font-size: large; font-weight: bold;">
+                                                        Total do Pedido: <?php echo htmlspecialchars(number_format($venda['total'], 2)); ?>€
+                                                    </a>
+                                                </div>
                                             </div>
                                             <div class="card-body produtos-list">
                                                 <div class="row">
@@ -173,15 +183,12 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                                                                     <h6 class="card-title"><?php echo htmlspecialchars($produto['nome_prod']); ?></h6>
                                                                     <p class="card-text">Quantidade: <?php echo htmlspecialchars($produto['quantidade']); ?></p>
                                                                     <p class="card-text">Tamanho: <?php echo htmlspecialchars($produto['tamanho']); ?></p>
-                                                                    <p class="card-text" style="" >Preço Unitário: <?php echo htmlspecialchars(number_format($produto['preco_uni'], 2)); ?>€</p>
+                                                                    <p class="card-text" style="">Preço Unitário: <?php echo htmlspecialchars(number_format($produto['preco_uni'], 2)); ?>€</p>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     <?php endforeach; ?>
                                                 </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <p class="text-end" style="font-weight: bold; font-size: large; color: green;">Total do Pedido: <?php echo htmlspecialchars(number_format($venda['total'], 2)); ?>€</p>
                                             </div>
                                         </div>
 

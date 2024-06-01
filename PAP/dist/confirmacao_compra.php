@@ -77,7 +77,7 @@ $result_detalhes = mysqli_query($con, $sql_detalhes);
               <h3 class="fs-5 fw-bolder mb-4 border-bottom pb-4" style="color: green;">Compra efetuada com sucesso !</h3>
               <div class="row">
                 <div class="col-12">
-                  <h5 class="justify-content-between d-flex align-items-start mb-2">Dados do cliente:</h5>
+                  <h5 class="justify-content-between d-flex align-items-start mb-2">Dados da compra:</h5>
                   <br>
                   <p><?= $venda['nome'] ?> <?= $venda['apelido'] ?></p>
                   <p><?= $venda['email'] ?></p>

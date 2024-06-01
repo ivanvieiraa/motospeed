@@ -27,7 +27,7 @@ require_once('tcpdf/tcpdf.php');
 $pdf = new TCPDF();
 
 // Set document information
-$pdf->SetCreator(PDF_CREATOR);
+$pdf->SetCreator('Motospeed');
 $pdf->SetAuthor('Motospeed');
 $pdf->SetTitle('Fatura de Compra');
 $pdf->SetSubject('Fatura');
@@ -39,16 +39,18 @@ $pdf->AddPage();
 $pdf->SetFont('helvetica', '', 12);
 
 // Write the HTML content
-$html = '<h1>Fatura de Compra</h1>';
-$html .= '<h2>Dados da Compra:</h2>';
-$html .= '<p>Nome: ' . $venda['nome'] . ' ' . $venda['apelido'] . '</p>';
-$html .= '<p>Email: ' . $venda['email'] . '</p>';
-$html .= '<p>Morada: ' . $venda['morada'] . '</p>';
-$html .= '<p>Código Postal: ' . $venda['codigop'] . '</p>';
-$html .= '<h2>Detalhes da Compra:</h2>';
+$html = '<table width="100%" cellpadding="5">';
+$html .= '<tr><td align="center"><img src="mstile-150x150.png" alt="Logo da Empresa" style="width: 200px;"></td></tr>';
+$html .= '<tr><td align="center"><h1>Fatura de Compra</h1></td></tr>';
+$html .= '<tr><td><h2>Dados da Compra:</h2></td></tr>';
+$html .= '<tr><td><b>Nome:</b> ' . $venda['nome'] . ' ' . $venda['apelido'] . '</td></tr>';
+$html .= '<tr><td><b>Email:</b> ' . $venda['email'] . '</td></tr>';
+$html .= '<tr><td><b>Morada:</b> ' . $venda['morada'] . '</td></tr>';
+$html .= '<tr><td><b>Código Postal:</b> ' . $venda['codigop'] . '</td></tr>';
+$html .= '<tr><td><h2>Detalhes da Compra:</h2></td></tr>';
 
 if (mysqli_num_rows($result_detalhes) > 0) {
-    $html .= '<table border="1" cellpadding="5">';
+    $html .= '<tr><td><table width="100%" border="1" cellpadding="5">';
     $html .= '<thead><tr><th>Produto</th><th>Tamanho</th><th>Quantidade</th><th>Preço Unitário</th></tr></thead>';
     $html .= '<tbody>';
     while ($detalhe = mysqli_fetch_assoc($result_detalhes)) {
@@ -59,13 +61,14 @@ if (mysqli_num_rows($result_detalhes) > 0) {
         $html .= '<td>' . $detalhe['preco_uni'] . '€</td>';
         $html .= '</tr>';
     }
-    $html .= '</tbody></table>';
+    $html .= '</tbody></table></td></tr>';
 } else {
-    $html .= '<p>Nenhum detalhe de compra encontrado.</p>';
+    $html .= '<tr><td><p>Nenhum detalhe de compra encontrado.</p></td></tr>';
 }
 
-$html .= '<h3>Total: ' . $venda['total'] . '€</h3>';
-$html .= '<p>IVA incluído</p>';
+$html .= '<tr><td><h3>Total: ' . $venda['total'] . '€</h3></td></tr>';
+$html .= '<tr><td><p>IVA incluído</p></td></tr>';
+$html .= '</table>';
 
 // Output the HTML content
 $pdf->writeHTML($html, true, false, true, false, '');

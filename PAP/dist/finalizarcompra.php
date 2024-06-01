@@ -5,6 +5,12 @@ include('ligacao.php');
 
 // Se o formulário for enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nomeVenda = $_POST['nomeVenda'];
+    $apelidoVenda = $_POST['apelidoVenda'];
+    $emailVenda = $_POST['emailVenda'];
+    $morada = $_POST['moradaVenda'];
+    $codigop = $_POST['codigopVenda'];
+    $custoEnvio = $_POST['custoEnvio'];
     // Dados do formulário
     $id_user = $_SESSION['id_user']; // Substitua por sua própria variável de sessão para o ID do usuário
     $data_venda = date("Y-m-d"); // Data atual
@@ -13,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $custoEnvio = $_POST['custoEnvio'];
     $total = $_POST['total'];
     // Inserir dados na tabela 'vendas'
-    $sql_vendas = "INSERT INTO vendas (id_user, data_venda, total) VALUES ('$id_user', '$data_venda', '$total')";
+    $sql_vendas = "INSERT INTO vendas (id_user, data_venda, total, nome, apelido, email, morada, codigop) VALUES ('$id_user', '$data_venda', '$total', '$nomeVenda', '$apelidoVenda', '$emailVenda', '$morada', '$codigop')";
     $result_vendas = mysqli_query($con, $sql_vendas);
     if ($result_vendas) {
         // Obter o ID da venda recém-inserida
@@ -29,7 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $preco_uni = $produto['preco'];
             $tamanho = $produto['tamanho'];
 
-            $sql_detalhe_venda = "INSERT INTO detalhe_venda (id_venda, id_prod, quantidade, tamanho, preco_uni) VALUES ('$id_venda', '$id_prod', '$quantidade', '$tamanho', '$preco_uni')";
+            $sql_detalhe_venda = "INSERT INTO detalhe_venda (id_venda, id_prod, quantidade, tamanho, preco_uni)
+                                VALUES ('$id_venda', '$id_prod', '$quantidade', '$tamanho', '$preco_uni')";
             $result_detalhe_venda = mysqli_query($con, $sql_detalhe_venda);
             if (!$result_detalhe_venda) {
                 echo "Erro ao inserir detalhe da venda: " . mysqli_error($con);

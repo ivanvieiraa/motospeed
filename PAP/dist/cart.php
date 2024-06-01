@@ -118,7 +118,7 @@
                             </div>
                         </div>
                         <br>
-                        <a href="./produtos.php" class="btn btn-dark w-100 text-center" role="button">Comprar produtos</a>
+                        <a href="./produtos.php" role="button">Adicionar produtos</a>
                     </div>
                 </div>
                 <?php if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) { ?>

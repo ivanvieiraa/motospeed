@@ -1,8 +1,8 @@
-<?php 
+<?php
 session_start();
 include("ligacao.php");
 
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
   header('location:login_form.php');
 }
 
@@ -82,7 +82,7 @@ if(!isset($_SESSION)){
               </ul>
             </nav>
             <div class="mt-5">
-              <form id="checkout-form">
+              <form name="checkout-form" id="checkout-form" action="checkout-shipping.php" method="POST">
                 <!-- Checkout Panel Information-->
                 <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-4">
                   <h3 class="fs-5 fw-bolder m-0 lh-1">Informações pessoais</h3>
@@ -92,7 +92,7 @@ if(!isset($_SESSION)){
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="firstNameBilling" class="form-label">Nome</label>
-                      <input type="text" class="form-control" id="firstNameBilling" placeholder="Insira um nome" value="<?php echo $_SESSION['nome']; ?>" readonly>
+                      <input type="text" class="form-control" name="firstNameBilling" id="firstNameBilling" placeholder="Insira um nome" value="<?php echo $_SESSION['nome']; ?>" required>
                     </div>
                   </div>
 
@@ -100,7 +100,7 @@ if(!isset($_SESSION)){
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="lastNameBilling" class="form-label">Apelido</label>
-                      <input type="text" class="form-control" id="lastNameBilling" placeholder="Insira um apelido" value="<?php echo $_SESSION['apelido']; ?>" readonly>
+                      <input type="text" class="form-control" name="lastNameBilling" id="lastNameBilling" placeholder="Insira um apelido" value="<?php echo $_SESSION['apelido']; ?>" required>
                     </div>
                   </div>
 
@@ -108,7 +108,7 @@ if(!isset($_SESSION)){
                   <div class="col-12">
                     <div class="form-group">
                       <label for="email" class="form-label">Email</label>
-                      <input type="email" class="form-control" placeholder="Insira um email" id="email" value="<?php echo $_SESSION['email']; ?>" readonly>
+                      <input type="email" class="form-control" placeholder="Insira um email" name="emailBilling" id="email" value="<?php echo $_SESSION['email']; ?>" required>
                     </div>
                   </div>
                 </div>
@@ -120,7 +120,7 @@ if(!isset($_SESSION)){
                   <div class="col-12">
                     <div class="form-group">
                       <label for="address" class="form-label">Morada</label>
-                      <input type="text" class="form-control" id="address" placeholder="Insira uma morada" value="<?php echo $_SESSION['morada']; ?>" required>
+                      <input type="text" class="form-control" id="address" name="address" placeholder="Insira uma morada" value="<?php echo $_SESSION['morada']; ?>" required>
                     </div>
                   </div>
 
@@ -128,11 +128,10 @@ if(!isset($_SESSION)){
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="zip" class="form-label">Código postal</label>
-                      <input type="text" class="form-control" id="zip" placeholder="Ex:. 1985-234" value="<?php echo $_SESSION['codigop']; ?>" required>
+                      <input type="text" class="form-control" name="zip" id="zip" placeholder="Ex:. 1985-234" value="<?php echo $_SESSION['codigop']; ?>" required>
                     </div>
                   </div>
                 </div>
-              </form>
             </div>
           </div>
         </div>
@@ -198,7 +197,7 @@ if(!isset($_SESSION)){
                 ?>
               </div>
             </div>
-            <button href="./checkout-shipping.php" id="proceed-to-shipping" class="btn btn-dark w-100 text-center">Proceder para envio</button>
+            <input type="submit" class="btn btn-dark w-100 text-center" id="proceed-to-shipping" value="Proceder para envio">
           </div>
         </div>
       </div>
@@ -231,10 +230,9 @@ if(!isset($_SESSION)){
           }
         });
 
-        // Validar se o campo de e-mail é um e-mail válido
         const emailInput = document.getElementById('email');
-        const email = emailInput.value.trim(); // Remover espaços em branco do início e do fim
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expressão regular para validar o e-mail
+        const email = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
           isValid = false;
@@ -243,34 +241,31 @@ if(!isset($_SESSION)){
           emailInput.classList.remove('is-invalid');
         }
 
-        // Validar se o campo de código postal contém um formato válido de Portugal
         const zipInput = document.getElementById('zip');
-        const zip = zipInput.value.trim(); // Remover espaços em branco do início e do fim
-        const zipRegex = /^\d{4}-\d{3}$/; // Expressão regular para validar o formato XXXX-XXX
+        const zip = zipInput.value.trim();
+        const zipRegex = /^\d{4}-\d{3}$/;
 
         if (!zipRegex.test(zip)) {
           isValid = false;
           zipInput.classList.add('is-invalid');
-          const errorMessage = document.createElement('div');
-          errorMessage.classList.add('invalid-feedback');
-          errorMessage.textContent = 'Código postal inválido';
-          zipInput.parentNode.appendChild(errorMessage);
+          if (!zipInput.nextElementSibling || !zipInput.nextElementSibling.classList.contains('invalid-feedback')) {
+            const errorMessage = document.createElement('div');
+            errorMessage.classList.add('invalid-feedback');
+            errorMessage.textContent = 'Código postal inválido';
+            zipInput.parentNode.appendChild(errorMessage);
+          }
         } else {
           zipInput.classList.remove('is-invalid');
-          const errorMessage = zipInput.parentNode.querySelector('.invalid-feedback');
-          if (errorMessage) {
-            errorMessage.parentNode.removeChild(errorMessage);
+          if (zipInput.nextElementSibling && zipInput.nextElementSibling.classList.contains('invalid-feedback')) {
+            zipInput.parentNode.removeChild(zipInput.nextElementSibling);
           }
         }
 
-        if (isValid) {
-          window.location.href = proceedButton.getAttribute('href');
+        if (!isValid) {
+          event.preventDefault();
         }
-
-        event.preventDefault(); // Prevenir o comportamento padrão do botão de envio
       });
 
-      // Remover a classe 'is-invalid' quando o usuário digitar algo em um campo
       inputs.forEach(input => {
         input.addEventListener('input', function() {
           if (input.checkValidity()) {

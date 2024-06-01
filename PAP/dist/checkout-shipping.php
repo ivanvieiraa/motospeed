@@ -1,6 +1,14 @@
 <?php
 session_start();
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nomeVenda = $_POST['firstNameBilling'];
+    $apelidoVenda = $_POST['lastNameBilling'];
+    $emailVenda = $_POST['emailBilling'];
+    $morada = $_POST['address'];
+    $codigop = $_POST['zip'];
+}
+
 // Função para calcular o subtotal do carrinho
 function calcularSubtotal($carrinho)
 {
@@ -114,7 +122,7 @@ $total = $subTotal + $custoEnvio;
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <div class="d-flex justify-content-start align-items-center">
                                         <span class="text-muted small me-2 f-w-36 fw-bolder">Dados de</span>
-                                        <span class="small"><?php echo $_SESSION['email']; ?></span>
+                                        <span class="small"><?php echo $emailVenda ?></span>
                                     </div>
                                     <a href="./checkout.php" class="text-muted small" role="button">Alterar</a>
                                 </li>
@@ -256,8 +264,14 @@ $total = $subTotal + $custoEnvio;
                         <form method="post" action="finalizarcompra.php">
                             <!-- Adicione os campos ocultos para enviar os dados necessários -->
                             <input type="hidden" name="subtotal" value="<?php echo $subTotal; ?>">
-                            <input type="hidden" name="custoEnvio" value="<?php echo $custoEnvio; ?>">
+                            <input type="hidden" name="custoEnvio" id="custoEnvio" value="<?php echo number_format($custoEnvio, 2); ?>">
                             <input type="hidden" name="total" id="totalInput" value="<?php echo $total; ?>">
+                            <input type="hidden" name="nomeVenda" value="<?php echo $nomeVenda; ?>">
+                            <input type="hidden" name="apelidoVenda" value="<?php echo $apelidoVenda; ?>">
+                            <input type="hidden" name="emailVenda" value="<?php echo $emailVenda; ?>">
+                            <input type="hidden" name="moradaVenda" value="<?php echo $morada; ?>">
+                            <input type="hidden" name="codigopVenda" value="<?php echo $codigop; ?>">
+
                             <!-- Adicione outros campos do formulário, se necessário -->
                             <button type="submit" class="btn btn-dark w-100 text-center">Finalizar compra</button>
                         </form>

@@ -20,10 +20,9 @@ $venda = mysqli_fetch_assoc($result_venda);
 $sql_detalhes = "SELECT dv.*, p.nome_prod, p.foto_prod FROM detalhe_venda dv JOIN produtos p ON dv.id_prod = p.id_prod WHERE dv.id_venda = '$id_venda'";
 $result_detalhes = mysqli_query($con, $sql_detalhes);
 ?>
+
 <!doctype html>
 <html lang="en">
-
-<!-- Head -->
 
 <head>
   <!-- Page Meta Tags-->
@@ -55,9 +54,6 @@ $result_detalhes = mysqli_query($con, $sql_detalhes);
   <!-- Fix for custom scrollbar if JS is disabled-->
   <noscript>
     <style>
-      /**
-          * Reinstate scrolling for non-JS clients
-          */
       .simplebar-content-wrapper {
         overflow: auto;
       }
@@ -66,7 +62,6 @@ $result_detalhes = mysqli_query($con, $sql_detalhes);
 
   <!-- Page Title -->
   <title>Motospeed | Checkout</title>
-
 </head>
 
 <body class="">
@@ -81,19 +76,17 @@ $result_detalhes = mysqli_query($con, $sql_detalhes);
             <div class="mt-5">
               <h3 class="fs-5 fw-bolder mb-4 border-bottom pb-4" style="color: green;">Compra efetuada com sucesso !</h3>
               <div class="row">
-
                 <div class="col-12">
-                  <h5 class="justify-content-between d-flex align-items-start mb-2">
-                    Dados do cliente:
-                  </h5>
+                  <h5 class="justify-content-between d-flex align-items-start mb-2">Dados do cliente:</h5>
                   <br>
-                  <p><?= $_SESSION['nome'] ?> <?= $_SESSION['apelido'] ?></p>
-                  <p><?= $_SESSION['morada'] ?></p>
-                  <p><?= $_SESSION['codigop'] ?></p>
+                  <p><?= $venda['nome'] ?> <?= $venda['apelido'] ?></p>
+                  <p><?= $venda['email'] ?></p>
+                  <p><?= $venda['morada'] ?></p>
+                  <p><?= $venda['codigop'] ?></p>
                 </div>
               </div>
               <div class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
-                <a href="./produtos.php" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Continuar a comprar</a>
+                <a href="./produtos.php" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Ver mais produtos</a>
                 <a href="./pedidos.php" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Ver histórico de compras</a>
               </div>
             </div>
@@ -102,29 +95,28 @@ $result_detalhes = mysqli_query($con, $sql_detalhes);
         <div class="col-12 col-lg-5 bg-light pt-lg-10 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
           <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
             <div class="pb-3">
-              <h5 class="justify-content-between d-flex align-items-start mb-2 mt-4">
-                Detalhes da Compra:
-              </h5>
+              <h5 class="justify-content-between d-flex align-items-start mb-2 mt-4">Detalhes da Compra:</h5>
               <?php
               if (mysqli_num_rows($result_detalhes) > 0) {
                 while ($detalhe = mysqli_fetch_assoc($result_detalhes)) {
-                  echo '
-                      <div class="row mx-0 py-4 g-0 border-bottom">
-                        <div class="col-2 position-relative">
-                          <picture class="d-block border">
-                            <img class="img-fluid" src="' . $detalhe['foto_prod'] . '">
-                          </picture>
-                        </div>
-                        <div class="col-9 offset-1">
-                          <div>
-                            <h6 class="justify-content-between d-flex align-items-start mb-2">
-                              ' . $detalhe['nome_prod'] . '
-                            </h6>
-                            <span class="d-block text-muted fw-bolder text-uppercase fs-9">Tamanho: ' . $detalhe['tamanho'] . ' / Quantidade: ' . $detalhe['quantidade'] . '</span>
-                          </div>
-                          <p class="fw-bolder text-end text-muted m-0">' . $detalhe['preco_uni'] . '€</p>
-                        </div>
-                      </div>';
+              ?>
+                  <div class="row mx-0 py-4 g-0 border-bottom">
+                    <div class="col-2 position-relative">
+                      <picture class="d-block border">
+                        <img class="img-fluid" src="<?= $detalhe['foto_prod'] ?>">
+                      </picture>
+                    </div>
+                    <div class="col-9 offset-1">
+                      <div>
+                        <h6 class="justify-content-between d-flex align-items-start mb-2">
+                          <?= $detalhe['nome_prod'] ?>
+                        </h6>
+                        <span class="d-block text-muted fw-bolder text-uppercase fs-9">Tamanho: <?= $detalhe['tamanho'] ?> / Quantidade: <?= $detalhe['quantidade'] ?></span>
+                      </div>
+                      <p class="fw-bolder text-end text-muted m-0"><?= $detalhe['preco_uni'] ?>€</p>
+                    </div>
+                  </div>
+              <?php
                 }
               } else {
                 echo '<p>Nenhum detalhe de compra encontrado.</p>';
@@ -152,7 +144,6 @@ $result_detalhes = mysqli_query($con, $sql_detalhes);
     <!-- /Page Content -->
   </section>
   <!-- / Main Section-->
-
 
   <!-- Theme JS -->
   <!-- Vendor JS -->

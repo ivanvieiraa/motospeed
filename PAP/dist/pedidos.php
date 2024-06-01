@@ -158,7 +158,7 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                         </h1>
                         <div class="table-responsive">
                             <?php if (empty($vendas)) : ?>
-                                <p class="text-center">O seu Histórico de compras irá aparecer aqui ! <br><br><a style="text-decoration: none;" href="./produtos.php">Comprar produtos</a></p>
+                                <p class="text-center">O seu Histórico de compras irá aparecer aqui ! <br><br><a href="./produtos.php">Comprar produtos</a></p>
                             <?php else : ?>
                                 <table class="table table-bordered table-striped" style="overflow-x: hidden;">
                                     <?php foreach ($vendas as $id_venda => $venda) : ?>

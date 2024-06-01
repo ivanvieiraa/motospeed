@@ -82,13 +82,13 @@ session_start();
                 </div>
                 <div class="col-12 col-md-6 position-relative z-index-20 pe-0" data-aos="fade-left">
                     <picture class="w-50 d-block position-relative z-index-10 border border-white border-4 shadow-lg">
-                        <img class="img-fluid" src="./assets/images/banners/yzf.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                        <img class="img-fluid" src="./assets/images/banners/yzf.jpg">
                     </picture>
                     <picture class="w-60 d-block me-8 mt-n10 shadow-lg border border-white border-4 position-relative z-index-20 ms-auto">
-                        <img class="img-fluid" src="./assets/images/banners/r6.jpeg" alt="HTML Bootstrap Template by Pixel Rocket">
+                        <img class="img-fluid" src="./assets/images/banners/r6.jpeg">
                     </picture>
                     <picture class="w-50 d-block me-8 mt-n7 shadow-lg border border-white border-4 position-absolute top-0 end-0 z-index-0 ">
-                        <img class="img-fluid" src="./assets/images/banners/cross.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                        <img class="img-fluid" src="./assets/images/banners/cross.jpg">
                     </picture>
                 </div>
             </div>
@@ -96,13 +96,13 @@ session_start();
 
                 <div class="col-12 col-md-6 position-relative z-index-20 pe-0" data-aos="fade-left">
                     <picture class="w-50 d-block position-relative z-index-10 border border-white border-4 shadow-lg">
-                        <img class="img-fluid" src="./assets/images/banners/yzf.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                        <img class="img-fluid" src="./assets/images/banners/ivann.jpeg">
                     </picture>
                     <picture class="w-60 d-block me-8 mt-n10 shadow-lg border border-white border-4 position-relative z-index-20 ms-auto">
-                        <img class="img-fluid" src="./assets/images/banners/r6.jpeg" alt="HTML Bootstrap Template by Pixel Rocket">
+                        <img class="img-fluid" src="./assets/images/banners/r6-2.jpg">
                     </picture>
                     <picture class="w-50 d-block me-8 mt-n7 shadow-lg border border-white border-4 position-absolute top-0 end-0 z-index-0 ">
-                        <img class="img-fluid" src="./assets/images/banners/cross.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                        <img class="img-fluid" src="./assets/images/banners/dirt2.jpg">
                     </picture>
                 </div>
                 <div class="col-12 col-md-6 position-relative z-index-20 mb-7 mb-lg-0" data-aos="fade-right" id="form-section">

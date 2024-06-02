@@ -66,6 +66,7 @@ if (mysqli_num_rows($result_detalhes) > 0) {
     $html .= '<tr><td><p>Nenhum detalhe de compra encontrado.</p></td></tr>';
 }
 
+$html .= '<tr><td><h3>Taxa de envio: ' . $venda['envio'] . '€</h3></td></tr>';
 $html .= '<tr><td><h3>Total: ' . $venda['total'] . '€</h3></td></tr>';
 $html .= '<tr><td><p>IVA incluído</p></td></tr>';
 $html .= '</table>';

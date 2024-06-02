@@ -186,20 +186,20 @@ $total = $subTotal + $custoEnvio;
                                         const subTotal = <?php echo json_encode($subTotal); ?>;
                                         const total = subTotal + custoEnvio;
                                         totalElement.textContent = total.toFixed(2) + '€';
-                                        totalInputElement.value = total.toFixed(2); // Atualiza o valor do campo input
+                                        totalInputElement.value = total.toFixed(2); // Atualiza o valor do input hidden
+                                        document.getElementById('hiddenCustoEnvio').value = custoEnvio.toFixed(2); // Atualiza o valor do input hidden de custo de envio
                                     }
 
-                                    const inputsEnvio = document.querySelectorAll('input[name="checkoutShippingMethod"]');
-                                    inputsEnvio.forEach(function(input) {
-                                        input.addEventListener("change", function() {
-                                            atualizarCustoEnvioETotal(this.value);
+                                    // Event listeners para os botões de opção de envio
+                                    document.querySelectorAll('input[name="checkoutShippingMethod"]').forEach((input) => {
+                                        input.addEventListener('change', (event) => {
+                                            atualizarCustoEnvioETotal(event.target.value);
                                         });
                                     });
 
-                                    // Inicializar o custo de envio com a opção padrão
-                                    // Use document.querySelector para selecionar o input de envio padrão e obter o seu valor
-                                    const opcaoEnvioPadrao = document.querySelector('input[name="checkoutShippingMethod"]:checked').value;
-                                    atualizarCustoEnvioETotal(opcaoEnvioPadrao);
+                                    // Atualizar o custo de envio e o total com base na opção selecionada inicialmente
+                                    const metodoEnvioSelecionado = document.querySelector('input[name="checkoutShippingMethod"]:checked').value;
+                                    atualizarCustoEnvioETotal(metodoEnvioSelecionado);
                                 });
                             </script>
                         </div>
@@ -246,7 +246,7 @@ $total = $subTotal + $custoEnvio;
                                 <p class="m-0 fs-6 fw-bolder"><?php echo number_format($subTotal, 2); ?>€</p>
                             </div>
                             <div class="d-flex justify-content-between align-items-center ">
-                                <p class="m-0 fw-bolder fs-6">Envio</p>
+                                <p class="m-0 fw-bolder fs-6">Taxa de Envio</p>
                                 <!-- Adicione um ID para exibir o custo de envio -->
                                 <p id="custoEnvio" class="m-0 fs-6 fw-bolder"><?php echo number_format($custoEnvio, 2); ?>€</p>
                             </div>
@@ -264,7 +264,7 @@ $total = $subTotal + $custoEnvio;
                         <form method="post" action="finalizarcompra.php">
                             <!-- Adicione os campos ocultos para enviar os dados necessários -->
                             <input type="hidden" name="subtotal" value="<?php echo $subTotal; ?>">
-                            <input type="hidden" name="custoEnvio" id="custoEnvio" value="<?php echo number_format($custoEnvio, 2); ?>">
+                            <input type="hidden" name="custoEnvio" id="hiddenCustoEnvio" value="<?php echo number_format($custoEnvio, 2); ?>">
                             <input type="hidden" name="total" id="totalInput" value="<?php echo $total; ?>">
                             <input type="hidden" name="nomeVenda" value="<?php echo $nomeVenda; ?>">
                             <input type="hidden" name="apelidoVenda" value="<?php echo $apelidoVenda; ?>">

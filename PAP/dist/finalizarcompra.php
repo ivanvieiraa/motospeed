@@ -16,10 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data_venda = date("Y-m-d"); // Data atual
     // $opcaoEnvioSelecionada = $_POST['envio'];
     // $subtotal = $_POST['subtotal'];
-    // $custoEnvio = $_POST['custoEnvio'];
+    $custoEnvio = $_POST['custoEnvio'];
     $total = $_POST['total'];
     // Inserir dados na tabela 'vendas'
-    $sql_vendas = "INSERT INTO vendas (id_user, data_venda, total, nome, apelido, email, morada, codigop) VALUES ('$id_user', '$data_venda', '$total', '$nomeVenda', '$apelidoVenda', '$emailVenda', '$morada', '$codigop')";
+    $sql_vendas = "INSERT INTO vendas (id_user, data_venda, total, envio, nome, apelido, email, morada, codigop) VALUES ('$id_user', '$data_venda', '$total', '$custoEnvio', '$nomeVenda', '$apelidoVenda', '$emailVenda', '$morada', '$codigop')";
     $result_vendas = mysqli_query($con, $sql_vendas);
     if ($result_vendas) {
         // Obter o ID da venda recém-inserida

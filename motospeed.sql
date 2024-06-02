@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01-Jun-2024 às 20:06
+-- Tempo de geração: 02-Jun-2024 às 23:36
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -56,30 +56,6 @@ CREATE TABLE `detalhe_venda` (
   `tamanho` varchar(255) NOT NULL,
   `preco_uni` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `detalhe_venda`
---
-
-INSERT INTO `detalhe_venda` (`id_venda`, `id_prod`, `quantidade`, `tamanho`, `preco_uni`) VALUES
-(40, 2, 1, 'M', 199.99),
-(41, 21, 1, 'S', 125),
-(42, 16, 2, 'L', 420),
-(42, 8, 1, 'S', 695),
-(42, 5, 2, 'XS', 1499),
-(43, 23, 1, 'L', 80),
-(43, 11, 2, 'S', 539),
-(44, 5, 1, 'M', 1499),
-(45, 16, 1, 'M', 420),
-(45, 2, 2, 'M', 199.99),
-(45, 15, 2, 'M', 150),
-(45, 5, 3, 'XS', 1499),
-(45, 17, 1, 'M', 449.9),
-(45, 9, 1, 'M', 495.99),
-(45, 21, 1, 'M', 125),
-(46, 21, 1, 'M', 125),
-(46, 5, 1, 'XS', 1499),
-(47, 5, 1, 'M', 1499);
 
 -- --------------------------------------------------------
 
@@ -349,26 +325,13 @@ CREATE TABLE `vendas` (
   `id_user` int(11) NOT NULL,
   `data_venda` date NOT NULL,
   `total` float DEFAULT NULL,
+  `envio` float NOT NULL,
   `nome` varchar(255) NOT NULL,
   `apelido` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `morada` varchar(255) NOT NULL,
   `codigop` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `vendas`
---
-
-INSERT INTO `vendas` (`id_venda`, `id_user`, `data_venda`, `total`, `nome`, `apelido`, `email`, `morada`, `codigop`) VALUES
-(40, 49, '2024-06-01', 199.99, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'Rua da solidariedade, Lote 16', '2345-094'),
-(41, 49, '2024-06-01', 129.99, 'Nuno', 'Vieira', 'nunovieira280@gmail.com', 'Rua Soares dos Reis Lote 678, 1 Andar', '2975-299'),
-(42, 49, '2024-06-01', 4542.99, 'Ana', 'Figueiredo', 'anafcapri@gmail.com', 'Rua da solidariedade, Lote 16', '2345-094'),
-(43, 49, '2024-06-01', 1162.99, 'Central', 'Cee', 'cench@apa.pt', 'Rua Soares dos Reis Lote 678, 1 Andar', '2345-094'),
-(44, 49, '2024-06-01', 1503.99, 'Admin', 'Admin', 'motospeed2024@gmail.com', 'Rua Soares dos Reis Lote 678, 1 Andar', '2345-094'),
-(45, 49, '2024-06-01', 6687.87, 'Paula', 'Ponte', 'paulaponte1974@gmail.com', 'Rua Pedro Álvares de Cabral 1ºD', '2810-963'),
-(46, 50, '2024-06-01', 1633.99, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'Rua da solidariedade, Lote 16', '1234-321'),
-(47, 49, '2024-06-01', 1503.99, 'Admin', 'Admin', 'motospeed2024@gmail.com', 'Rua da solidariedade, Lote 16', '2975-299');
 
 --
 -- Índices para tabelas despejadas
@@ -470,7 +433,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- Restrições para despejos de tabelas

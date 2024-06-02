@@ -124,6 +124,13 @@ $result_detalhes = mysqli_query($con, $sql_detalhes);
               ?>
             </div>
             <div class="py-4 border-bottom">
+              <div class="d-flex justify-content-between align-items-center ">
+                <p class="m-0 fw-bolder fs-6">Taxa de Envio</p>
+                <!-- Adicione um ID para exibir o custo de envio -->
+                <p id="custoEnvio" class="m-0 fs-6 fw-bolder"><?=$venda['envio']?>€</p>
+              </div>
+            </div>
+            <div class="py-4 border-bottom">
               <div class="d-flex justify-content-between">
                 <div>
                   <p class="m-0 fw-bold fs-5">Total</p>

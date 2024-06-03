@@ -312,7 +312,7 @@
     <!-- Modal for "Ver Mais" -->
     <div id="viewMoreModal" class="modal">
         <div class="modal-content">
-            <span class="modal-close">&times;</span>
+            <span class="modal-close" style="cursor: pointer;">&times;</span>
             <h2 class="modal-title">Descrição Completa</h2>
             <p class="modal-text" id="viewMoreText"></p>
         </div>

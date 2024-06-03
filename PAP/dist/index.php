@@ -135,7 +135,7 @@ session_start();
                                 data-swiper-parallax="100">
                                 Alpine<span class="text-outline-light">Stars</span></h2>
                             <div data-swiper-parallax-y="-25">
-                                <a href="./produtos.php" class="btn btn-psuedo text-white" role="button">Produtos |
+                                <a href="./produtos.php?id_marca=1" class="btn btn-psuedo text-white" role="button">Produtos |
                                     alpinestars</a>
                             </div>
                         </div>
@@ -160,7 +160,7 @@ session_start();
                                 <span class="text-outline-light">Scorpion</span>
                             </h2>
                             <div data-swiper-parallax-y="-25">
-                                <a href="./produtos.php" class="btn btn-psuedo text-white" role="button">Produtos |
+                                <a href="./produtos.php?id_marca=2" class="btn btn-psuedo text-white" role="button">Produtos |
                                     Scorpion</a>
                             </div>
                         </div>
@@ -184,7 +184,7 @@ session_start();
                                 <span class="text-outline-light"></span> DAINESE
                             </h2>
                             <div data-swiper-parallax-y="-25">
-                                <a href="./produtos.php" class="btn btn-psuedo text-white" role="button">produtos |
+                                <a href="./produtos.php?id_marca=4" class="btn btn-psuedo text-white" role="button">produtos |
                                     Dainese
                                 </a>
                             </div>
@@ -208,7 +208,7 @@ session_start();
                     <div class="marquee-body">
                         <div class="marquee-section animation-marquee-50">
                             <div class="mx-3 mx-lg-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=1">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/alpine.svg"
                                             alt="">
@@ -216,7 +216,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-3 mx-lg-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=2">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/scorpion.png"
                                             alt="">
@@ -224,7 +224,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-3 mx-lg-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=3">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/agv.png"
                                             alt="">
@@ -232,7 +232,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-3 mx-lg-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=4">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/dainese.png"
                                             alt="">
@@ -240,7 +240,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-3 mx-lg-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=6">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/shoei.png"
                                             alt="">
@@ -248,7 +248,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-3 mx-lg-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=7">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/shark.svg"
                                             alt="">
@@ -256,7 +256,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-3 mx-lg-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=1">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/alpine.svg"
                                             alt="">
@@ -264,7 +264,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-3 mx-lg-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=2">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/scorpion.png"
                                             alt="">
@@ -272,7 +272,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-3 mx-lg-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=3">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/agv.png"
                                             alt="">
@@ -282,7 +282,7 @@ session_start();
                         </div>
                         <div class="marquee-section animation-marquee-50">
                             <div class="mx-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=4">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/dainese.png"
                                             alt="">
@@ -290,7 +290,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=6">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/shoei.png"
                                             alt="">
@@ -298,7 +298,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=7">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/shark.svg"
                                             alt="">
@@ -306,7 +306,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=1">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/alpine.svg"
                                             alt="">
@@ -314,7 +314,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=2">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/scorpion.png"
                                             alt="">
@@ -322,7 +322,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=3">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/agv.png"
                                             alt="">
@@ -330,7 +330,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=4">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/dainese.png"
                                             alt="">
@@ -338,7 +338,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=6">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/shoei.png"
                                             alt="">
@@ -346,7 +346,7 @@ session_start();
                                 </a>
                             </div>
                             <div class="mx-5 f-w-24">
-                                <a class="d-block" href="./produtos.php">
+                                <a class="d-block" href="./produtos.php?id_marca=7">
                                     <picture>
                                         <img class="img-fluid d-table mx-auto" src="./assets/images/logos/shark.svg"
                                             alt="">

@@ -220,7 +220,7 @@
                                             <div
                                                 class="align-items-center justify-content-between mt-5 d-none d-lg-flex">
                                                 <div class="me-5 f-w-20">
-                                                    <a class="d-block" href="./produtos.php">
+                                                    <a class="d-block" href="./produtos.php?id_marca=1">
                                                         <picture>
                                                             <img class="img-fluid d-table mx-auto"
                                                                 src="./assets/images/logos/alpine.svg" alt="">
@@ -228,7 +228,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="me-5 f-w-20">
-                                                    <a class="d-block" href="./produtos.php">
+                                                    <a class="d-block" href="./produtos.php?id_marca=2">
                                                         <picture>
                                                             <img class="img-fluid d-table mx-auto"
                                                                 src="./assets/images/logos/scorpion.png" alt="">
@@ -236,7 +236,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="me-5 f-w-20">
-                                                    <a class="d-block" href="./produtos.php">
+                                                    <a class="d-block" href="./produtos.php?id_marca=3">
                                                         <picture>
                                                             <img class="img-fluid d-table mx-auto"
                                                                 src="./assets/images/logos/agv.png" alt="">
@@ -244,7 +244,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="me-5 f-w-20">
-                                                    <a class="d-block" href="./produtos.php">
+                                                    <a class="d-block" href="./produtos.php?id_marca=4">
                                                         <picture>
                                                             <img class="img-fluid d-table mx-auto"
                                                                 src="./assets/images/logos/dainese.png" alt="">
@@ -252,7 +252,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="me-5 f-w-20">
-                                                    <a class="d-block" href="./produtos.php">
+                                                    <a class="d-block" href="./produtos.php?id_marca=6">
                                                         <picture>
                                                             <img class="img-fluid d-table mx-auto"
                                                                 src="./assets/images/logos/shoei.png" alt="">
@@ -260,7 +260,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="me-5 f-w-20">
-                                                    <a class="d-block" href="./produtos.php">
+                                                    <a class="d-block" href="./produtos.php?id_marca=71">
                                                         <picture>
                                                             <img class="img-fluid d-table mx-auto"
                                                                 src="./assets/images/logos/shark.svg" alt="">

@@ -81,6 +81,9 @@ session_start();
                     if (isset($_GET['id_categoria'])) {
                         $id_categoria = $_GET['id_categoria'];
                         $sql_count = "SELECT COUNT(*) as total_produtos FROM produtos WHERE status = 1 AND id_categoria = $id_categoria";
+                    } else if (isset($_GET['id_marca'])) {
+                        $id_marca = $_GET['id_marca'];
+                        $sql_count = "SELECT COUNT(*) as total_produtos FROM produtos WHERE status = 1 AND id_marca = $id_marca";
                     } else {
                         // Se não houver categoria definida, contar todos os produtos com status = 1
                         $sql_count = "SELECT COUNT(*) as total_produtos FROM produtos WHERE status = 1";
@@ -128,6 +131,21 @@ session_start();
                 INNER JOIN categorias c ON p.id_categoria = c.id_categoria
                 INNER JOIN marcas m ON p.id_marca = m.id_marca
                 WHERE status = 1 AND c.id_categoria = $id_categoria";
+                } else if (isset($_GET['id_marca'])) {
+                    $id_marca = $_GET['id_marca'];
+                    $sqlProd = "SELECT DISTINCT 
+                    p.id_prod,
+                    p.nome_prod,
+                    c.nome_categoria,
+                    m.nome_marca,
+                    p.preco_prod,
+                    p.foto_prod,
+                    p.desc_prod
+                FROM 
+                    produtos p
+                INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                INNER JOIN marcas m ON p.id_marca = m.id_marca
+                WHERE status = 1 AND p.id_marca = $id_marca";
                 } else {
                     $sqlProd = "SELECT DISTINCT 
                     p.id_prod,
@@ -144,10 +162,11 @@ session_start();
                 WHERE status = 1";
                 }
 
-                if (!empty($_GET['marcas'])) {
-                    $marcas_selecionadas = implode(",", $_GET['marcas']);
-                    $sqlProd .= " AND m.id_marca IN ($marcas_selecionadas)";
-                }
+                // if (!empty($_GET['marcas'])) {
+                //     $marcas_selecionadas = implode(",", $_GET['marcas']);
+                //     $sqlProd .= " AND m.id_marca IN ($marcas_selecionadas)";
+                // }
+
                 $result2 = mysqli_query($con, $sqlProd);
                 if (mysqli_num_rows($result2) > 0) {
                     while ($row2 = mysqli_fetch_assoc($result2)) {

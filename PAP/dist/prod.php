@@ -40,9 +40,6 @@ $id_prod = $_GET['id_prod'];
     <!-- Fix for custom scrollbar if JS is disabled-->
     <noscript>
         <style>
-            /**
-          * Reinstate scrolling for non-JS clients
-          */
             .simplebar-content-wrapper {
                 overflow: auto;
             }
@@ -57,12 +54,11 @@ $id_prod = $_GET['id_prod'];
 <body class="">
 
     <!-- Navbar -->
-    <!-- Navbar -->
     <?php include('navbar.php'); ?>
-    <!-- / Navbar--> <!-- / Navbar-->
+    <!-- / Navbar-->
 
     <!-- Main Section-->
-    <section class="mt-0 ">
+    <section class="mt-0">
         <!-- Page Content Goes Here -->
         <?php
         $sqlProd = "SELECT DISTINCT 
@@ -83,7 +79,7 @@ $id_prod = $_GET['id_prod'];
         $sqlTamanhos = "SELECT * FROM produtos_tamanhos WHERE id_prod = $id_prod";
         $resultTamanhos = mysqli_query($con, $sqlTamanhos);
 
-        if (mysqli_num_rows($result2) > 0)
+        if (mysqli_num_rows($result2) > 0) {
             if (mysqli_num_rows($resultTamanhos) > 0) {
                 while ($row2 = mysqli_fetch_assoc($result2)) { ?>
                 <!-- Breadcrumbs-->
@@ -93,7 +89,7 @@ $id_prod = $_GET['id_prod'];
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item breadcrumb-light"><a href="index.php">Início</a></li>
                                 <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php">Produtos</a></li>
-                                <li class="breadcrumb-item  breadcrumb-light active" aria-current="page">
+                                <li class="breadcrumb-item breadcrumb-light active" aria-current="page">
                                     <?= $row2['nome_prod'] ?>
                                 </li>
                             </ol>
@@ -114,12 +110,6 @@ $id_prod = $_GET['id_prod'];
                                         <img class="img-fluid" data-zoomable src="<?= $row2['foto_prod'] ?>">
                                     </picture>
                                 </div>
-                                <!-- <div class="col-12">
-                            <picture>
-                                <img class="img-fluid" data-zoomable src="./assets/images/products/product-page-2.jpeg"
-                                    alt="HTML Bootstrap Template by Pixel Rocket">
-                            </picture>
-                        </div> -->
                             </div>
                         </div>
                         <!-- /Product Images-->
@@ -137,21 +127,18 @@ $id_prod = $_GET['id_prod'];
                                             <span class="text-muted">Tamanhos disponíveis</span> :
                                         </small>
                                         <?php
-                                        while ($tamanho = mysqli_fetch_array($resultTamanhos)) {
-                                            if (!isset($i)) {
-                                                $i = 0;
-                                            } ?>
+                                        $i = 0;
+                                        while ($tamanho = mysqli_fetch_array($resultTamanhos)) { ?>
                                             <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
                                                 <div class="form-check-option form-check-rounded">
-                                                    <input type="radio" name="product-option-sizes" value="<?= $tamanho['tamanho']; ?>" id="option-sizes-<?= $i; ?>">
+                                                    <input type="radio" name="product-option-sizes" value="<?= $tamanho['tamanho']; ?>" id="option-sizes-<?= $i; ?>" data-max="<?= $tamanho['stock'] ?>">
                                                     <label for="option-sizes-<?= $i; ?>">
-
                                                         <small><?= $tamanho['tamanho']; ?></small>
                                                     </label>
                                                 </div>
                                             </div>
                                         <?php
-                                            $i = $i + 1;
+                                            $i++;
                                         }
                                         ?>
                                     </div>
@@ -162,7 +149,7 @@ $id_prod = $_GET['id_prod'];
                                         <form id="formAddToCart" action="adicionar_ao_carrinho.php" method="POST">
                                             <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
                                                 <div class="form-check-option2 form-check-rounded">
-                                                   <input type="number" name="quantidade" value="1" min="1" max="<?= $tamanho['stock'] ?>" onchange="checkQuantity(this)">
+                                                   <input type="number" name="quantidade" value="1" min="1" max="1" id="quantidadeInput" onchange="checkQuantity(this)">
                                                 </div>
                                             </div>
                                             <button id="btnAddToCart" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Adicionar ao carrinho</button>
@@ -172,22 +159,46 @@ $id_prod = $_GET['id_prod'];
                                         </form>
                                         <script>
                                             document.getElementById('btnAddToCart').addEventListener('click', function(event) {
-                                                // Evitar o comportamento padrão do botão (submit do formulário)
                                                 event.preventDefault();
 
-                                                // Obter o tamanho selecionado pelo usuário
-                                                var tamanhoSelecionado = document.querySelector('input[name="product-option-sizes"]:checked').value;
-                                                // Atribuir o tamanho selecionado ao campo oculto
-                                                document.getElementById('tamanhoSelecionado').value = tamanhoSelecionado;
+                                                var tamanhoSelecionado = document.querySelector('input[name="product-option-sizes"]:checked');
+                                                if (!tamanhoSelecionado) {
+                                                    alert('Selecione um tamanho.');
+                                                    return;
+                                                }
+                                                var quantidadeInput = document.querySelector('input[name="quantidade"]');
+                                                var maxQuantidade = parseInt(tamanhoSelecionado.getAttribute('data-max'), 10);
+                                                var quantidade = parseInt(quantidadeInput.value, 10);
 
-                                                // Obter a quantidade digitada pelo usuário
-                                                var quantidadeSelecionada = document.querySelector('input[name="quantidade"]').value;
-                                                // Atribuir a quantidade selecionada ao campo oculto
-                                                document.querySelector('input[name="quantidade"]').value = quantidadeSelecionada;
+                                                if (quantidade > maxQuantidade) {
+                                                    alert('A quantidade não pode exceder o stock disponível.');
+                                                    quantidadeInput.value = maxQuantidade;
+                                                    return;
+                                                }
 
-                                                // Enviar o formulário
+                                                document.getElementById('tamanhoSelecionado').value = tamanhoSelecionado.value;
                                                 document.getElementById('formAddToCart').submit();
                                             });
+
+                                            document.querySelectorAll('input[name="product-option-sizes"]').forEach(function(radio) {
+                                                radio.addEventListener('change', function() {
+                                                    var maxQuantidade = parseInt(this.getAttribute('data-max'), 10);
+                                                    var quantidadeInput = document.getElementById('quantidadeInput');
+                                                    quantidadeInput.setAttribute('max', maxQuantidade);
+                                                    if (parseInt(quantidadeInput.value, 10) > maxQuantidade) {
+                                                        quantidadeInput.value = maxQuantidade;
+                                                    }
+                                                });
+                                            });
+
+                                            function checkQuantity(input) {
+                                                var max = parseInt(input.getAttribute('max'), 10);
+                                                if (isNaN(input.value) || Number(input.value) <= 0) {
+                                                    input.value = "1";
+                                                } else if (Number(input.value) > max) {
+                                                    input.value = max;
+                                                }
+                                            }
                                         </script>
                                         <!-- Product Highlights-->
                                         <div class="my-5">
@@ -240,6 +251,7 @@ $id_prod = $_GET['id_prod'];
                     $i++;
                 }
             }
+        }
                 ?>
                     </div>
 
@@ -256,16 +268,6 @@ $id_prod = $_GET['id_prod'];
 
     <!-- Theme JS -->
     <script src="./assets/js/theme.bundle.js"></script>
-    <script>
-        function checkQuantity(input) {
-            // Verifica se o valor é um número positivo
-            if (isNaN(input.value) || Number(input.value) <= 0) {
-                // Se não for, define o valor como 1
-                input.value = "1";
-            }
-        }
-    </script>
-
 </body>
 
 </html>

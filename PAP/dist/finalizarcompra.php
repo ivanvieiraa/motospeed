@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 
 include('ligacao.php');
@@ -14,8 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Dados do formulário
     $id_user = $_SESSION['id_user']; // Substitua por sua própria variável de sessão para o ID do usuário
     $data_venda = date("Y-m-d"); // Data atual
-    // $opcaoEnvioSelecionada = $_POST['envio'];
-    // $subtotal = $_POST['subtotal'];
     $custoEnvio = $_POST['custoEnvio'];
     $total = $_POST['total'];
     // Inserir dados na tabela 'vendas'
@@ -28,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Dados do carrinho
         $carrinho = $_SESSION['carrinho'];
 
-        // Inserir detalhes da venda na tabela 'detalhe_venda'
+        // Inserir detalhes da venda na tabela 'detalhe_venda' e atualizar o stock
         foreach ($carrinho as $produto) {
             $id_prod = $produto['id_prod']; // Substitua pela coluna correta na tabela 'produtos'
             $quantidade = $produto['quantidade'];
@@ -40,6 +38,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $result_detalhe_venda = mysqli_query($con, $sql_detalhe_venda);
             if (!$result_detalhe_venda) {
                 echo "Erro ao inserir detalhe da venda: " . mysqli_error($con);
+                exit();
+            }
+
+            // Atualizar o stock na tabela 'produtos_tamanhos'
+            $sql_update_stock = "UPDATE produtos_tamanhos SET stock = stock - $quantidade WHERE id_prod = '$id_prod' AND tamanho = '$tamanho'";
+            $result_update_stock = mysqli_query($con, $sql_update_stock);
+            if (!$result_update_stock) {
+                echo "Erro ao atualizar o stock: " . mysqli_error($con);
                 exit();
             }
         }

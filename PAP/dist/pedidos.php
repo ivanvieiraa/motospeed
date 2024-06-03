@@ -162,7 +162,11 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                                         <div class="card mb-3 pedido-card"> <!-- Adicionando a classe pedido-card aqui -->
                                             <div class="card-header d-flex justify-content-between align-items-center">
                                                 <h5 class="card-title mb-0">
-                                                    Pedido #<?php echo htmlspecialchars($id_venda); ?> - <?php echo htmlspecialchars($venda['data_venda']); ?>
+                                                    <?php
+                                                    $data_venda_formatada = date("d/m/Y", strtotime($venda['data_venda']));
+                                                    ?>
+
+                                                    Pedido #<?php echo htmlspecialchars($id_venda); ?> - <?php echo htmlspecialchars($data_venda_formatada); ?>
                                                 </h5>
                                                 <div class="d-flex align-items-center">
                                                     <a style="text-decoration: none; color: orangered; font-weight: bold; font-size: large; margin-right: 20px;" href="generate_invoice.php?id_venda=<?= $id_venda ?>">

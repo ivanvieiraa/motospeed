@@ -126,26 +126,27 @@ $id_prod = $_GET['id_prod'];
                                             <small class="text-uppercase pt-4 d-block fw-bolder">
                                                 <span class="text-muted">Tamanhos disponíveis</span> :
                                             </small>
-                                            <?php
-                                            $i = 0;
-                                            while ($tamanho = mysqli_fetch_array($resultTamanhos)) { ?>
-                                                <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
-                                                    <div class="form-check-option form-check-rounded">
+                                            <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
+                                                <?php
+                                                $i = 0;
+                                                while ($tamanho = mysqli_fetch_array($resultTamanhos)) { ?>
+                                                    <div class="form-check-option form-check-rounded me-3 mb-3">
                                                         <input type="radio" name="product-option-sizes" value="<?= $tamanho['tamanho']; ?>" id="option-sizes-<?= $i; ?>" data-max="<?= $tamanho['stock'] ?>">
                                                         <label for="option-sizes-<?= $i; ?>">
                                                             <small><?= $tamanho['tamanho']; ?></small>
                                                         </label>
                                                     </div>
-                                                </div>
-                                            <?php
-                                                $i++;
-                                            }
-                                            ?>
+                                                <?php
+                                                    $i++;
+                                                }
+                                                ?>
+                                            </div>
                                         </div>
                                         <div class="border-top mt-4 mb-3 product-option">
                                             <small class="text-uppercase pt-4 d-block fw-bolder">
                                                 <span class="text-muted">Quantidade</span> :
                                             </small>
+
                                             <form id="formAddToCart" action="adicionar_ao_carrinho.php" method="POST">
                                                 <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
                                                     <div class="form-check-option2 form-check-rounded">
@@ -196,16 +197,19 @@ $id_prod = $_GET['id_prod'];
                                                     radio.addEventListener('change', function() {
                                                         var maxQuantidade = parseInt(this.getAttribute('data-max'), 10);
                                                         var quantidadeInput = document.getElementById('quantidadeInput');
+                                                        var btnAddToCart = document.getElementById('btnAddToCart');
 
                                                         // Define o valor máximo para o campo de entrada da quantidade
                                                         quantidadeInput.setAttribute('max', maxQuantidade);
 
-                                                        // Se o estoque disponível for zero, oculta o campo de entrada da quantidade e exibe a mensagem "Fora de stock"
+                                                        // Se o estoque disponível for zero, oculta o campo de entrada da quantidade e o botão "Adicionar ao carrinho"
                                                         if (maxQuantidade === 0) {
                                                             quantidadeInput.style.display = 'none';
+                                                            btnAddToCart.style.display = 'none';
                                                             document.getElementById('outOfStockMessage').style.display = 'block';
                                                         } else {
                                                             quantidadeInput.style.display = 'block';
+                                                            btnAddToCart.style.display = 'block';
                                                             document.getElementById('outOfStockMessage').style.display = 'none';
                                                         }
 

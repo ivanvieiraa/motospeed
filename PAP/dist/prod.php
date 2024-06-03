@@ -79,9 +79,13 @@ $id_prod = $_GET['id_prod'];
                         INNER JOIN marcas m ON p.id_marca = m.id_marca
                         WHERE id_prod = $id_prod";
         $result2 = mysqli_query($con, $sqlProd);
-        if (mysqli_num_rows($result2) > 0) {
-            while ($row2 = mysqli_fetch_assoc($result2)) {
-        ?>
+
+        $sqlTamanhos = "SELECT * FROM produtos_tamanhos WHERE id_prod = $id_prod";
+        $resultTamanhos = mysqli_query($con, $sqlTamanhos);
+
+        if (mysqli_num_rows($result2) > 0)
+            if (mysqli_num_rows($resultTamanhos) > 0) {
+                while ($row2 = mysqli_fetch_assoc($result2)) { ?>
                 <!-- Breadcrumbs-->
                 <div class="bg-dark py-6">
                     <div class="container-fluid">
@@ -132,43 +136,24 @@ $id_prod = $_GET['id_prod'];
                                         <small class="text-uppercase pt-4 d-block fw-bolder">
                                             <span class="text-muted">Tamanhos disponíveis</span> :
                                         </small>
-                                        <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
-                                            <div class="form-check-option form-check-rounded">
-                                                <input type="radio" name="product-option-sizes" value="XS" id="option-sizes-0">
-                                                <label for="option-sizes-0">
+                                        <?php
+                                        while ($tamanho = mysqli_fetch_array($resultTamanhos)) {
+                                            if (!isset($i)) {
+                                                $i = 0;
+                                            } ?>
+                                            <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
+                                                <div class="form-check-option form-check-rounded">
+                                                    <input type="radio" name="product-option-sizes" value="<?= $tamanho['tamanho']; ?>" id="option-sizes-<?= $i; ?>">
+                                                    <label for="option-sizes-<?= $i; ?>">
 
-                                                    <small>XS</small>
-                                                </label>
+                                                        <small><?= $tamanho['tamanho']; ?></small>
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="form-check-option form-check-rounded">
-                                                <input type="radio" name="product-option-sizes" value="S" id="option-sizes-1">
-                                                <label for="option-sizes-1">
-
-                                                    <small>S</small>
-                                                </label>
-                                            </div>
-                                            <div class="form-check-option form-check-rounded">
-                                                <input type="radio" name="product-option-sizes" value="M" checked id="option-sizes-2">
-                                                <label for="option-sizes-2">
-
-                                                    <small>M</small>
-                                                </label>
-                                            </div>
-                                            <div class="form-check-option form-check-rounded">
-                                                <input type="radio" name="product-option-sizes" value="L" id="option-sizes-3">
-                                                <label for="option-sizes-3">
-
-                                                    <small>L</small>
-                                                </label>
-                                            </div>
-                                            <div class="form-check-option form-check-rounded">
-                                                <input type="radio" name="product-option-sizes" value="Xl" id="option-sizes-4">
-                                                <label for="option-sizes-4">
-
-                                                    <small>XL</small>
-                                                </label>
-                                            </div>
-                                        </div>
+                                        <?php
+                                            $i = $i + 1;
+                                        }
+                                        ?>
                                     </div>
                                     <div class="border-top mt-4 mb-3 product-option">
                                         <small class="text-uppercase pt-4 d-block fw-bolder">
@@ -177,7 +162,7 @@ $id_prod = $_GET['id_prod'];
                                         <form id="formAddToCart" action="adicionar_ao_carrinho.php" method="POST">
                                             <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
                                                 <div class="form-check-option2 form-check-rounded">
-                                                    <input type="number" name="quantidade" value="1" min="1" onchange="checkQuantity(this)">
+                                                   <input type="number" name="quantidade" value="1" min="1" max="<?= $tamanho['stock'] ?>" onchange="checkQuantity(this)">
                                                 </div>
                                             </div>
                                             <button id="btnAddToCart" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Adicionar ao carrinho</button>
@@ -252,8 +237,9 @@ $id_prod = $_GET['id_prod'];
                         </div>
                         <!-- / Product Top Section-->
                 <?php
+                    $i++;
+                }
             }
-        }
                 ?>
                     </div>
 

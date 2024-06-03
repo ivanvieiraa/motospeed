@@ -3,6 +3,19 @@ session_start();
 include("ligacao.php");
 $id_prod = $_GET['id_prod'];
 
+$sqlTamanhos = "SELECT * FROM produtos_tamanhos WHERE id_prod = $id_prod";
+$resultTamanhos = mysqli_query($con, $sqlTamanhos);
+
+$tamanhosDisponivel = false;
+if (mysqli_num_rows($resultTamanhos) > 0) {
+    while ($tamanho = mysqli_fetch_array($resultTamanhos)) {
+        if ($tamanho['stock'] > 0) {
+            $tamanhosDisponivel = true;
+            break;
+        }
+    }
+}
+
 ?>
 
 <!doctype html>
@@ -122,7 +135,7 @@ $id_prod = $_GET['id_prod'];
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p class="fs-4 m-0"><?= $row2['preco_prod'] ?>€</p>
                                         </div>
-                                        <div class="border-top mt-4 mb-3 product-option">
+                                        <div class="border-top mt-4 mb-3 product-option" style="display: <?= ($tamanhosDisponivel === true) ? "block" : "none" ?>">
                                             <small class="text-uppercase pt-4 d-block fw-bolder">
                                                 <span class="text-muted">Tamanhos disponíveis</span> :
                                             </small>
@@ -144,20 +157,20 @@ $id_prod = $_GET['id_prod'];
                                         </div>
                                         <div class="border-top mt-4 mb-3 product-option">
                                             <small class="text-uppercase pt-4 d-block fw-bolder">
-                                                <span class="text-muted">Quantidade</span> :
+                                                <span class="text-muted" style="display: <?= ($tamanhosDisponivel === true) ? "block" : "none" ?>">Quantidade</span>
                                             </small>
 
                                             <form id="formAddToCart" action="adicionar_ao_carrinho.php" method="POST">
                                                 <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
-                                                    <div class="form-check-option2 form-check-rounded">
+                                                    <div class="form-check-option2 form-check-rounded" style="display: <?= ($tamanhosDisponivel === true) ? "block" : "none" ?>">
                                                         <input type="number" name="quantidade" value="1" min="1" max="1" id="quantidadeInput" onchange="checkQuantity(this)">
                                                     </div>
                                                 </div>
-                                                <div id="outOfStockMessage" class="mt-4 mb-3 product-option" style="display: none;">
+                                                <div id="outOfStockMessage" class="mt-4 mb-3 product-option" style="display: <?= ($tamanhosDisponivel === false) ? "block" : "none" ?>">
                                                     <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Fora de stock</small>
                                                 </div>
 
-                                                <button id="btnAddToCart" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Adicionar ao carrinho</button>
+                                                <button id="btnAddToCart" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow" style="display: <?= ($tamanhosDisponivel === true) ? "block" : "none" ?>">Adicionar ao carrinho</button>
 
                                                 <input type="hidden" name="id_prod" value="<?= $id_prod ?>">
                                                 <input type="hidden" name="tamanho" id="tamanhoSelecionado"> <!-- Campo oculto para o tamanho -->

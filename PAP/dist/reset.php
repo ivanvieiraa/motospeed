@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $mail->Port = 465;
 
                 //Recipients
+                $mail->CharSet = 'UTF-8';
                 $mail->setFrom('motospeed2024@gmail.com', 'Motospeed');
                 $mail->addAddress($reset_email);     //Add a recipient
                 $mail->addReplyTo('motospeed2024@gmail.com', 'Motospeed');
@@ -47,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 //Content
                 $mail->isHTML(true);                                  //Set email format to HTML
                 $mail->Subject = 'Motospeed | Reset da password';
-                $mail->Body = '<h4>Ola, a recuperacao da password foi concluida com sucesso!<br><br>
-                Deves utilizar o codigo de confirmacao para definires a tua nova password.<br><br>
-                Codigo de confirmacao: ' . $codigo . ' <br><br>
+                $mail->Body = '<h4>Olá, a recuperação da password foi concluída com sucesso!<br><br>
+                Deves utilizar o código de confirmação para definires a tua nova password.<br><br>
+                Código de confirmação: ' . $codigo . ' <br><br>
                 Com os melhores cumprimentos,<br>Motospeed!</h4>';
 
                 $mail->send();

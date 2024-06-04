@@ -240,19 +240,18 @@
                                         <!-- Menswear Dropdown Menu Images Section-->
                                         <div class="col-lg-4 d-none d-lg-block">
                                             <div class="vw-50 border-start h-100 position-absolute"></div>
-                                            <div class="py-lg-5 position-relative z-index-10 px-lg-4 align-items-center">
+                                            <div class="py-lg-5 position-relative z-index-10 px-lg-4 align-items-center text-center">
                                                 <div class="row g-4 justify-content-center"> <!-- Adicionado justify-content-center -->
                                                     <div class="col-12 col-md-6">
                                                         <div class="card justify-content-center d-flex align-items-center bg-transparent">
                                                             <picture class="w-100 d-block mb-2 mx-auto">
-                                                                <img class="w-100 rounded" title="" src="./assets/images/banners/novidade.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                                                                <img class="w-50 rounded " title=""  src="./assets/images/banners/suporte.png">
                                                             </picture>
-                                                            <a class="fw-bolder link-cover" style="text-decoration: none;" href="./sobre.php#form-section">Pedir apoio</a>
                                                         </div>
                                                     </div>
                                                     <!-- Outros col-md-6 removidos para simplificação -->
                                                 </div>
-                                                <a href="./produtos.php" class="btn btn-link p-0 fw-bolder text-link-border mt-5 text-dark mx-auto d-table" style="text-decoration: none;">Ir para página de produtos</a>
+                                                <a href="./sobre.php#form-section" class="btn btn-link p-0 fw-bolder text-link-border mt-5 text-dark mx-auto d-table" style="text-decoration: none;">Apoio ao cliente</a>
                                             </div>
                                         </div>
                                         <!-- Menswear Dropdown Menu Images Section-->

@@ -2,6 +2,7 @@
 session_start();
 include("ligacao.php");
 $id_prod = $_GET['id_prod'];
+$id_user = $_SESSION['id_user']; // Supondo que o ID do usuário está armazenado na sessão
 
 $sqlTamanhos = "SELECT * FROM produtos_tamanhos WHERE id_prod = $id_prod";
 $resultTamanhos = mysqli_query($con, $sqlTamanhos);
@@ -16,6 +17,10 @@ if (mysqli_num_rows($resultTamanhos) > 0) {
     }
 }
 
+// Verifica se o produto já está na lista de desejos do usuário
+$sqlWishlist = "SELECT * FROM wishlist WHERE id_user = $id_user AND id_prod = $id_prod";
+$resultWishlist = mysqli_query($con, $sqlWishlist);
+$isInWishlist = mysqli_num_rows($resultWishlist) > 0;
 ?>
 
 <!doctype html>
@@ -104,8 +109,8 @@ if (mysqli_num_rows($resultTamanhos) > 0) {
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item breadcrumb-light"><a href="index.php">Início</a></li>
                                     <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php">Produtos</a></li>
-                                    <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_categoria=<?=$row2['id_categoria'];?>"><?=$row2['nome_categoria'];?></a></li>
-                                    <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_marca=<?=$row2['id_marca'];?>"><?=$row2['nome_marca'];?></a></li>
+                                    <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_categoria=<?= $row2['id_categoria']; ?>"><?= $row2['nome_categoria']; ?></a></li>
+                                    <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_marca=<?= $row2['id_marca']; ?>"><?= $row2['nome_marca']; ?></a></li>
                                     <li class="breadcrumb-item breadcrumb-light active" aria-current="page">
                                         <?= $row2['nome_prod'] ?>
                                     </li>
@@ -135,7 +140,14 @@ if (mysqli_num_rows($resultTamanhos) > 0) {
                             <div class="col-12 col-md-6 col-lg-7">
                                 <div class="sticky-top top-5">
                                     <div class="pb-3" data-aos="fade-in">
-                                        <h1 class="mb-1 fs-2 fw-bold"><?= $row2['nome_prod'] ?></h1>
+                                        <h1 class="mb-1 fs-2 fw-bold"><?= $row2['nome_prod'] ?>
+                                            <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted">
+                                                <a href="#" style="text-decoration: none;" class="wishlist-icon" data-id-prod="<?= $row2['id_prod']; ?>">
+                                                    <i class="<?= $isInWishlist ? 'ri-heart-fill' : 'ri-heart-line'; ?>"></i>
+                                                </a>
+                                            </span>
+
+                                        </h1>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p class="fs-4 m-0"><?= $row2['preco_prod'] ?>€</p>
                                         </div>
@@ -319,6 +331,45 @@ if (mysqli_num_rows($resultTamanhos) > 0) {
 
     <!-- Theme JS -->
     <script src="./assets/js/theme.bundle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.wishlist-icon').forEach(function(icon) {
+                icon.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    var idProd = this.getAttribute('data-id-prod');
+                    var iconElement = this.querySelector('i');
+
+                    fetch('add_to_wishlist.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: 'id_prod=' + idProd
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                if (data.action === 'added') {
+                                    iconElement.classList.remove('ri-heart-line');
+                                    iconElement.classList.add('ri-heart-fill');
+                                } else if (data.action === 'removed') {
+                                    iconElement.classList.remove('ri-heart-fill');
+                                    iconElement.classList.add('ri-heart-line');
+                                }
+                            } else {
+                                alert(data.message || 'Failed to update wishlist');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            });
+        });
+    </script>
+
+
 </body>
 
 </html>

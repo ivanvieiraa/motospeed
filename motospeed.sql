@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03-Jun-2024 às 16:49
+-- Tempo de geração: 04-Jun-2024 às 13:40
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -56,6 +56,13 @@ CREATE TABLE `detalhe_venda` (
   `tamanho` varchar(255) NOT NULL,
   `preco_uni` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `detalhe_venda`
+--
+
+INSERT INTO `detalhe_venda` (`id_venda`, `id_prod`, `quantidade`, `tamanho`, `preco_uni`) VALUES
+(65, 5, 1, 'XS', 1499);
 
 -- --------------------------------------------------------
 
@@ -159,16 +166,16 @@ CREATE TABLE `produtos_tamanhos` (
 --
 
 INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
-(2, 'L', 100),
-(2, 'M', 100),
-(2, 'S', 100),
-(2, 'XL', 100),
-(2, 'XS', 100),
+(2, 'L', 0),
+(2, 'M', 0),
+(2, 'S', 0),
+(2, 'XL', 0),
+(2, 'XS', 0),
 (5, 'L', 100),
 (5, 'M', 100),
 (5, 'S', 100),
 (5, 'XL', 100),
-(5, 'XS', 100),
+(5, 'XS', 99),
 (8, 'L', 100),
 (8, 'M', 100),
 (8, 'S', 100),
@@ -204,8 +211,8 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (14, 'S', 100),
 (14, 'XL', 100),
 (14, 'XS', 100),
-(15, 'L', 100),
-(15, 'M', 100),
+(15, 'L', 95),
+(15, 'M', 0),
 (15, 'S', 100),
 (15, 'XL', 100),
 (15, 'XS', 100),
@@ -337,7 +344,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id_user`, `nome`, `apelido`, `email`, `pass`, `data_nasc`, `foto`, `morada`, `codigop`, `adm`, `criado_a`, `alterado_a`, `status`) VALUES
 (49, 'Admin', 'Admin', 'motospeed2024@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '0000-00-00', 'uploads/users/mstile-150x150.png', '', '', 1, '2024-04-28 21:50:28', '2024-05-08 17:02:13', 1),
-(50, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', '5788e2b0db1849bbe8ce4f21f63471b6', '2006-10-07', 'uploads/users/default.png', '', '', 0, '2024-04-28 22:05:41', '2024-05-23 14:58:56', 1);
+(50, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', '2c42e5cf1cdbafea04ed267018ef1511', '2006-10-07', 'uploads/users/default.png', 'Rua da solidariadade, Lote 16', '1675-629', 0, '2024-04-28 22:05:41', '2024-06-04 11:17:54', 1);
 
 -- --------------------------------------------------------
 
@@ -357,6 +364,33 @@ CREATE TABLE `vendas` (
   `morada` varchar(255) NOT NULL,
   `codigop` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `vendas`
+--
+
+INSERT INTO `vendas` (`id_venda`, `id_user`, `data_venda`, `total`, `envio`, `nome`, `apelido`, `email`, `morada`, `codigop`) VALUES
+(65, 50, '2024-06-04', 1503.99, 4.99, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'Rua da solidariadade, Lote 16', '1675-629');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `wishlist`
+--
+
+CREATE TABLE `wishlist` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_prod` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `wishlist`
+--
+
+INSERT INTO `wishlist` (`id`, `id_user`, `id_prod`) VALUES
+(10, 49, 17),
+(11, 50, 2);
 
 --
 -- Índices para tabelas despejadas
@@ -421,6 +455,14 @@ ALTER TABLE `vendas`
   ADD KEY `id_user` (`id_user`);
 
 --
+-- Índices para tabela `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_prod` (`id_prod`);
+
+--
 -- AUTO_INCREMENT de tabelas despejadas
 --
 
@@ -458,7 +500,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+
+--
+-- AUTO_INCREMENT de tabela `wishlist`
+--
+ALTER TABLE `wishlist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restrições para despejos de tabelas
@@ -490,6 +538,13 @@ ALTER TABLE `produtos_tamanhos`
 --
 ALTER TABLE `vendas`
   ADD CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+
+--
+-- Limitadores para a tabela `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
+  ADD CONSTRAINT `wishlist_ibfk_2` FOREIGN KEY (`id_prod`) REFERENCES `produtos` (`id_prod`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

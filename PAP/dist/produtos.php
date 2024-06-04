@@ -226,7 +226,6 @@ session_start();
                             <div class="card-img position-relative">
                                 <div class="card-badges">
                                 </div>
-                                <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
                                 <picture class="position-relative overflow-hidden d-block bg-light">
                                     <img class="w-100 img-fluid position-relative z-index-10" title="" src="<?= $dados['foto_prod']; ?>" alt="">
                                 </picture>

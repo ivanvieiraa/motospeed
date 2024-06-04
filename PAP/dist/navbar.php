@@ -60,6 +60,7 @@
                                 <hr>
                                 <li><a class="dropdown-item" href="./perfil.php">Editar Perfil</a></li>
                                 <li><a class="dropdown-item" href="./pedidos.php">Histórico de compras</a></li>
+                                <li><a class="dropdown-item" href="./desejos.php">Lista de desejos</a></li>
                                 <?php
                                 if ($_SESSION['adm'] == 1)
                                     echo '<li><a class="dropdown-item" href="./AdminLTE-3.2.0">Dashboard</a></li>

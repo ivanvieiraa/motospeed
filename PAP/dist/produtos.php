@@ -61,7 +61,45 @@ session_start();
     <!-- Main Section-->
     <section class="mt-0 ">
         <!-- Page Content Goes Here -->
+        <?php
+        include('ligacao.php');
 
+        // Verifica se a categoria está definida na URL
+        if (isset($_GET['id_categoria'])) {
+            $id_categoria = $_GET['id_categoria'];
+            $sql_count = "SELECT c.nome_categoria, COUNT(*) AS total_produtos 
+              FROM produtos p 
+              INNER JOIN categorias c ON p.id_categoria = c.id_categoria 
+              WHERE p.status = 1 AND p.id_categoria = $id_categoria";
+            $result = mysqli_query($con, $sql_count);
+
+            if ($result) {
+                // Extrair os dados da consulta
+                $row = mysqli_fetch_assoc($result);
+                $nome_categoria = $row['nome_categoria'];
+            }
+        } else if (isset($_GET['id_marca'])) {
+            $id_marca = $_GET['id_marca'];
+            $sql_count = "SELECT m.nome_marca, COUNT(*) AS total_produtos 
+            FROM produtos p 
+            INNER JOIN marcas m ON p.id_marca = m.id_marca 
+            WHERE p.status = 1 AND p.id_marca = $id_marca";
+            $result = mysqli_query($con, $sql_count);
+
+            if ($result) {
+                // Extrair os dados da consulta
+                $row = mysqli_fetch_assoc($result);
+                $nome_marca = $row['nome_marca'];
+            }
+        } else {
+            // Se não houver categoria definida, contar todos os produtos com status = 1
+            $sql_count = "SELECT COUNT(*) as total_produtos FROM produtos WHERE status = 1";
+        }
+        // Executa a consulta SQL para contar produtos
+        $result_count = mysqli_query($con, $sql_count);
+        $row_count = mysqli_fetch_assoc($result_count);
+        $total_produtos = $row_count['total_produtos'];
+        ?>
         <div class="container-fluid" data-aos="fade-in">
             <!-- Category Toolbar-->
             <div class="d-flex justify-content-between items-center pt-5 pb-4 flex-column flex-lg-row">
@@ -70,29 +108,18 @@ session_start();
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.php">Início</a></li>
                             <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php">Produtos</a>
+                                <?php
+                                if (isset($id_categoria)) { ?>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_categoria=<?= $id_categoria ?>"><?= $nome_categoria ?></a>
                             </li>
-
+                        <?php } ?>
+                        <?php
+                        if (isset($id_marca)) { ?>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_marca=<?= $id_marca ?>"><?= $nome_marca ?></a>
+                            </li>
+                        <?php } ?>
                         </ol>
                     </nav>
-                    <?php
-                    include('ligacao.php');
-
-                    // Verifica se a categoria está definida na URL
-                    if (isset($_GET['id_categoria'])) {
-                        $id_categoria = $_GET['id_categoria'];
-                        $sql_count = "SELECT COUNT(*) as total_produtos FROM produtos WHERE status = 1 AND id_categoria = $id_categoria";
-                    } else if (isset($_GET['id_marca'])) {
-                        $id_marca = $_GET['id_marca'];
-                        $sql_count = "SELECT COUNT(*) as total_produtos FROM produtos WHERE status = 1 AND id_marca = $id_marca";
-                    } else {
-                        // Se não houver categoria definida, contar todos os produtos com status = 1
-                        $sql_count = "SELECT COUNT(*) as total_produtos FROM produtos WHERE status = 1";
-                    }
-                    // Executa a consulta SQL para contar produtos
-                    $result_count = mysqli_query($con, $sql_count);
-                    $row_count = mysqli_fetch_assoc($result_count);
-                    $total_produtos = $row_count['total_produtos'];
-                    ?>
                     <!-- Exibir a contagem de produtos -->
                     <h1 class="fw-bold fs-3 mb-2">Produtos (<?php echo $total_produtos; ?>)</h1>
                 </div>

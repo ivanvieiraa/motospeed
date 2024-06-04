@@ -78,7 +78,9 @@ if (mysqli_num_rows($resultTamanhos) > 0) {
                         p.id_prod,
                         p.nome_prod,
                         c.nome_categoria,
+                        c.id_categoria,
                         m.nome_marca,
+                        m.id_marca,
                         p.preco_prod,
                         p.foto_prod,
                         p.desc_prod
@@ -102,6 +104,8 @@ if (mysqli_num_rows($resultTamanhos) > 0) {
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item breadcrumb-light"><a href="index.php">Início</a></li>
                                     <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php">Produtos</a></li>
+                                    <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_categoria=<?=$row2['id_categoria'];?>"><?=$row2['nome_categoria'];?></a></li>
+                                    <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_marca=<?=$row2['id_marca'];?>"><?=$row2['nome_marca'];?></a></li>
                                     <li class="breadcrumb-item breadcrumb-light active" aria-current="page">
                                         <?= $row2['nome_prod'] ?>
                                     </li>

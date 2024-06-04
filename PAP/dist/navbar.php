@@ -19,28 +19,20 @@
 
                     <!-- Mobile Nav Toggler-->
                     <li class="d-lg-none">
-                        <span class="nav-link text-body d-flex align-items-center cursor-pointer"
-                            data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-                            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><i
-                                class="ri-menu-line ri-lg me-1"></i> Menu</span>
+                        <span class="nav-link text-body d-flex align-items-center cursor-pointer" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><i class="ri-menu-line ri-lg me-1"></i> Menu</span>
                     </li>
                     <!-- /Mobile Nav Toggler-->
 
                     <!-- Navbar Search-->
                     <li class="d-none d-sm-block">
-                        <span class="nav-link text-body search-trigger cursor-pointer"><i
-                                class="fas fa-search"></i></span>
+                        <span class="nav-link text-body search-trigger cursor-pointer"><i class="fas fa-search"></i></span>
 
                         <!-- Search navbar overlay-->
                         <div class="navbar-search d-none">
                             <div class="input-group mb-3 h-100">
-                                <span class="input-group-text px-4 bg-transparent border-0"><i
-                                        class="ri-search-line ri-lg"></i></span>
-                                <input type="text" class="form-control text-body bg-transparent border-0"
-                                    placeholder="Introduza a sua pesquisa...">
-                                <span
-                                    class="input-group-text px-4 cursor-pointer disable-child-pointer close-search bg-transparent border-0"><i
-                                        class="ri-close-circle-line ri-lg"></i></span>
+                                <span class="input-group-text px-4 bg-transparent border-0"><i class="ri-search-line ri-lg"></i></span>
+                                <input type="text" class="form-control text-body bg-transparent border-0" placeholder="Introduza a sua pesquisa...">
+                                <span class="input-group-text px-4 cursor-pointer disable-child-pointer close-search bg-transparent border-0"><i class="ri-close-circle-line ri-lg"></i></span>
                             </div>
                         </div>
                         <div class="search-overlay"></div>
@@ -52,20 +44,21 @@
                     <!-- Navbar Login-->
                     <?php
                     if (isset($_SESSION['nome'])) {
-                        ?>
+                    ?>
                         <li class="ms-1 d-none d-lg-inline-block dropdown">
-                            <a class="nav-link text-body dropdown-toggle" href="#" role="button" id="userDropdown"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link text-body dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-user"></i> <i class="fas fa-chevron-down"></i>
 
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                                <li><h5>Olá, <?= $_SESSION['nome']?></h5></li>
+                                <li>
+                                    <h5>Olá, <?= $_SESSION['nome'] ?></h5>
+                                </li>
                                 <hr>
                                 <li><a class="dropdown-item" href="./perfil.php">Editar Perfil</a></li>
                                 <li><a class="dropdown-item" href="./pedidos.php">Histórico de compras</a></li>
-                                <?php 
-                                    if($_SESSION['adm'] == 1)
+                                <?php
+                                if ($_SESSION['adm'] == 1)
                                     echo '<li><a class="dropdown-item" href="./AdminLTE-3.2.0">Dashboard</a></li>
                                     ';
                                 ?>
@@ -73,37 +66,37 @@
                                 <li><a class="dropdown-item" href="./logout.php" style="color:red">Log out</a></li>
                             </ul>
                         </li>
-                        <?php
+                    <?php
                     } else {
-                        ?>
+                    ?>
                         <li class="ms-1 d-none d-lg-inline-block">
                             <a class="nav-link text-body" href="./login_form.php">
-                            <i class="fas fa-sign-in-alt"></i>
+                                <i class="fas fa-sign-in-alt"></i>
 
                             </a>
                         </li>
-                        <?php
+                    <?php
                     }
                     ?>
                     <!-- /Navbar Login-->
 
                     <?php
                     if (isset($_SESSION['nome'])) {
-                        ?>
+                    ?>
                         <li class="ms-1 d-none d-lg-inline-block">
                             <a class="nav-link text-body" href="./cart.php">
                                 <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
-                        <?php
+                    <?php
                     } else {
-                        ?>
+                    ?>
                         <li class="ms-1 d-none d-lg-inline-block">
                             <a class="nav-link text-body" href="./login_form.php">
                                 <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
-                        <?php
+                    <?php
                     }
                     ?>
 
@@ -115,8 +108,7 @@
                 <!-- Navbar Icons-->
 
                 <!-- Main Navigation-->
-                <div class="flex-shrink-0 collapse navbar-collapse navbar-collapse-light w-auto flex-grow-1 order-2 order-lg-1"
-                    id="navbarNavDropdown">
+                <div class="flex-shrink-0 collapse navbar-collapse navbar-collapse-light w-auto flex-grow-1 order-2 order-lg-1" id="navbarNavDropdown">
 
                     <!-- Menu-->
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
@@ -126,8 +118,7 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown dropdown position-static">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 categorias
                             </a>
                             <!-- Menswear dropdown menu-->
@@ -141,14 +132,10 @@
                                                 <div class="col">
                                                     <h6 class="dropdown">Capacetes</h6>
                                                     <ul class="list-unstyled">
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Corrida</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Motocross</a>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Corrida</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Motocross</a>
                                                         </li>
-                                                        <li class="dropdown-list-item"><a
-                                                                class="dropdown-item dropdown-link-all"
-                                                                href="./produtos.php?id_categoria=1">Ver todos</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="./produtos.php?id_categoria=1">Ver todos</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->
@@ -157,14 +144,10 @@
                                                 <div class="col">
                                                     <h6 class="dropdown">Casacos</h6>
                                                     <ul class="list-unstyled">
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Cabedal</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Tecido</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Cabedal</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Tecido</a></li>
 
-                                                        <li class="dropdown-list-item"><a
-                                                                class="dropdown-item dropdown-link-all"
-                                                                href="./produtos.php?id_categoria=2">Ver todos</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="./produtos.php?id_categoria=2">Ver todos</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->
@@ -173,14 +156,10 @@
                                                 <div class="col">
                                                     <h6 class="dropdown">Luvas</h6>
                                                     <ul class="list-unstyled">
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Cabedal</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Tecido</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Cabedal</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Tecido</a></li>
 
-                                                        <li class="dropdown-list-item"><a
-                                                                class="dropdown-item dropdown-link-all"
-                                                                href="./produtos.php?id_categoria=4">Ver todas</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="./produtos.php?id_categoria=4">Ver todas</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->
@@ -189,14 +168,10 @@
                                                 <div class="col">
                                                     <h6 class="dropdown">Calças</h6>
                                                     <ul class="list-unstyled">
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Cabedal</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Tecido</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Cabedal</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Tecido</a></li>
 
-                                                        <li class="dropdown-list-item"><a
-                                                                class="dropdown-item dropdown-link-all"
-                                                                href="./produtos.php?id_categoria=3">Ver todas</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="./produtos.php?id_categoria=3">Ver todas</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->
@@ -205,65 +180,54 @@
                                                 <div class="col">
                                                     <h6 class="dropdown">Botas</h6>
                                                     <ul class="list-unstyled">
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Cabedal</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item"
-                                                                href="./produtos.php">Tecido</a></li>
-                                                        <li class="dropdown-list-item"><a
-                                                                class="dropdown-item dropdown-link-all"
-                                                                href="./produtos.php?id_categoria=5">Ver todas</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Cabedal</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Tecido</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="./produtos.php?id_categoria=5">Ver todas</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- / menu row-->
                                             </div>
 
-                                            <div
-                                                class="align-items-center justify-content-between mt-5 d-none d-lg-flex">
+                                            <div class="align-items-center justify-content-between mt-5 d-none d-lg-flex">
                                                 <div class="me-5 f-w-20">
                                                     <a class="d-block" href="./produtos.php?id_marca=1">
                                                         <picture>
-                                                            <img class="img-fluid d-table mx-auto"
-                                                                src="./assets/images/logos/alpine.svg" alt="">
+                                                            <img class="img-fluid d-table mx-auto" src="./assets/images/logos/alpine.svg" alt="">
                                                         </picture>
                                                     </a>
                                                 </div>
                                                 <div class="me-5 f-w-20">
                                                     <a class="d-block" href="./produtos.php?id_marca=2">
                                                         <picture>
-                                                            <img class="img-fluid d-table mx-auto"
-                                                                src="./assets/images/logos/scorpion.png" alt="">
+                                                            <img class="img-fluid d-table mx-auto" src="./assets/images/logos/scorpion.png" alt="">
                                                         </picture>
                                                     </a>
                                                 </div>
                                                 <div class="me-5 f-w-20">
                                                     <a class="d-block" href="./produtos.php?id_marca=3">
                                                         <picture>
-                                                            <img class="img-fluid d-table mx-auto"
-                                                                src="./assets/images/logos/agv.png" alt="">
+                                                            <img class="img-fluid d-table mx-auto" src="./assets/images/logos/agv.png" alt="">
                                                         </picture>
                                                     </a>
                                                 </div>
                                                 <div class="me-5 f-w-20">
                                                     <a class="d-block" href="./produtos.php?id_marca=4">
                                                         <picture>
-                                                            <img class="img-fluid d-table mx-auto"
-                                                                src="./assets/images/logos/dainese.png" alt="">
+                                                            <img class="img-fluid d-table mx-auto" src="./assets/images/logos/dainese.png" alt="">
                                                         </picture>
                                                     </a>
                                                 </div>
                                                 <div class="me-5 f-w-20">
                                                     <a class="d-block" href="./produtos.php?id_marca=6">
                                                         <picture>
-                                                            <img class="img-fluid d-table mx-auto"
-                                                                src="./assets/images/logos/shoei.png" alt="">
+                                                            <img class="img-fluid d-table mx-auto" src="./assets/images/logos/shoei.png" alt="">
                                                         </picture>
                                                     </a>
                                                 </div>
                                                 <div class="me-5 f-w-20">
-                                                    <a class="d-block" href="./produtos.php?id_marca=71">
+                                                    <a class="d-block" href="./produtos.php?id_marca=7">
                                                         <picture>
-                                                            <img class="img-fluid d-table mx-auto"
-                                                                src="./assets/images/logos/shark.svg" alt="">
+                                                            <img class="img-fluid d-table mx-auto" src="./assets/images/logos/shark.svg" alt="">
                                                         </picture>
                                                     </a>
                                                 </div>
@@ -273,65 +237,22 @@
                                         <!-- Menswear Dropdown Menu Images Section-->
                                         <div class="col-lg-4 d-none d-lg-block">
                                             <div class="vw-50 border-start h-100 position-absolute"></div>
-                                            <div class="py-lg-5 position-relative z-index-10 px-lg-4">
-                                                <div class="row g-4">
+                                            <div class="py-lg-5 position-relative z-index-10 px-lg-4 align-items-center">
+                                                <div class="row g-4 justify-content-center"> <!-- Adicionado justify-content-center -->
                                                     <div class="col-12 col-md-6">
-                                                        <div
-                                                            class="card justify-content-center d-flex align-items-center bg-transparent">
+                                                        <div class="card justify-content-center d-flex align-items-center bg-transparent">
                                                             <picture class="w-100 d-block mb-2 mx-auto">
-                                                                <img class="w-100 rounded" title=""
-                                                                    src="./assets/images/banners/novidade.jpg"
-                                                                    alt="HTML Bootstrap Template by Pixel Rocket">
+                                                                <img class="w-100 rounded" title="" src="./assets/images/banners/novidade.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
                                                             </picture>
-                                                            <a class="fw-bolder link-cover" style="text-decoration: none;"
-                                                                href="./produtos.php">Últimos lançamentos</a>
+                                                            <a class="fw-bolder link-cover" style="text-decoration: none;" href="./sobre.php#form-section">Pedir apoio</a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-12 col-md-6">
-                                                        <div
-                                                            class="card justify-content-center d-flex align-items-center bg-transparent">
-                                                            <picture class="w-100 d-block mb-2 mx-auto">
-                                                                <img class="w-100 rounded" title=""
-                                                                    src="./assets/images/banners/capacetes.png"
-                                                                    alt="HTML Bootstrap Template by Pixel Rocket">
-                                                            </picture>
-                                                            <a class="fw-bolder link-cover" style="text-decoration: none;"
-                                                                href="./produtos.php">Capacetes</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-md-6">
-                                                        <div
-                                                            class="card justify-content-center d-flex align-items-center bg-transparent">
-                                                            <picture class="w-100 d-block mb-2 mx-auto">
-                                                                <img class="w-100 rounded" title=""
-                                                                    src="./assets/images/banners/casacos.png"
-                                                                    alt="HTML Bootstrap Template by Pixel Rocket">
-                                                            </picture>
-                                                            <a class="fw-bolder link-cover" style="text-decoration: none;"
-                                                                href="./produtos.php">Casacos</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-md-6">
-                                                        <div
-                                                            class="card justify-content-center d-flex align-items-center bg-transparent">
-                                                            <picture class="w-100 d-block mb-2 mx-auto">
-                                                                <img class="w-100 rounded" title=""
-                                                                    src="./assets/images/banners/luvas.png"
-                                                                    alt="HTML Bootstrap Template by Pixel Rocket">
-                                                            </picture>
-                                                            <a class="fw-bolder link-cover" style="text-decoration: none;"
-                                                                href="./produtos.php">Luvas</a>
-                                                        </div>
-                                                    </div>
+                                                    <!-- Outros col-md-6 removidos para simplificação -->
                                                 </div>
-                                                <a href="./produtos.php"
-                                                    class="btn btn-link p-0 fw-bolder text-link-border mt-5 text-dark mx-auto d-table" style="text-decoration: none;">Ir
-                                                    para página de produtos</a>
+                                                <a href="./produtos.php" class="btn btn-link p-0 fw-bolder text-link-border mt-5 text-dark mx-auto d-table" style="text-decoration: none;">Ir para página de produtos</a>
                                             </div>
                                         </div>
                                         <!-- Menswear Dropdown Menu Images Section-->
-
-
                                     </div>
                                 </div>
                             </div>

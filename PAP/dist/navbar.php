@@ -246,7 +246,7 @@
                                                     <div class="col-12 col-md-6">
                                                         <div class="card justify-content-center d-flex align-items-center bg-transparent">
                                                             <picture class="w-100 d-block mb-2 mx-auto">
-                                                                <img class="w-50 rounded " title=""  src="./assets/images/banners/suporte.png">
+                                                                <a href="sobre.php#form-section"><img class="w-50 rounded " title=""  src="./assets/images/banners/suporte.png"></a>
                                                             </picture>
                                                         </div>
                                                     </div>

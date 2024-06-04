@@ -63,6 +63,10 @@ if ($id_user !== null) {
     <!-- Main CSS -->
     <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
 
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <!-- Fix for custom scrollbar if JS is disabled-->
     <noscript>
         <style>
@@ -78,7 +82,6 @@ if ($id_user !== null) {
 </head>
 
 <body class="">
-
     <!-- Navbar -->
     <?php include('navbar.php'); ?>
     <!-- / Navbar-->
@@ -205,7 +208,11 @@ if ($id_user !== null) {
 
                                                     var tamanhoSelecionado = document.querySelector('input[name="product-option-sizes"]:checked');
                                                     if (!tamanhoSelecionado) {
-                                                        alert('Selecione um tamanho.');
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Oops...',
+                                                            text: 'Selecione um tamanho!',
+                                                        });
                                                         return;
                                                     }
 
@@ -361,12 +368,22 @@ if ($id_user !== null) {
                                 if (data.action === 'added') {
                                     iconElement.classList.remove('ri-heart-line');
                                     iconElement.classList.add('ri-heart-fill');
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Sucesso!',
+                                        text: 'Produto adicionado à lista de desejos!',
+                                    });
                                 } else if (data.action === 'removed') {
                                     iconElement.classList.remove('ri-heart-fill');
                                     iconElement.classList.add('ri-heart-line');
+                                    Swal.fire({
+                                        icon: 'success1',
+                                        title: 'Sucesso!',
+                                        text: 'Produto removido da lista de desejos!',
+                                    });
                                 }
                             } else {
-                                alert(data.message || 'Failed to update wishlist');
+                                alert(data.message || 'Falha ao atualizar lista de desejos');
                             }
                         })
                         .catch(error => {

@@ -8,8 +8,10 @@ if (!isset($_SESSION['id_user'])) {
 }
 
 $id_user = $_SESSION['id_user'];
-$id_prod = $_POST['id_prod'];
-
+if(isset($_POST['id_prod']))
+    $id_prod = $_POST['id_prod'];
+if(isset($_GET['id_prod']))
+    $id_prod = $_GET['id_prod'];
 // Verificar se o produto já está na wishlist
 $sqlCheck = "SELECT * FROM wishlist WHERE id_user = ? AND id_prod = ?";
 $stmtCheck = $con->prepare($sqlCheck);

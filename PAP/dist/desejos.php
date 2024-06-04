@@ -20,7 +20,7 @@ if (!$result || mysqli_num_rows($result) == 0) {
 $user_data = mysqli_fetch_assoc($result);
 
 // Consulta para obter os produtos na lista de desejos do usuário
-$sql_desejos = "SELECT produtos.id_prod, produtos.nome_prod, produtos.foto_prod FROM wishlist
+$sql_desejos = "SELECT produtos.id_prod, produtos.nome_prod, produtos.foto_prod, produtos.preco_prod FROM wishlist
                 INNER JOIN produtos ON wishlist.id_prod = produtos.id_prod
                 WHERE wishlist.id_user = $id_user";
 $result_desejos = mysqli_query($con, $sql_desejos);
@@ -62,56 +62,73 @@ if (!$result_desejos) {
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
+
     <style>
-        /* Estilo para a tabela */
-        .table-responsive {
-            /* Remover a propriedade overflow-x */
-            overflow-x: hidden;
+        /* Estilos para a lista de desejos */
+        .wishlist-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            margin-top: 50px;
         }
 
-        /* Outros estilos de tabela */
-        .table thead th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-        }
-
-        .table tbody td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        .table tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        /* Estilo para os cards dos pedidos */
-        .pedido-card {
-            border: 2px solid lightgray;
+        .wishlist-item {
+            background-color: #f9f9f9;
             border-radius: 10px;
-            /* Arredonda as bordas dos cards */
-            transition: all 0.3s ease;
-            /* Adiciona uma transição suave */
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 300px;
+            /* Definindo uma largura máxima para os cards */
         }
 
-        .pedido-card:hover {
-            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
-            /* Adiciona uma sombra ao passar o mouse */
+        .wishlist-image {
+            position: relative;
+            overflow: hidden;
+            height: 210px;
+            /* Aumentando a altura das imagens em 10 pixels */
         }
 
-        /* Outros estilos vão aqui */
-        .card-body.produtos-list {
-            max-width: 100%;
-            overflow-x: auto;
+        .wishlist-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* Alterando de "cover" para "contain" */
         }
 
-        .card-body.produtos-list .row {
-            flex-wrap: nowrap;
+        .wishlist-details {
+            padding: 15px;
         }
 
-        .card-body.produtos-list .col-md-3 {
-            flex: 0 0 auto;
+        .wishlist-details h6 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .remove-item {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .remove-item:hover {
+            color: #ff0000;
+        }
+
+        a:hover{
+            color: red;
         }
     </style>
+
 </head>
 
 <body>
@@ -120,10 +137,10 @@ if (!$result_desejos) {
     <?php include('navbar.php'); ?>
     <!-- / Navbar -->
 
-    <!-- Main Section-->
+    <!-- Main Section -->
     <section class="mt-0 overflow-hidden">
         <div class="container-fluid">
-            <!-- Profile-->
+            <!-- Profile -->
             <form name="alterarPerfil" action="alterarPerfil.php" method="POST" enctype="multipart/form-data">
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
@@ -136,23 +153,23 @@ if (!$result_desejos) {
                             <?php echo htmlspecialchars($user_data['nome']) . ' ' . htmlspecialchars($user_data['apelido']); ?>
                         </h3>
                         <p class="text-muted text-center">Lista de desejos</p>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Nome do Produto</th>
-                                        <th>Foto do Produto</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php while ($row = mysqli_fetch_assoc($result_desejos)) : ?>
-                                        <tr>
-                                            <td><?php echo $row['nome_prod']; ?></td>
-                                            <td><img src="<?php echo $row['foto_prod']; ?>" alt="<?php echo $row['nome_prod']; ?>" width="100"></td>
-                                        </tr>
-                                    <?php endwhile; ?>
-                                </tbody>
-                            </table>
+                        <div class="wishlist-container">
+                            <?php if (mysqli_num_rows($result_desejos) > 0) : ?>
+                                <?php while ($row = mysqli_fetch_assoc($result_desejos)) : ?>
+                                    <div class="wishlist-item">
+                                        <div class="wishlist-image">
+                                            <img class="img-fluid" src="<?= $row['foto_prod']; ?>" alt="<?= $row['nome_prod']; ?>">
+                                            <a href="remove_wishlist.php?id_prod=<?= $row['id_prod']; ?>" class="remove-item" title="Remover da lista de desejos"><i class="ri-close-line"></i></a>
+                                        </div>
+                                        <div class="wishlist-details">
+                                            <h6><a style="text-decoration: none;" href="prod.php?id_prod=<?=$row['id_prod'];?>"><?= $row['nome_prod']; ?></a></h6>
+                                            <p class="price"><?= $row['preco_prod']; ?>€</p>
+                                        </div>
+                                    </div>
+                                <?php endwhile; ?>
+                            <?php else : ?>
+                                <p class="text-center">A sua lista de desejos está vazia! <br><br><a href="./produtos.php">Explore a nossa loja</a></p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -161,6 +178,7 @@ if (!$result_desejos) {
         </div>
     </section>
     <!-- / Main Section -->
+
 
     <!-- Footer -->
     <?php include("footer.php"); ?>

@@ -31,7 +31,10 @@
                         <div class="navbar-search d-none">
                             <div class="input-group mb-3 h-100">
                                 <span class="input-group-text px-4 bg-transparent border-0"><i class="ri-search-line ri-lg"></i></span>
-                                <input type="text" class="form-control text-body bg-transparent border-0" placeholder="Introduza a sua pesquisa...">
+                                <form class="d-flex" action="produtos.php" method="GET">
+                                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar" name="query">
+                                    <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+                                </form>
                                 <span class="input-group-text px-4 cursor-pointer disable-child-pointer close-search bg-transparent border-0"><i class="ri-close-circle-line ri-lg"></i></span>
                             </div>
                         </div>

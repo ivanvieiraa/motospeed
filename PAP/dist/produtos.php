@@ -64,13 +64,23 @@ session_start();
         <?php
         include('ligacao.php');
 
-        // Verifica se a categoria está definida na URL
-        if (isset($_GET['id_categoria'])) {
+        // Variáveis de controle
+        $sql_count = "";
+        $nome_categoria = "";
+        $nome_marca = "";
+
+        // Verifica se a pesquisa está definida na URL
+        if (isset($_GET['query'])) {
+            $query = mysqli_real_escape_string($con, $_GET['query']);
+            $sql_count = "SELECT COUNT(*) as total_produtos 
+                          FROM produtos 
+                          WHERE status = 1 AND (nome_prod LIKE '%$query%' OR desc_prod LIKE '%$query%')";
+        } elseif (isset($_GET['id_categoria'])) {
             $id_categoria = $_GET['id_categoria'];
             $sql_count = "SELECT c.nome_categoria, COUNT(*) AS total_produtos 
-              FROM produtos p 
-              INNER JOIN categorias c ON p.id_categoria = c.id_categoria 
-              WHERE p.status = 1 AND p.id_categoria = $id_categoria";
+                          FROM produtos p 
+                          INNER JOIN categorias c ON p.id_categoria = c.id_categoria 
+                          WHERE p.status = 1 AND p.id_categoria = $id_categoria";
             $result = mysqli_query($con, $sql_count);
 
             if ($result) {
@@ -78,12 +88,12 @@ session_start();
                 $row = mysqli_fetch_assoc($result);
                 $nome_categoria = $row['nome_categoria'];
             }
-        } else if (isset($_GET['id_marca'])) {
+        } elseif (isset($_GET['id_marca'])) {
             $id_marca = $_GET['id_marca'];
             $sql_count = "SELECT m.nome_marca, COUNT(*) AS total_produtos 
-            FROM produtos p 
-            INNER JOIN marcas m ON p.id_marca = m.id_marca 
-            WHERE p.status = 1 AND p.id_marca = $id_marca";
+                          FROM produtos p 
+                          INNER JOIN marcas m ON p.id_marca = m.id_marca 
+                          WHERE p.status = 1 AND p.id_marca = $id_marca";
             $result = mysqli_query($con, $sql_count);
 
             if ($result) {
@@ -92,9 +102,10 @@ session_start();
                 $nome_marca = $row['nome_marca'];
             }
         } else {
-            // Se não houver categoria definida, contar todos os produtos com status = 1
+            // Se não houver categoria ou pesquisa definida, contar todos os produtos com status = 1
             $sql_count = "SELECT COUNT(*) as total_produtos FROM produtos WHERE status = 1";
         }
+
         // Executa a consulta SQL para contar produtos
         $result_count = mysqli_query($con, $sql_count);
         $row_count = mysqli_fetch_assoc($result_count);
@@ -143,84 +154,94 @@ session_start();
 
             <div class="row g-4">
                 <?php
-                if (isset($_GET['id_categoria'])) {
+                if (isset($_GET['query'])) {
+                    $query = mysqli_real_escape_string($con, $_GET['query']);
+                    $sqlProd = "SELECT DISTINCT 
+                                p.id_prod,
+                                p.nome_prod,
+                                c.nome_categoria,
+                                m.nome_marca,
+                                p.preco_prod,
+                                p.foto_prod,
+                                p.desc_prod
+                            FROM 
+                                produtos p
+                            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                            INNER JOIN marcas m ON p.id_marca = m.id_marca
+                            WHERE status = 1 AND (nome_prod LIKE '%$query%' OR desc_prod LIKE '%$query%')";
+                } elseif (isset($_GET['id_categoria'])) {
                     $id_categoria = $_GET['id_categoria'];
                     $sqlProd = "SELECT DISTINCT 
-                    p.id_prod,
-                    p.nome_prod,
-                    c.nome_categoria,
-                    m.nome_marca,
-                    p.preco_prod,
-                    p.foto_prod,
-                    p.desc_prod
-                FROM 
-                    produtos p
-                INNER JOIN categorias c ON p.id_categoria = c.id_categoria
-                INNER JOIN marcas m ON p.id_marca = m.id_marca
-                WHERE status = 1 AND c.id_categoria = $id_categoria";
-                } else if (isset($_GET['id_marca'])) {
+                                p.id_prod,
+                                p.nome_prod,
+                                c.nome_categoria,
+                                m.nome_marca,
+                                p.preco_prod,
+                                p.foto_prod,
+                                p.desc_prod
+                            FROM 
+                                produtos p
+                            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                            INNER JOIN marcas m ON p.id_marca = m.id_marca
+                            WHERE status = 1 AND c.id_categoria = $id_categoria";
+                } elseif (isset($_GET['id_marca'])) {
                     $id_marca = $_GET['id_marca'];
                     $sqlProd = "SELECT DISTINCT 
-                    p.id_prod,
-                    p.nome_prod,
-                    c.nome_categoria,
-                    m.nome_marca,
-                    p.preco_prod,
-                    p.foto_prod,
-                    p.desc_prod
-                FROM 
-                    produtos p
-                INNER JOIN categorias c ON p.id_categoria = c.id_categoria
-                INNER JOIN marcas m ON p.id_marca = m.id_marca
-                WHERE status = 1 AND p.id_marca = $id_marca";
+                                p.id_prod,
+                                p.nome_prod,
+                                c.nome_categoria,
+                                m.nome_marca,
+                                p.preco_prod,
+                                p.foto_prod,
+                                p.desc_prod
+                            FROM 
+                                produtos p
+                            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                            INNER JOIN marcas m ON p.id_marca = m.id_marca
+                            WHERE status = 1 AND m.id_marca = $id_marca";
                 } else {
                     $sqlProd = "SELECT DISTINCT 
-                    p.id_prod,
-                    p.nome_prod,
-                    c.nome_categoria,
-                    m.nome_marca,
-                    p.preco_prod,
-                    p.foto_prod,
-                    p.desc_prod
-                FROM 
-                    produtos p
-                INNER JOIN categorias c ON p.id_categoria = c.id_categoria
-                INNER JOIN marcas m ON p.id_marca = m.id_marca
-                WHERE status = 1";
+                                p.id_prod,
+                                p.nome_prod,
+                                c.nome_categoria,
+                                m.nome_marca,
+                                p.preco_prod,
+                                p.foto_prod,
+                                p.desc_prod
+                            FROM 
+                                produtos p
+                            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                            INNER JOIN marcas m ON p.id_marca = m.id_marca
+                            WHERE status = 1";
                 }
 
-                // if (!empty($_GET['marcas'])) {
-                //     $marcas_selecionadas = implode(",", $_GET['marcas']);
-                //     $sqlProd .= " AND m.id_marca IN ($marcas_selecionadas)";
-                // }
+                // Executa a consulta SQL para obter os produtos
+                $resultProd = mysqli_query($con, $sqlProd);
 
-                $result2 = mysqli_query($con, $sqlProd);
-                if (mysqli_num_rows($result2) > 0) {
-                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                // Exibir produtos
+                while ($dados = mysqli_fetch_array($resultProd)) {
                 ?>
-                        <div class="col-12 col-sm-4 col-lg-3">
-                            <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
-                                <div class="card-img position-relative">
-                                    <div class="card-badges">
-                                    </div>
-                                    <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
-                                    <picture class="position-relative overflow-hidden d-block bg-light">
-                                        <img class="w-100 img-fluid position-relative z-index-10" title="" src="<?= $row2['foto_prod']; ?>" alt="">
-                                    </picture>
-                                    <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
-                                        <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i>Ver detalhe do produto</button>
-                                    </div>
+                    <div class="col-12 col-sm-4 col-lg-3">
+                        <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
+                            <div class="card-img position-relative">
+                                <div class="card-badges">
                                 </div>
-                                <div class="card-body px-0">
-                                    <a class="text-decoration-none link-cover" href="./prod.php?id_prod=<?= $row2['id_prod'] ?>"><?= $row2['nome_prod']; ?></a>
-                                    <p class="mt-2 mb-0 large"><?= $row2['preco_prod']; ?>€</p>
+                                <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
+                                <picture class="position-relative overflow-hidden d-block bg-light">
+                                    <img class="w-100 img-fluid position-relative z-index-10" title="" src="<?= $dados['foto_prod']; ?>" alt="">
+                                </picture>
+                                <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
+                                    <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i>Ver detalhe do produto</button>
                                 </div>
                             </div>
+                            <div class="card-body px-0">
+                                <a class="text-decoration-none link-cover" href="./prod.php?id_prod=<?= $dados['id_prod'] ?>"><?= $dados['nome_prod']; ?></a>
+                                <p class="mt-2 mb-0 large"><?= $dados['preco_prod']; ?>€</p>
+                            </div>
                         </div>
+                    </div>
+                    <!-- / Product-->
                 <?php
-                    }
-                } else {
-                    echo '<p style=text-align:center;>Não existem produtos para mostrar</p>';
                 }
                 ?>
             </div>

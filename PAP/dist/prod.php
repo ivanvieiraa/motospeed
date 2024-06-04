@@ -2,7 +2,11 @@
 session_start();
 include("ligacao.php");
 $id_prod = $_GET['id_prod'];
-$id_user = $_SESSION['id_user']; // Supondo que o ID do usuário está armazenado na sessão
+$id_user = isset($_SESSION['id_user']) ? $_SESSION['id_user'] : null; // Verifica se $_SESSION['id_user'] está definido
+
+if ($id_user === null) {
+    // Redirecionar para página de login ou fazer alguma outra ação
+}
 
 $sqlTamanhos = "SELECT * FROM produtos_tamanhos WHERE id_prod = $id_prod";
 $resultTamanhos = mysqli_query($con, $sqlTamanhos);
@@ -17,10 +21,14 @@ if (mysqli_num_rows($resultTamanhos) > 0) {
     }
 }
 
-// Verifica se o produto já está na lista de desejos do usuário
-$sqlWishlist = "SELECT * FROM wishlist WHERE id_user = $id_user AND id_prod = $id_prod";
-$resultWishlist = mysqli_query($con, $sqlWishlist);
-$isInWishlist = mysqli_num_rows($resultWishlist) > 0;
+// Verifica se o produto já está na lista de desejos do usuário apenas se o usuário estiver logado
+$isInWishlist = false;
+if ($id_user !== null) {
+    $sqlWishlist = "SELECT * FROM wishlist WHERE id_user = $id_user AND id_prod = $id_prod";
+    $resultWishlist = mysqli_query($con, $sqlWishlist);
+    $isInWishlist = mysqli_num_rows($resultWishlist) > 0;
+}
+
 ?>
 
 <!doctype html>

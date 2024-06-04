@@ -1,10 +1,12 @@
 <?php
+// Incluir o arquivo de conexão com o banco de dados
 include("ligacao.php");
+
+// Iniciar a sessão
 session_start();
 
 // Verificar se o ID da venda foi passado
 if (!isset($_GET['id_venda'])) {
-    // Redirecionar para a página inicial ou mostrar uma mensagem de erro
     header('location:index.php');
     exit();
 }
@@ -16,12 +18,18 @@ $sql_venda = "SELECT * FROM vendas WHERE id_venda = '$id_venda'";
 $result_venda = mysqli_query($con, $sql_venda);
 $venda = mysqli_fetch_assoc($result_venda);
 
+// Verificar se os dados da venda foram encontrados
+if (!$venda) {
+    header('location:index.php');
+    exit();
+}
+
 // Obter os detalhes da venda
 $sql_detalhes = "SELECT dv.*, p.nome_prod, p.foto_prod FROM detalhe_venda dv JOIN produtos p ON dv.id_prod = p.id_prod WHERE dv.id_venda = '$id_venda'";
 $result_detalhes = mysqli_query($con, $sql_detalhes);
 
 // Include the TCPDF library
-require_once('tcpdf/tcpdf.php');
+require_once('TCPDF-main/tcpdf.php');
 
 // Create a new PDF document
 $pdf = new TCPDF();
@@ -38,42 +46,71 @@ $pdf->AddPage();
 // Set the font
 $pdf->SetFont('helvetica', '', 12);
 
-// Write the HTML content
-$html = '<table width="100%" cellpadding="5">';
-$html .= '<tr><td align="center"><img src="mstile-150x150.png" alt="Logo da Empresa" style="width: 200px;"></td></tr>';
-$html .= '<tr><td align="center"><h1>Fatura de Compra</h1></td></tr>';
-$html .= '<tr><td><h2>Dados da Compra:</h2></td></tr>';
-$html .= '<tr><td><b>Nome:</b> ' . $venda['nome'] . ' ' . $venda['apelido'] . '</td></tr>';
-$html .= '<tr><td><b>Email:</b> ' . $venda['email'] . '</td></tr>';
-$html .= '<tr><td><b>Morada:</b> ' . $venda['morada'] . '</td></tr>';
-$html .= '<tr><td><b>Código Postal:</b> ' . $venda['codigop'] . '</td></tr>';
-$html .= '<tr><td><h2>Detalhes da Compra:</h2></td></tr>';
+// Write the header
+$pdf->writeHTML('<table cellpadding="5" cellspacing="0" border="0">
+                    <tr>
+                        <td colspan="2" align="center">
+                            <img src="mstile-150x150.png" alt="Logo da Empresa" />
+                            <h1>Motospeed</h1>
+                        </td>
+                    </tr>
+                </table>');
 
-if (mysqli_num_rows($result_detalhes) > 0) {
-    $html .= '<tr><td><table width="100%" border="1" cellpadding="5">';
-    $html .= '<thead><tr><th>Produto</th><th>Tamanho</th><th>Quantidade</th><th>Preço Unitário</th></tr></thead>';
-    $html .= '<tbody>';
-    while ($detalhe = mysqli_fetch_assoc($result_detalhes)) {
-        $html .= '<tr>';
-        $html .= '<td>' . $detalhe['nome_prod'] . '</td>';
-        $html .= '<td>' . $detalhe['tamanho'] . '</td>';
-        $html .= '<td>' . $detalhe['quantidade'] . '</td>';
-        $html .= '<td>' . $detalhe['preco_uni'] . '€</td>';
-        $html .= '</tr>';
-    }
-    $html .= '</tbody></table></td></tr>';
-} else {
-    $html .= '<tr><td><p>Nenhum detalhe de compra encontrado.</p></td></tr>';
+// Write the address and purchase details
+$html = '<table cellpadding="5" cellspacing="0" border="0">
+            <tr>
+                <td style="width: 50%;">
+                    <h2 style="color: #333;">Morada de entrega</h2>
+                    <p>' . $venda['nome'] . ' ' . $venda['apelido'] . '<br>' . $venda['morada'] . '<br>' . $venda['codigop'] . '</p>
+                </td>
+                <td style="width: 50%;">
+                    <h2 style="color: #333;">Detalhes de compra</h2>
+                    <p><strong>Número de compra:</strong> ' . $venda['id_venda'] . '<br><strong>Data da compra:</strong> ' . date("d.m.Y") . '</p>
+                </td>
+            </tr>
+        </table>';
+
+$pdf->writeHTML($html);
+
+$html = '<table cellpadding="5" cellspacing="0" border="0" style="width: 100%; background-color: #f2f2f2;">
+            <thead>
+                <tr style="background-color: #ddd;">
+                    <th style="color: #333; padding: 8px;">Nome do produto</th>
+                    <th style="color: #333; padding: 8px;">Quantidade</th>
+                    <th style="color: #333; padding: 8px;">Preço unitário</th>
+                    <th style="color: #333; padding: 8px;">Total</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+// Write the products details
+$total_liquido = 0;
+$oddRow = true;
+while ($detalhe = mysqli_fetch_assoc($result_detalhes)) {
+    $valor_total_liquido = $detalhe['preco_uni'] * $detalhe['quantidade'];
+    $total_liquido += $valor_total_liquido;
+    $html .= '<tr style="background-color: ' . ($oddRow ? '#fff' : '#f9f9f9') . ';">';
+    $oddRow = !$oddRow;
+    $html .= '<td style="color: #333; padding: 8px;">' . $detalhe['nome_prod'] . '</td>';
+    $html .= '<td style="color: #333; padding: 8px;">' . $detalhe['quantidade'] . '</td>';
+    $html .= '<td style="color: #333; padding: 8px;">' . $detalhe['preco_uni'] . '€</td>';
+    $html .= '<td style="color: #333; padding: 8px;">' . number_format($valor_total_liquido, 2) . '€</td>';
+    $html .= '</tr>';
 }
+$html .= '</tbody></table>';
 
-$html .= '<tr><td><h3>Taxa de envio: ' . $venda['envio'] . '€</h3></td></tr>';
-$html .= '<tr><td><h3>Total: ' . $venda['total'] . '€</h3></td></tr>';
-$html .= '<tr><td><p>IVA incluído</p></td></tr>';
-$html .= '</table>';
 
-// Output the HTML content
-$pdf->writeHTML($html, true, false, true, false, '');
+$pdf->writeHTML($html);
 
-// Close and output the PDF document
+// Write the total amount
+$pdf->writeHTML('<p style="text-align:right; margin-top:20px; color: #333;"><strong>Custos de envio:</strong> ' . number_format($venda['envio'], 2) . '€</p>');
+$pdf->writeHTML('<p style="text-align:right; color: #333;"><strong>Total da compra:</strong> ' . number_format($total_liquido + $venda['envio'], 2) . '€</p>');
+
+// Add space before "Obrigado pela sua compra!"
+$pdf->writeHTML('<br>');
+
+// Write the footer with a different color and increased bottom margin
+$pdf->writeHTML('<p style="text-align:center; margin-top:50px; margin-bottom: 150px; font-size:16px;">Obrigado pela sua compra!</p>');
+
+// Output the PDF
 $pdf->Output('fatura.pdf', 'D');
-?>

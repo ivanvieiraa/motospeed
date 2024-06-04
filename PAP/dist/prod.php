@@ -331,7 +331,90 @@ if ($id_user !== null) {
         }
                 ?>
                         </div>
+                        <div class="row g-0">
 
+                            <!-- Related Products-->
+                            <?php
+                            $moreProd = "SELECT DISTINCT 
+                        p.id_prod,
+                        p.nome_prod,
+                        c.nome_categoria,
+                        c.id_categoria,
+                        m.nome_marca,
+                        m.id_marca,
+                        p.preco_prod,
+                        p.foto_prod,
+                        p.desc_prod
+                        FROM 
+                        produtos p
+                        INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                        INNER JOIN marcas m ON p.id_marca = m.id_marca
+                        WHERE id_prod != $id_prod
+                        LIMIT 10";
+                            $result3 = mysqli_query($con, $moreProd); ?>
+                            <div class="col-12 aos-init aos-animate" data-aos="fade-up">
+                                <h3 class="fs-4 fw-bolder mt-7 mb-4">Produtos que poderás gostar</h3>
+                                <!-- Swiper Latest -->
+                                <div class="swiper-container swiper-container-initialized swiper-container-horizontal" data-swiper="" data-options="{
+                        &quot;spaceBetween&quot;: 10,
+                        &quot;loop&quot;: true,
+                        &quot;autoplay&quot;: {
+                          &quot;delay&quot;: 5000,
+                          &quot;disableOnInteraction&quot;: false
+                        },
+                        &quot;navigation&quot;: {
+                          &quot;nextEl&quot;: &quot;.swiper-next&quot;,
+                          &quot;prevEl&quot;: &quot;.swiper-prev&quot;
+                        },   
+                        &quot;breakpoints&quot;: {
+                          &quot;600&quot;: {
+                            &quot;slidesPerView&quot;: 2
+                          },
+                          &quot;1024&quot;: {
+                            &quot;slidesPerView&quot;: 3
+                          },       
+                          &quot;1400&quot;: {
+                            &quot;slidesPerView&quot;: 4
+                          }
+                        }
+                      }">
+                                    <?php
+                                    if (mysqli_num_rows($result3) > 0) {
+                                        while ($row3 = mysqli_fetch_assoc($result3)) { ?>
+                                            <div class="swiper-wrapper" style="transform: translate3d(-3280px, 0px, 0px); transition-duration: 0ms;">
+                                                <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-prev" style="width: 318px; margin-right: 10px;" data-swiper-slide-index="5">
+                                                    <!-- Card Product-->
+                                                    <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
+                                                        <div class="card-img position-relative">
+                                                            <picture class="position-relative overflow-hidden d-block bg-light">
+                                                                <img class="w-100 img-fluid position-relative z-index-10" title="" src="<?= $row3['foto_prod']; ?>" alt="">
+                                                            </picture>
+                                                            <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
+                                                                <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i>+ Ver detalhe do produto </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body px-0">
+                                                            <a class="text-decoration-none link-cover" href="./prod.php?id_prod=<?= $row3['id_prod']; ?>"><?= $row3['nome_prod']; ?></a>
+                                                            <p class="mt-2 mb-0 small"><s class="text-muted"><?= $row3['preco_prod']; ?>€</s></p>
+                                                        </div>
+                                                    </div>
+                                                    <!--/ Card Product-->
+                                                </div>
+                                            </div>
+                                    <?php }
+                                    } ?>
+                                    <!-- Add Arrows -->
+                                    <div class="swiper-prev top-50  start-0 z-index-30 cursor-pointer transition-all bg-white px-3 py-4 position-absolute z-index-30 top-50 start-0 mt-n8 d-flex justify-content-center align-items-center opacity-50-hover">
+                                        <i class="ri-arrow-left-s-line ri-lg"></i>
+                                    </div>
+                                    <div class="swiper-next top-50 end-0 z-index-30 cursor-pointer transition-all bg-white px-3 py-4 position-absolute z-index-30 top-50 end-0 mt-n8 d-flex justify-content-center align-items-center opacity-50-hover">
+                                        <i class="ri-arrow-right-s-line ri-lg"></i>
+                                    </div>
+                                </div>
+                                <!-- / Swiper Latest-->
+                            </div>
+                            <!-- / Related Products-->
+                        </div>
                         <!-- /Page Content -->
     </section>
     <!-- / Main Section-->
@@ -390,8 +473,6 @@ if ($id_user !== null) {
             });
         });
     </script>
-
-
 </body>
 
 </html>

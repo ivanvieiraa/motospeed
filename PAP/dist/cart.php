@@ -58,10 +58,6 @@
                 <div class="col-lg-7 pt-5 pt-lg-10">
                     <div class="pe-lg-5">
                         <nav class="d-none d-md-block">
-                            <ul class="list-unstyled d-flex justify-content-start mt-4 align-items-center fw-bolder small">
-                                <li class="me-4"><a class="nav-link-checkout active" href="./cart.php">Carrinho</a></li>
-                                </li>
-                            </ul>
                         </nav>
                         <?php
                         // Verifica se o parâmetro produto_adicionado está presente na URL e é igual a "true"
@@ -110,7 +106,7 @@
                                             }
                                         } else {
                                             // Se não houver produtos no carrinho, exibe uma mensagem indicando isso
-                                            echo '<td colspan="3">O seu carrinho está vazio</td>';
+                                            echo '<td colspan="3">O seu carrinho está vazio... <a href="./produtos.php" role="button">Adicione produtos</a></td>';
                                         }
                                         ?>
                                     </tbody>
@@ -118,7 +114,7 @@
                             </div>
                         </div>
                         <br>
-                        <a href="./produtos.php" role="button">Adicionar produtos</a>
+
                     </div>
                 </div>
                 <?php if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) { ?>

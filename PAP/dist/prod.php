@@ -210,7 +210,6 @@ if ($id_user !== null) {
                                                     if (!tamanhoSelecionado) {
                                                         Swal.fire({
                                                             icon: 'error',
-                                                            title: 'Oops...',
                                                             text: 'Selecione um tamanho!',
                                                         });
                                                         return;
@@ -370,15 +369,13 @@ if ($id_user !== null) {
                                     iconElement.classList.add('ri-heart-fill');
                                     Swal.fire({
                                         icon: 'success',
-                                        title: 'Sucesso!',
                                         text: 'Produto adicionado à lista de desejos!',
                                     });
                                 } else if (data.action === 'removed') {
                                     iconElement.classList.remove('ri-heart-fill');
                                     iconElement.classList.add('ri-heart-line');
                                     Swal.fire({
-                                        icon: 'success1',
-                                        title: 'Sucesso!',
+                                        icon: 'success',
                                         text: 'Produto removido da lista de desejos!',
                                     });
                                 }

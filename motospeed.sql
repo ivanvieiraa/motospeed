@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04-Jun-2024 às 13:40
+-- Tempo de geração: 04-Jun-2024 às 16:42
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -343,7 +343,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `nome`, `apelido`, `email`, `pass`, `data_nasc`, `foto`, `morada`, `codigop`, `adm`, `criado_a`, `alterado_a`, `status`) VALUES
-(49, 'Admin', 'Admin', 'motospeed2024@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '0000-00-00', 'uploads/users/mstile-150x150.png', '', '', 1, '2024-04-28 21:50:28', '2024-05-08 17:02:13', 1),
+(49, 'Ivan', 'Vieira', 'motospeed2024@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '2006-10-07', 'uploads/users/mstile-150x150.png', 'Rua da solidariadade, Lote 16', '1675-629', 1, '2024-04-28 21:50:28', '2024-06-04 14:36:15', 1),
 (50, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', '2c42e5cf1cdbafea04ed267018ef1511', '2006-10-07', 'uploads/users/default.png', 'Rua da solidariadade, Lote 16', '1675-629', 0, '2024-04-28 22:05:41', '2024-06-04 11:17:54', 1);
 
 -- --------------------------------------------------------
@@ -383,14 +383,6 @@ CREATE TABLE `wishlist` (
   `id_user` int(11) NOT NULL,
   `id_prod` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `wishlist`
---
-
-INSERT INTO `wishlist` (`id`, `id_user`, `id_prod`) VALUES
-(10, 49, 17),
-(11, 50, 2);
 
 --
 -- Índices para tabelas despejadas
@@ -506,7 +498,7 @@ ALTER TABLE `vendas`
 -- AUTO_INCREMENT de tabela `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- Restrições para despejos de tabelas

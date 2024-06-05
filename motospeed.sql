@@ -134,20 +134,20 @@ INSERT INTO `produtos` (`id_prod`, `nome_prod`, `preco_prod`, `desc_prod`, `foto
 (25, 'ARMURE KERR', 40, 'Armure Kerr Vented Lady Gloves Preto. Luvas curtas com ajuste específico para mulher, feitas de uma combinação de pele de cabra e malha de poliéster. Eles incorporam proteções de TPU nas articulações.', 'uploads/produtos/armure-kerr.webp', 9, 4, '2024-05-20 22:12:01', NULL, 1),
 (26, 'DAINESE UNRULY', 116.99, 'Luvas Dainese Unruly Ergo-Tek Preto / Vermelho. A construção das costas em malha sem costuras oferece grande elasticidade e liberdade de movimentos, que se combinam com os elevados níveis de segurança garantidos pela proteção dos nós dos dedos com tecnologia Ergo-Tek, concebida para garantir a total mobilidade da mão ao proteger os mais áreas expostas.', 'uploads/produtos/dainese-unruly.webp', 4, 4, '2024-05-20 22:14:28', NULL, 1);
 
---
--- Acionadores `produtos`
---
-DELIMITER $$
-CREATE TRIGGER `after_insert_produtos` AFTER INSERT ON `produtos` FOR EACH ROW BEGIN
-    INSERT INTO produtos_tamanhos (id_prod, tamanho, stock)
-    VALUES (NEW.id_prod, 'L', 0),
-           (NEW.id_prod, 'M', 0),
-           (NEW.id_prod, 'S', 0),
-           (NEW.id_prod, 'XL', 0),
-           (NEW.id_prod, 'XS', 0);
-END
-$$
-DELIMITER ;
+-- --
+-- -- Acionadores `produtos`
+-- --
+-- DELIMITER $$
+-- CREATE TRIGGER `after_insert_produtos` AFTER INSERT ON `produtos` FOR EACH ROW BEGIN
+--     INSERT INTO produtos_tamanhos (id_prod, tamanho, stock)
+--     VALUES (NEW.id_prod, 'L', 0),
+--            (NEW.id_prod, 'M', 0),
+--            (NEW.id_prod, 'S', 0),
+--            (NEW.id_prod, 'XL', 0),
+--            (NEW.id_prod, 'XS', 0);
+-- END
+-- $$
+-- DELIMITER ;
 
 -- --------------------------------------------------------
 

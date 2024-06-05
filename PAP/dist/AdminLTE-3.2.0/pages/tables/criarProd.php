@@ -147,6 +147,10 @@ include("ligacao.php");
             width: 40%;
             /* Largura dos inputs dos tamanhos */
         }
+        .campo-vazio {
+            background-color: #ffcccc;
+            /* Altera a cor de fundo para vermelho */
+        }
     </style>
 </head>
 
@@ -264,7 +268,7 @@ include("ligacao.php");
                             <!-- general form elements -->
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="inserirProd.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                            <form id="myForm" action="inserirProd.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
                                 <label for="nome">Nome:</label>
                                 <input type="text" name="nome" id="nome" value="" oninput="clearErrorMessage('nome-error')"><br>
                                 <span id="nome-error" class="error-message"></span><br>
@@ -315,7 +319,7 @@ include("ligacao.php");
                                     while ($row = mysqli_fetch_assoc($resultado)) {
                                         echo "<div class='tamanho-input'>";
                                         echo "<label for='tamanho_" . $row['tamanho'] . "'>" . $row['tamanho'] . ":</label>";
-                                        echo "<input type='number' min=0 name='tamanho[" . $row['tamanho'] . "]' id='tamanho_" . $row['tamanho'] . "'><br>";
+                                        echo "<input type='number' min=0 value=0 name='tamanho[" . $row['tamanho'] . "]' id='tamanho_" . $row['tamanho'] . "'><br>";
                                         echo "</div>";
                                     }
                                     ?>
@@ -455,45 +459,71 @@ include("ligacao.php");
             }
         }
     </script>
+    <style>
+        .campo-vazio {
+            background-color: #ffcccc;
+            /* Altera a cor de fundo para vermelho */
+        }
+    </style>
+
     <script>
         function validateForm() {
-            var nome = document.forms["adicionarUser"]["nome"].value;
-            var apelido = document.forms["adicionarUser"]["apelido"].value;
-            var desc = document.forms["adicionarUser"]["desc"].value;
-            var foto = document.forms["adicionarUser"]["fotoword"].value;
-            var descRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var nome = document.getElementById('nome');
+            var desc = document.getElementById('desc');
+            var marca = document.getElementById('marca');
+            var categoria = document.getElementById('categoria');
+            var preco = document.getElementById('preco');
+            var foto = document.getElementById('foto');
+            var valido = true; // Variável para rastrear a validade do formulário
 
-            if (nome === "") {
-                displayErrorMessage('nome-error', '<br>Insira um nome!');
+            if (nome.value.trim() === '') {
+                nome.classList.add('campo-vazio');
+                valido = false;
+            } else {
+                nome.classList.remove('campo-vazio');
+            }
+            if (desc.value.trim() === '') {
+                desc.classList.add('campo-vazio');
+                valido = false;
+            } else {
+                desc.classList.remove('campo-vazio');
+            }
+            if (marca.value === null || marca.value === '') {
+                marca.classList.add('campo-vazio');
+                valido = false;
+            } else {
+                marca.classList.remove('campo-vazio');
+            }
+            if (categoria.value === null || categoria.value === '') {
+                categoria.classList.add('campo-vazio');
+                valido = false;
+            } else {
+                categoria.classList.remove('campo-vazio');
+            }
+            if (preco.value.trim() === '') {
+                preco.classList.add('campo-vazio');
+                valido = false;
+            } else {
+                preco.classList.remove('campo-vazio');
+            }
+            if (foto.value.trim() === '') {
+                foto.classList.add('campo-vazio');
+                valido = false;
+            } else {
+                foto.classList.remove('campo-vazio');
+            }
+
+            if (!valido) {
+                // Se algum campo estiver vazio, retorne false para impedir o envio do formulário
                 return false;
             }
 
-            if (apelido === "") {
-                displayErrorMessage('apelido-error', '<br>Insira um apelido!');
-                return false;
-            }
-
-            if (desc === "" || !descRegex.test(desc)) {
-                displayErrorMessage('desc-error', '<br>Insira um desc válido!');
-                return false;
-            }
-
-            if (foto === "") {
-                displayErrorMessage('foto-error', '<br>Insira uma fotoword!');
-                return false;
-            }
-
+            // Se todos os campos estiverem preenchidos, retorne true para permitir o envio do formulário
             return true;
         }
-
-        function displayErrorMessage(id, message) {
-            document.getElementById(id).innerHTML = message;
-        }
-
-        function clearErrorMessage(id) {
-            document.getElementById(id).innerHTML = '';
-        }
     </script>
+
+
 </body>
 
 </html>

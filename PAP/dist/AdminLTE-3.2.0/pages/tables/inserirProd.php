@@ -1,6 +1,7 @@
 <?php
 // Inclua o arquivo de conexão com o banco de dados
 include('ligacao.php');
+session_start();
 
 // Verifica se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

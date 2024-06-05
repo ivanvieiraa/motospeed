@@ -261,7 +261,7 @@ session_start();
                                 <input type="text" name="nome" id="nome" value="<?= $row['nome_marca'] ?>" oninput="clearErrorMessage('nome-error')"><br>
                                 <span id="nome-error" class="error-message"></span><br>
 
-                                <input type="submit" value="Criar">
+                                <input type="submit" value="Editar">
                                 <li class="breadcrumb-item active" style="list-style: none;">
                                     <a href="marcas.php"> <i class="fas fa-arrow-left"></i> Voltar</a>
                                 </li>

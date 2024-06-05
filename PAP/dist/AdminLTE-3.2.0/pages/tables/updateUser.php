@@ -41,6 +41,18 @@ if ($idade < 16 && $data != null) {
     exit();
 }
 
+// Verificar se o usuário é um administrador (supondo que "adm" seja o campo no banco de dados que indica se o usuário é um administrador)
+$sql_verificar_adm = "SELECT adm FROM users WHERE id_user = '$id_user'";
+$result_verificar_adm = mysqli_query($con, $sql_verificar_adm);
+$row_verificar_adm = mysqli_fetch_assoc($result_verificar_adm);
+$adm = $row_verificar_adm['adm'];
+
+if ($adm == 1 && $status == 0) {
+    $_SESSION['mensagem'] = "O admin não pode ser desativado.";
+    header("Location: ./editUser.php?id_user=$id_user");
+    exit();
+}
+
 // Atualize os dados do utilizador no banco de dados
 $sql = "UPDATE users SET 
         nome = '$nome',
@@ -60,7 +72,7 @@ if (!empty($pass)) {
 $sql .= " WHERE id_user = '$id_user'";
 
 if (mysqli_query($con, $sql)) {
-    $_SESSION['mensagem'] = "Perfil atualizado com sucesso";
+    $_SESSION['mensagem'] = "Registo atualizado com sucesso";
 
     // Se uma nova foto foi enviada, processe o upload e atualize o caminho da foto
     if ($_FILES['foto']['size'] > 0 && $_FILES['foto']['error'] == 0) {
@@ -89,4 +101,3 @@ if (mysqli_query($con, $sql)) {
 // Redirecione de volta para a página de perfil
 header("Location: utilizadores.php");
 exit();
-?>

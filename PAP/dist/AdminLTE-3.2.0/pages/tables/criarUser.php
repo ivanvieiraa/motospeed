@@ -110,6 +110,11 @@ session_start();
       border-color: #c3e6cb;
       color: #155724;
     }
+
+    .error-input {
+      border: 1px solid red !important;
+      /* Garante que a borda vermelha prevaleça */
+    }
   </style>
 </head>
 
@@ -262,74 +267,35 @@ session_start();
                 <div class="form-group">
                   <div class="checkbox-group">
                     <div>
-                      <label for="isActive">Estado :</label>
-                      <input type="checkbox" id="isActiveCheckbox" name="status">Não ativo
+                      <label for="isActive">Estado:</label>
+                      <input type="checkbox" name="status" id="statusCheckbox" value="1">
+                      <span id="statusText">Não ativo</span>
+                      <input type="hidden" name="status" id="statusValue" value="1"> 
                     </div>
                   </div>
+
+                  <script>
+                    // Função para atualizar o valor do campo hidden e o texto ao lado da checkbox
+                    document.getElementById('statusCheckbox').addEventListener('change', function() {
+                      var statusText = document.getElementById('statusText');
+                      var statusValue = document.getElementById('statusValue');
+
+                      if (this.checked) {
+                        statusText.textContent = "Ativo";
+                        statusValue.value = 1;
+                      } else {
+                        statusText.textContent = "Não ativo";
+                        statusValue.value = 0;
+                      }
+                    });
+                  </script>
                 </div>
-                <script>
-                  const checkbox = document.getElementById('isActiveCheckbox');
 
-                  checkbox.addEventListener('change', function() {
-                    const valueToSend = this.checked ? 1 : 0;
-                    const textToDisplay = this.checked ? 'Ativo' : 'Não ativo';
-
-                    // Aqui você pode enviar o valor para o backend ou fazer qualquer outra ação necessária
-                    console.log('Valor a enviar para o backend:', valueToSend);
-
-                    // Altera o texto ao lado da checkbox
-                    this.nextSibling.nodeValue = textToDisplay;
-                  });
-                </script>
                 <input type="submit" value="Criar">
                 <li class="breadcrumb-item active" style="list-style: none;">
                   <a href="utilizadores.php"> <i class="fas fa-arrow-left"></i> Voltar</a>
                 </li>
               </form>
-              <script>
-                function validateForm() {
-                  var nome = document.getElementById('nome').value;
-                  var apelido = document.getElementById('apelido').value;
-                  var email = document.getElementById('email').value;
-                  var data = document.getElementById('data').value;
-                  var morada = document.getElementById('morada').value;
-                  var codp = document.getElementById('codp').value;
-
-                  if (nome.trim() == '') {
-                    displayErrorMessage('nome-error', 'Insira um nome!');
-                    return false;
-                  }
-                  if (apelido.trim() == '') {
-                    displayErrorMessage('apelido-error', 'Insira um apelido!');
-                    return false;
-                  }
-                  if (email.trim() == '') {
-                    displayErrorMessage('email-error', 'Insira um email!');
-                    return false;
-                  }
-                  // if (data.trim() == '') {
-                  //   displayErrorMessage('data-error', 'Insira uma data de nascimento!');
-                  //   return false;
-                  // }
-                  // if (morada.trim() == '') {
-                  //   displayErrorMessage('morada-error', 'Insira uma morada!');
-                  //   return false;
-                  // }
-                  // if (codp.trim() == '') {
-                  //   displayErrorMessage('codp-error', 'Insira um código postal!');
-                  //   return false;
-                  // }
-                  return true;
-                }
-
-                function displayErrorMessage(id, message) {
-                  document.getElementById(id).innerHTML = message;
-                }
-
-                function clearErrorMessage(id) {
-                  document.getElementById(id).innerHTML = '';
-                }
-              </script>
             </div>
       </section>
       <!-- /.content -->
@@ -383,33 +349,57 @@ session_start();
   </script>
   <script>
     function validateForm() {
-      var nome = document.forms["adicionarUser"]["nome"].value;
-      var apelido = document.forms["adicionarUser"]["apelido"].value;
-      var email = document.forms["adicionarUser"]["email"].value;
-      var pass = document.forms["adicionarUser"]["password"].value;
+      var nome = document.getElementById('nome');
+      var apelido = document.getElementById('apelido');
+      var email = document.getElementById('email');
+      var pass = document.getElementById('pass');
+      var isValid = true;
+
+      // Validar Nome
+      if (nome.value.trim() === '') {
+        nome.classList.add('error-input');
+        isValid = false;
+      } else {
+        clearErrorMessage('nome-error');
+        nome.classList.remove('error-input');
+      }
+
+      // Validar Apelido
+      if (apelido.value.trim() === '') {
+        apelido.classList.add('error-input');
+        isValid = false;
+      } else {
+        clearErrorMessage('apelido-error');
+        apelido.classList.remove('error-input');
+      }
+
+      // Validar Email
+      if (email.value.trim() === '') {
+        email.classList.add('error-input');
+        isValid = false;
+      } else if (!isValidEmail(email.value)) {
+        email.classList.add('error-input');
+        isValid = false;
+      } else {
+        clearErrorMessage('email-error');
+        email.classList.remove('error-input');
+      }
+
+      // Validar Password
+      if (pass.value.trim() === '') {
+        pass.classList.add('error-input');
+        isValid = false;
+      } else {
+        clearErrorMessage('pass-error');
+        pass.classList.remove('error-input');
+      }
+
+      return isValid;
+    }
+
+    function isValidEmail(email) {
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      if (nome === "") {
-        displayErrorMessage('nome-error', '<br>Insira um nome!');
-        return false;
-      }
-
-      if (apelido === "") {
-        displayErrorMessage('apelido-error', '<br>Insira um apelido!');
-        return false;
-      }
-
-      if (email === "" || !emailRegex.test(email)) {
-        displayErrorMessage('email-error', '<br>Insira um email válido!');
-        return false;
-      }
-
-      if (pass === "") {
-        displayErrorMessage('pass-error', '<br>Insira uma password!');
-        return false;
-      }
-
-      return true;
+      return emailRegex.test(email);
     }
 
     function displayErrorMessage(id, message) {

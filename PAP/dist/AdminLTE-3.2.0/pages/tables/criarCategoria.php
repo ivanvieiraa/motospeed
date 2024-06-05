@@ -110,6 +110,10 @@ session_start();
       border-color: #c3e6cb;
       color: #155724;
     }
+
+    .error {
+      border: 1px solid red !important;
+    }
   </style>
 </head>
 
@@ -240,7 +244,7 @@ session_start();
                   <a href="categorias.php"> <i class="fas fa-arrow-left"></i> Voltar</a>
                 </li>
               </form>
-              
+
             </div>
       </section>
       <!-- /.content -->
@@ -276,6 +280,27 @@ session_start();
   <!-- AdminLTE for demo purposes -->
   <script src="../../dist/js/demo.js"></script>
   <!-- Page specific script -->
+  <script>
+    function validateForm() {
+      // Pegue o valor do campo de entrada
+      var nome = document.getElementById("nome").value;
+
+      // Verifique se o campo está vazio
+      if (nome.trim() == "") {
+        // Se estiver vazio, adicione a classe de erro ao campo
+        document.getElementById("nome").classList.add("error");
+        return false; // Retorna false para impedir o envio do formulário
+      }
+
+      return true; // Retorna true se a validação passar
+    }
+
+    function clearErrorMessage(id) {
+      // Esta função é chamada quando o usuário começa a digitar novamente, para limpar a mensagem de erro
+      document.getElementById(id).innerText = "";
+      document.getElementById("nome").classList.remove("error"); // Limpa também a classe de erro
+    }
+  </script>
 </body>
 
 </html>

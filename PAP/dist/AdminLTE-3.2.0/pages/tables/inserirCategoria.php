@@ -1,7 +1,7 @@
 <?php
 // Inclua o arquivo de conexão com o banco de dados
 include("ligacao.php");
-
+session_start();
 // Verifique se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recupere o nome da marca do formulário

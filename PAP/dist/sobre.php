@@ -73,7 +73,7 @@ session_start();
                     <p class="text-muted title-small">sobre nós</p>
                     <h3 class="display-3 fw-bold mb-5"><span class="text-outline-dark">Motospeed</span> - Material de
                         proteção para motociclistas</h3>
-                    <p class="lead">A Motospeed é uma grande empresa que trabalha com as melhores marcas do mercado como a <a href="./produtos.php">Alpinestars</a>, <a href="./produtos.php">Dainese</a>, <a href="./produtos.php">Scorpion</a>, <a href="./produtos.php">AGV</a> e muitas mais...</p>
+                    <p class="lead">A Motospeed é uma grande empresa que trabalha com as melhores marcas do mercado como a <a href="./produtos.php?id_marca=1">Alpinestars</a>, <a href="./produtos.php?id_marca=4">Dainese</a>, <a href="./produtos.php?id_marca=2">Scorpion</a>, <a href="./produtos.php?id_marca=3">AGV</a> e muitas mais...</p>
                     <p class="lead">Trabalhamos arduamente todos os dias em busca de oferecer aos nossos clientes as
                         melhores marcas e produtos do mercado.</p>
                     <p class="lead">Priorizamos sempre os clientes, de modo a consquistar a melhor confiança alguma vez

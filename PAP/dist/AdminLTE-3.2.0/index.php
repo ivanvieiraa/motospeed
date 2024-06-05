@@ -1,10 +1,9 @@
 <?php
-  session_start();
-  if ($_SESSION['adm'] != 1) {
-    header('Location: ../index.php');
-  }
-
-  ?>
+session_start();
+if ($_SESSION['adm'] != 1) {
+  header('Location: ../index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -38,6 +37,26 @@
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
   <script src="https://kit.fontawesome.com/d5954f6b26.js" crossorigin="anonymous"></script>
+
+
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    .alert {
+      position: fixed;
+      top: 1%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.2s ease;
+    }
+
+    .alert.hide {
+      opacity: 0;
+    }
+  </style>
 
 </head>
 
@@ -237,6 +256,28 @@
           </div>
           <!-- /.row -->
           <h3>Lista de pedidos de Suporte</h3>
+          <?php
+          // Verifica se a mensagem de erro está definida na sessão
+          if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] != "O Admin não pode ser desativado.") {
+            echo '<div id="alert" class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
+            unset($_SESSION['mensagem']);
+          } else {
+            if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "O Admin não pode ser desativado.") {
+              echo '<div id="alert" class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
+              unset($_SESSION['mensagem']);
+            }
+          }
+          ?>
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              var alertBox = document.getElementById('alert');
+              if (alertBox) {
+                setTimeout(function() {
+                  alertBox.classList.add('hide');
+                }, 3000); // 5000 milissegundos = 5 segundos
+              }
+            });
+          </script>
           <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
@@ -254,7 +295,7 @@
                 <tbody>
                   <?php
                   // Inclua o arquivo de conexão
-                    include("../ligacao.php");
+                  include("../ligacao.php");
                   // Consulta SQL para obter os dados da tabela
                   $sql = "SELECT * FROM suporte";
                   $result = mysqli_query($con, $sql);
@@ -263,19 +304,16 @@
                     while ($row = mysqli_fetch_assoc($result)) {
                       echo "<tr>";
                       echo "<td>" . $row["id_suporte"] . "</td>";
-                      echo "<td style='text-align:left'>" . $row["assunto"];
-                      "</td>";
-                      echo "<td style='text-align:left'>" . $row["email"];
-                      "</td>";
-                      echo "<td style='text-align:left'>" . $row["criado_a"];
-                      "</td>";
+                      echo "<td style='text-align:left'>" . $row["assunto"] . "</td>";
+                      echo "<td style='text-align:left'>" . $row["email"] . "</td>";
+                      echo "<td style='text-align:left'>" . $row["criado_a"] . "</td>";
                       if ($row['status'] == 0)
                         echo "<td style='text-align:left; color:red; font-weight: bold;'>Não resolvido</td>";
                       if ($row['status'] == 1)
                         echo "<td style='text-align:left; color:green; font-weight: bold;'>Resolvido</td>";
                       if ($row['status'] == 2)
                         echo "<td style='text-align:left; color:orange; font-weight: bold;'>Em análise</td>";
-                      echo "<td><i class='fa-solid fa-eye'></i></td>";
+                      echo "<td style='cursor: pointer;'><i class='fa-solid fa-eye' onclick='showDetails(" . $row["id_suporte"] . "," . $row["status"] . ")'></i></td>";
                       echo "</tr>";
                     }
                   } else {
@@ -313,6 +351,90 @@
     <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
+
+  <!-- Modal HTML -->
+  <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document"> <!-- Use modal-lg or modal-xl for larger size -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Detalhes do Suporte</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p style="display: none;"><strong>ID:</strong> <span id="support-id"></span></p>
+          <p><strong>Assunto:</strong> <span id="support-subject"></span></p>
+          <p><strong>Email:</strong> <span id="support-email"></span></p>
+          <p style="display: none;"><strong>Recebido a:</strong> <span id="support-date"></span></p>
+          <p style="display: none;"><strong>Estado:</strong> <span id="support-status"></span></p>
+          <p><strong>Mensagem:</strong> <span id="support-description"></span></p>
+
+          <form id="responseForm" method="POST" action="resposta.php">
+            <input type="hidden" name="support_id" id="form-support-id">
+            <div class="form-group" style="display: none;">
+              <label for="response-subject">Assunto</label>
+              <input type="text" class="form-control" id="response-subject" name="subject" readonly>
+            </div>
+            <div class="form-group">
+              <label for="response-message">Resposta:</label>
+              <textarea class="form-control" id="response-message" name="message" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btnEnviar">Enviar resposta</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    function showDetails(id, status) {
+      // Fetch details from the server using AJAX
+      fetch(`getSupportDetails.php?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+          // Fill the modal with the fetched data
+          document.getElementById('support-id').innerText = data.id_suporte;
+          document.getElementById('support-subject').innerText = data.assunto;
+          document.getElementById('support-email').innerText = data.email;
+          document.getElementById('support-date').innerText = data.criado_a;
+          document.getElementById('support-status').innerText = data.status == 0 ? 'Não resolvido' : data.status == 1 ? 'Resolvido' : 'Em análise';
+          document.getElementById('support-description').innerText = data.mensagem;
+
+          // Pre-fill the form in the modal
+          document.getElementById('form-support-id').value = data.id_suporte;
+          document.getElementById('response-subject').value = `Resposta: ${data.assunto}`;
+
+          // Hide or show the response form based on the status
+          if (status == 2 || status == 1) { // Se o status for "Em análise"
+            document.getElementById('responseForm').style.display = 'none';
+          } else {
+            document.getElementById('responseForm').style.display = 'block';
+          }
+
+          // Show the modal
+          $('#detailModal').modal('show');
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    // Adicione um evento de escuta para o envio do formulário
+    document.getElementById('responseForm').addEventListener('submit', function(event) {
+      // Verifique se o campo de mensagem está vazio
+      if (document.getElementById('response-message').value.trim() === '') {
+        // Se estiver vazio, impeça o envio do formulário
+        event.preventDefault();
+        Swal.fire({
+          icon: 'error',
+          text: 'Escreva uma resposta!',
+        });
+      }
+    });
+  </script>
 
   <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>

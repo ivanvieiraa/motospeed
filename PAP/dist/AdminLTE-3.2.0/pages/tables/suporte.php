@@ -106,11 +106,16 @@
                                         <p>Categorias</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="subcategorias.php" class="nav-link">
+                                        <p>Sub-Categorias</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item menu-closed">
                             <a href="./suporte.php" class="nav-link active">
-                               <i class="nav-icon fa-solid fa-phone"></i>
+                                <i class="nav-icon fa-solid fa-phone"></i>
                                 <p>
                                     Suporte
                                 </p>
@@ -182,9 +187,12 @@
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         echo "<tr>";
                                         echo "<td>" . $row["id_suporte"] . "</td>";
-                                        echo "<td style='text-align:left'>" . $row["assunto"]; "</td>";
-                                        echo "<td style='text-align:left'>" . $row["email"]; "</td>";
-                                        echo "<td style='text-align:left'>" . $row["criado_a"]; "</td>";
+                                        echo "<td style='text-align:left'>" . $row["assunto"];
+                                        "</td>";
+                                        echo "<td style='text-align:left'>" . $row["email"];
+                                        "</td>";
+                                        echo "<td style='text-align:left'>" . $row["criado_a"];
+                                        "</td>";
                                         if ($row['status'] == 0)
                                             echo "<td style='text-align:left; color:red; font-weight: bold;'>Não resolvido</td>";
                                         if ($row['status'] == 1)

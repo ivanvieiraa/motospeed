@@ -147,6 +147,7 @@ include("ligacao.php");
             width: 40%;
             /* Largura dos inputs dos tamanhos */
         }
+
         .campo-vazio {
             background-color: #ffcccc;
             /* Altera a cor de fundo para vermelho */
@@ -221,6 +222,11 @@ include("ligacao.php");
                                         <p>Categorias</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="subcategorias.php" class="nav-link">
+                                        <p>Sub-Categorias</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                 </nav>
@@ -293,19 +299,27 @@ include("ligacao.php");
                                 <span id="marca-error" class="error-message"></span><br>
 
                                 <label for="categoria">Categoria:</label>
-                                <select name="categoria" id="categoria" oninput="clearErrorMessage('categoria-error')">
-                                    <option value="" disabled selected>Selecione uma categoria</option>
+                                <select name="id_categoria" id="categoria" onchange="getSubcategories(this.value)">
+                                    <option value="">Selecione uma categoria</option>
                                     <?php
-                                    // Consulta SQL para obter as categorias
-                                    $sql = "SELECT * FROM categorias";
-                                    $resultado = mysqli_query($con, $sql);
+                                    // Consulta SQL para obter as marcas
+                                    $sql2 = "SELECT * FROM categorias";
+                                    $resultado2 = mysqli_query($con, $sql2);
                                     // Exibir as opções
-                                    while ($row = mysqli_fetch_assoc($resultado)) {
-                                        echo "<option value='" . $row['id_categoria'] . "'>" . $row['nome_categoria'] . "</option>";
+                                    while ($row2 = mysqli_fetch_assoc($resultado2)) {
+                                        echo "<option value='" . $row2['id_categoria'] . "'>" . $row2['nome_categoria'] . "</option>";
                                     }
                                     ?>
                                 </select><br>
                                 <span id="categoria-error" class="error-message"></span><br>
+
+                                <div id="subcategoriaSelectDiv" style="display: none;">
+                                    <label for="subcategoria">Sub-categoria:</label>
+                                    <select name="id_subcategoria" id="subcategoria">
+                                        <option value="">Selecione uma subcategoria</option>
+                                    </select><br>
+                                    <span id="subcategoria-error" class="error-message"></span><br>
+                                </div>
 
                                 <label for="tamanho">Stock:</label><br>
                                 <!-- Container para os tamanhos -->
@@ -365,47 +379,28 @@ include("ligacao.php");
                                 </li>
                             </form>
                             <script>
-                                function validateForm() {
-                                    var nome = document.getElementById('nome').value;
-                                    var apelido = document.getElementById('apelido').value;
-                                    var desc = document.getElementById('desc').value;
-                                    var marca = document.getElementById('marca').value;
-                                    var categoria = document.getElementById('categoria').value;
-                                    var codp = document.getElementById('codp').value;
-
-                                    if (nome.trim() == '') {
-                                        displayErrorMessage('nome-error', 'Insira um nome!');
-                                        return false;
+                                function getSubcategories(id_categoria) {
+                                    if (id_categoria) {
+                                        // Fazer uma requisição AJAX para obter as subcategorias associadas à categoria escolhida
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.onreadystatechange = function() {
+                                            if (xhr.readyState === XMLHttpRequest.DONE) {
+                                                if (xhr.status === 200) {
+                                                    // Atualizar o select de subcategorias com os dados recebidos
+                                                    document.getElementById("subcategoriaSelectDiv").style.display = "block";
+                                                    document.getElementById("subcategoria").innerHTML = xhr.responseText;
+                                                } else {
+                                                    console.error('Erro na requisição: ' + xhr.status);
+                                                }
+                                            }
+                                        };
+                                        xhr.open("GET", "getSubcategories.php?id_categoria=" + id_categoria, true);
+                                        xhr.send();
+                                    } else {
+                                        // Limpar e esconder o select de subcategorias se nenhuma categoria for selecionada
+                                        document.getElementById("subcategoriaSelectDiv").style.display = "none";
+                                        document.getElementById("subcategoria").innerHTML = '<option value="">Selecione uma subcategoria</option>';
                                     }
-                                    if (apelido.trim() == '') {
-                                        displayErrorMessage('apelido-error', 'Insira um apelido!');
-                                        return false;
-                                    }
-                                    if (desc.trim() == '') {
-                                        displayErrorMessage('desc-error', 'Insira um desc!');
-                                        return false;
-                                    }
-                                    // if (marca.trim() == '') {
-                                    //   displayErrorMessage('marca-error', 'Insira uma marca de nascimento!');
-                                    //   return false;
-                                    // }
-                                    // if (categoria.trim() == '') {
-                                    //   displayErrorMessage('categoria-error', 'Insira uma categoria!');
-                                    //   return false;
-                                    // }
-                                    // if (codp.trim() == '') {
-                                    //   displayErrorMessage('codp-error', 'Insira um código postal!');
-                                    //   return false;
-                                    // }
-                                    return true;
-                                }
-
-                                function displayErrorMessage(id, message) {
-                                    document.getElementById(id).innerHTML = message;
-                                }
-
-                                function clearErrorMessage(id) {
-                                    document.getElementById(id).innerHTML = '';
                                 }
                             </script>
                         </div>
@@ -522,7 +517,6 @@ include("ligacao.php");
             return true;
         }
     </script>
-
 
 </body>
 

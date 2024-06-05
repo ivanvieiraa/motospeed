@@ -1,5 +1,27 @@
 <?php
 session_start();
+include 'ligacao.php';
+
+$sql = "SELECT id_categoria, nome_categoria FROM categorias";
+$result = $con->query($sql);
+
+$categorias = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $categorias[] = $row;
+    }
+}
+
+$sql2 = "SELECT id_subcategoria, subcategoria FROM subcategorias";
+$result2 = $con->query($sql2);
+
+$subcategorias = [];
+if ($result2->num_rows > 0) {
+    while ($row2 = $result2->fetch_assoc()) {
+        $subcategorias[] = $row2;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -110,6 +132,19 @@ session_start();
             border-color: #c3e6cb;
             color: #155724;
         }
+
+        .error {
+            border: 1px solid red !important;
+        }
+
+        select {
+            width: 100%;
+            padding: 5px;
+            /* margin-bottom: 15px; */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 
@@ -179,12 +214,12 @@ session_start();
                                 </a>
                         </li>
                         <li class="nav-item">
-                            <a href="categorias.php" class="nav-link active">
+                            <a href="categorias.php" class="nav-link">
                                 <p>Categorias</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="subcategorias.php" class="nav-link">
+                            <a href="subcategorias.php" class="nav-link active">
                                 <p>Sub-Categorias</p>
                             </a>
                         </li>
@@ -203,7 +238,7 @@ session_start();
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Categorias
+                            <h1>Sub-Categorias
                             </h1>
                             <?php
                             // Verifica se a mensagem de erro está definida na sessão
@@ -217,9 +252,9 @@ session_start();
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item active">Gestão</li>
-                                <li class="breadcrumb-item active"><a href="categorias.php">Categorias</a></li>
+                                <li class="breadcrumb-item active"><a href="subcategorias.php">Sub-Categorias</a></li>
                                 <li class="breadcrumb-item active">
-                                    Editar categoria
+                                    Inserir sub-categoria
                                 </li>
                             </ol>
                         </div>
@@ -235,42 +270,43 @@ session_start();
                             <!-- general form elements -->
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <?php
-                            include("ligacao.php");
+                            <form action="inserirSubCategoria.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
 
-                            // Verifica se o utilizador está autenticado
-                            if (!isset($_SESSION['id_user'])) {
-                                header('Location: login.php');
-                                exit();
-                            }
+                                <label for="categoria">Categoria Mãe:</label>
+                                <select name="id_categoria" id="categoria" oninput="clearErrorMessage('categoria-error')">
+                                    <option value="">Selecione uma categoria</option>
+                                    <?php foreach ($categorias as $categoria) : ?>
+                                        <option value="<?php echo $categoria['id_categoria']; ?>"><?php echo $categoria['nome_categoria']; ?></option>
+                                    <?php endforeach; ?>
+                                </select><br>
+                                <span id="categoria-error" class="error-message"></span><br>
 
-                            $id_categoria = $_GET['id_categoria'];
+                                <div id="existingSubcategoryDiv">
+                                    <label for="subcategoria">Sub-categoria:</label>
+                                    <select name="id_subcategoria" id="subcategoria" oninput="clearErrorMessage('subcategoria-error')">
+                                        <option value="">Selecione uma subcategoria</option>
+                                        <?php foreach ($subcategorias as $subcategoria) : ?>
+                                            <option value="<?php echo $subcategoria['id_subcategoria']; ?>"><?php echo $subcategoria['subcategoria']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select><br>
+                                    <span id="subcategoria-error" class="error-message"></span><br>
+                                </div>
 
-                            // Consulta SQL para obter os dados do utilizador
-                            $sql = "SELECT * FROM categorias WHERE id_categoria = '$id_categoria'";
-                            $result = mysqli_query($con, $sql);
+                                <div id="newSubcategoryDiv" style="display:none;">
+                                    <label for="newSubcategory">Nova Sub-categoria:</label>
+                                    <input type="text" name="new_subcategoria" id="newSubcategory" oninput="clearErrorMessage('newSubcategory-error')"><br>
+                                    <span id="newSubcategory-error" class="error-message"></span><br>
+                                </div>
 
-                            // Verifica se o utilizador existe
-                            if (mysqli_num_rows($result) > 0) {
-                                $row = mysqli_fetch_assoc($result);
-                            } else {
-                                $_SESSION['mensagem'] = "Marca não encontrada";
-                                header('Location: categorias.php');
-                                exit();
-                            }
-                            ?>
-                            <form action="updateCategoria.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-                                <input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
+                                <input type="checkbox" id="newSubcategoryCheckbox" onclick="toggleSubcategoryInput()"> Adicionar nova subcategoria
+                                <br><br>
 
-                                <label for="nome">Nome:</label>
-                                <input type="text" name="nome" id="nome" value="<?= $row['nome_categoria'] ?>" oninput="clearErrorMessage('nome-error')"><br>
-                                <span id="nome-error" class="error-message"></span><br>
-
-                                <input type="submit" value="Editar">
+                                <input type="submit" value="Criar">
                                 <li class="breadcrumb-item active" style="list-style: none;">
-                                    <a href="categorias.php"> <i class="fas fa-arrow-left"></i> Voltar</a>
+                                    <a href="subcategorias.php"> <i class="fas fa-arrow-left"></i> Voltar</a>
                                 </li>
                             </form>
+
 
                         </div>
             </section>
@@ -307,6 +343,85 @@ session_start();
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
     <!-- Page specific script -->
+    <script>
+        function validateForm() {
+            var nome = document.getElementById("nome").value;
+            var categoria = document.getElementById("categoria").value;
+            var isValid = true;
+
+            if (nome.trim() == "") {
+                document.getElementById("nome").classList.add("error");
+                isValid = false;
+            }
+
+            if (categoria == "") {
+                document.getElementById("categoria").classList.add("error");
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function clearErrorMessage(id) {
+            document.getElementById(id).innerText = "";
+            document.getElementById("nome").classList.remove("error");
+            document.getElementById("categoria").classList.remove("error");
+        }
+    </script>
+    <script>
+        function toggleSubcategoryInput() {
+            var checkbox = document.getElementById("newSubcategoryCheckbox");
+            var existingSubcategoryDiv = document.getElementById("existingSubcategoryDiv");
+            var newSubcategoryDiv = document.getElementById("newSubcategoryDiv");
+
+            if (checkbox.checked) {
+                existingSubcategoryDiv.style.display = "none";
+                newSubcategoryDiv.style.display = "block";
+            } else {
+                existingSubcategoryDiv.style.display = "block";
+                newSubcategoryDiv.style.display = "none";
+            }
+        }
+
+        function validateForm() {
+            var categoria = document.getElementById("categoria").value;
+            var isValid = true;
+            var subcategoria = document.getElementById("subcategoria").value;
+            var newSubcategoria = document.getElementById("newSubcategory").value;
+            var checkbox = document.getElementById("newSubcategoryCheckbox");
+
+            if (categoria == "") {
+                document.getElementById("categoria").classList.add("error");
+                isValid = false;
+            }
+
+            if (checkbox.checked) {
+                if (newSubcategoria.trim() == "") {
+                    document.getElementById("newSubcategory").classList.add("error");
+                    isValid = false;
+                }
+            } else {
+                if (subcategoria == "") {
+                    document.getElementById("subcategoria").classList.add("error");
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
+        function clearErrorMessage(id) {
+            document.getElementById(id).innerText = "";
+            document.getElementById("categoria").classList.remove("error");
+            if (document.getElementById("newSubcategoryCheckbox").checked) {
+                document.getElementById("newSubcategory").classList.remove("error");
+            } else {
+                document.getElementById("subcategoria").classList.remove("error");
+            }
+        }
+    </script>
+
+
 </body>
 
 </html>

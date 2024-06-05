@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04-Jun-2024 às 16:42
+-- Tempo de geração: 05-Jun-2024 às 11:43
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -46,6 +46,18 @@ INSERT INTO `categorias` (`id_categoria`, `nome_categoria`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `categorias_subcategorias`
+--
+
+CREATE TABLE `categorias_subcategorias` (
+  `id` int(11) NOT NULL,
+  `id_categoria` int(11) NOT NULL,
+  `id_subcategoria` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `detalhe_venda`
 --
 
@@ -62,7 +74,11 @@ CREATE TABLE `detalhe_venda` (
 --
 
 INSERT INTO `detalhe_venda` (`id_venda`, `id_prod`, `quantidade`, `tamanho`, `preco_uni`) VALUES
-(65, 5, 1, 'XS', 1499);
+(65, 5, 1, 'XS', 1499),
+(66, 5, 1, 'S', 1499),
+(67, 21, 1, 'M', 125),
+(68, 23, 1, 'XS', 80),
+(68, 17, 1, 'M', 449.9);
 
 -- --------------------------------------------------------
 
@@ -112,7 +128,7 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`id_prod`, `nome_prod`, `preco_prod`, `desc_prod`, `foto_prod`, `id_marca`, `id_categoria`, `criado_a`, `alterado_a`, `status`) VALUES
-(2, 'Scorpion EXO 520 Air', 199.99, ' Capacete integral confeccionado em policarbonato injetado com homologação ECE 22-06 e projetado especificamente para proporcionar um nível aerodinâmico esportivo aliado ao conforto de um capacete de uso diário. O Exo-520 Evo Air destaca-se por incorporar o protetor solar Speedview® integrado, mecanismo de viseira Ellip-Tech®, interior acolchoado Kwikwick®2 e um sistema de ventilação eficaz.', 'uploads/produtos/scorpion-520air.png', 2, 1, '2024-03-19 17:36:29', '2024-05-11 15:22:12', 1),
+(2, 'Scorpion EXO 520 Air', 199.99, ' Capacete integral confeccionado em policarbonato injetado com homologação ECE 22-06 e projetado especificamente para proporcionar um nível aerodinâmico esportivo aliado ao conforto de um capacete de uso diário. O Exo-520 Evo Air destaca-se por incorporar o protetor solar Speedview® integrado, mecanismo de viseira Ellip-Tech®, interior acolchoado Kwikwick®2 e um sistema de ventilação eficaz.', 'uploads/produtos/scorpion-520air.png', 2, 1, '2024-03-19 17:36:29', '2024-06-05 10:19:15', 1),
 (5, 'AGV Pista GP RR', 1499, 'Capacete Agv Pista GP RR E2206 Futuro Carbonio Forgiato. O novo Pista GP RR é homologado de acordo com os regulamentos de corrida da FIM e os novos regulamentos ECE 22.06. A Pista GP RR Futuro Carbonio Forgiato foi fabricada com carcaça e asa PRO Spoiler em carbono forjado exclusivo e detalhes na cor Elettro Iridium. A estrutura de carbono forjado com acabamento fosco torna cada concha e cada PRO Spoiler uma peça única. Os detalhes e a tela na cor exclusiva Elettro Iridium são inspirados na potência silenciosa e limpa do futuro da mobilidade.', 'uploads/produtos/agv-pista.png', 3, 1, '2024-05-09 22:11:19', '2024-05-11 12:42:01', 1),
 (8, 'Shark Race-R PRO', 695, 'Capacete Shark Race-R Pro GP 06 Blank Matte Black . Shark evolui seu capacete mais esportivo e equipa o novo Race-R Pro GP 06 com os novos regulamentos ECE 22.06. A casca externa feita com estrutura COVA (fibra de carbono e aramida) oferece excelente desempenho aerodinâmico. Ele tem o recorde de velocidade na MotoGP capturado em 363,6 km/h! O spoiler traseiro destaca-se por melhorar o desempenho aerodinâmico e a estabilidade em alta velocidade. Este é o capacete topo de gama, fruto da experiência da Shark nos mais altos escalões de competição (MotoGP e SBK) com mais de 250 pódios.', 'uploads/produtos/shark.png', 7, 1, '2024-05-09 22:19:50', '2024-05-09 22:20:13', 1),
 (9, 'DAINESE AVRO 4 ', 495.99, 'Casaco de pele Dainese Avro 4 Preto Mate / Branco. Casaco desportivo confeccionado em pele bovina de primeira qualidade; destaca-se pelo seu conforto, segurança e design. Possui proteções certificadas nos ombros e cotovelos e inserções de alumínio nos ombros.', 'uploads/produtos/dainese-avro4.png', 4, 2, '2024-05-11 13:33:39', '2024-05-11 15:28:02', 1),
@@ -133,21 +149,6 @@ INSERT INTO `produtos` (`id_prod`, `nome_prod`, `preco_prod`, `desc_prod`, `foto
 (24, 'ALPINESTARS TOURER', 100.99, 'Luvas Alpinestars Tourer W-7 V2 Drystar Pretas . Luvas impermeáveis e isoladas para uso Touring no inverno e em baixas temperaturas. Confeccionada em mix de couro e tecido Softshell para maior durabilidade e conforto. A membrana impermeável Drystar® oferece respirabilidade e evita a entrada de água e, juntamente com o duplo isolamento Thinsulate™, oferece excelente proteção contra o frio.', 'uploads/produtos/alpine-tourer.webp', 1, 4, '2024-05-20 22:10:57', NULL, 1),
 (25, 'ARMURE KERR', 40, 'Armure Kerr Vented Lady Gloves Preto. Luvas curtas com ajuste específico para mulher, feitas de uma combinação de pele de cabra e malha de poliéster. Eles incorporam proteções de TPU nas articulações.', 'uploads/produtos/armure-kerr.webp', 9, 4, '2024-05-20 22:12:01', NULL, 1),
 (26, 'DAINESE UNRULY', 116.99, 'Luvas Dainese Unruly Ergo-Tek Preto / Vermelho. A construção das costas em malha sem costuras oferece grande elasticidade e liberdade de movimentos, que se combinam com os elevados níveis de segurança garantidos pela proteção dos nós dos dedos com tecnologia Ergo-Tek, concebida para garantir a total mobilidade da mão ao proteger os mais áreas expostas.', 'uploads/produtos/dainese-unruly.webp', 4, 4, '2024-05-20 22:14:28', NULL, 1);
-
--- --
--- -- Acionadores `produtos`
--- --
--- DELIMITER $$
--- CREATE TRIGGER `after_insert_produtos` AFTER INSERT ON `produtos` FOR EACH ROW BEGIN
---     INSERT INTO produtos_tamanhos (id_prod, tamanho, stock)
---     VALUES (NEW.id_prod, 'L', 0),
---            (NEW.id_prod, 'M', 0),
---            (NEW.id_prod, 'S', 0),
---            (NEW.id_prod, 'XL', 0),
---            (NEW.id_prod, 'XS', 0);
--- END
--- $$
--- DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -173,7 +174,7 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (2, 'XS', 0),
 (5, 'L', 100),
 (5, 'M', 100),
-(5, 'S', 100),
+(5, 'S', 99),
 (5, 'XL', 100),
 (5, 'XS', 99),
 (8, 'L', 100),
@@ -222,7 +223,7 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (16, 'XL', 100),
 (16, 'XS', 100),
 (17, 'L', 100),
-(17, 'M', 100),
+(17, 'M', 99),
 (17, 'S', 100),
 (17, 'XL', 100),
 (17, 'XS', 100),
@@ -242,7 +243,7 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (20, 'XL', 100),
 (20, 'XS', 100),
 (21, 'L', 100),
-(21, 'M', 100),
+(21, 'M', 99),
 (21, 'S', 100),
 (21, 'XL', 100),
 (21, 'XS', 100),
@@ -255,7 +256,7 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (23, 'M', 100),
 (23, 'S', 100),
 (23, 'XL', 100),
-(23, 'XS', 100),
+(23, 'XS', 99),
 (24, 'L', 100),
 (24, 'M', 100),
 (24, 'S', 100),
@@ -271,6 +272,17 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (26, 'S', 100),
 (26, 'XL', 100),
 (26, 'XS', 100);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `subcategorias`
+--
+
+CREATE TABLE `subcategorias` (
+  `id_subcategoria` int(11) NOT NULL,
+  `subcategoria` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -370,7 +382,10 @@ CREATE TABLE `vendas` (
 --
 
 INSERT INTO `vendas` (`id_venda`, `id_user`, `data_venda`, `total`, `envio`, `nome`, `apelido`, `email`, `morada`, `codigop`) VALUES
-(65, 50, '2024-06-04', 1503.99, 4.99, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'Rua da solidariadade, Lote 16', '1675-629');
+(65, 50, '2024-06-04', 1503.99, 4.99, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'Rua da solidariadade, Lote 16', '1675-629'),
+(66, 49, '2024-06-05', 1499, 0, 'Ivan', 'Vieira', 'motospeed2024@gmail.com', 'Rua da solidariadade, Lote 16', '1675-629'),
+(67, 50, '2024-06-05', 134.99, 9.99, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'Rua da solidariadade, Lote 16', '1675-629'),
+(68, 50, '2024-06-05', 534.89, 4.99, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'Rua Soares dos Reis, Lote 678 - 1 Andar', '2975-299');
 
 -- --------------------------------------------------------
 
@@ -393,6 +408,14 @@ CREATE TABLE `wishlist` (
 --
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id_categoria`);
+
+--
+-- Índices para tabela `categorias_subcategorias`
+--
+ALTER TABLE `categorias_subcategorias`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_categoria` (`id_categoria`),
+  ADD KEY `fk_subcategoria` (`id_subcategoria`);
 
 --
 -- Índices para tabela `detalhe_venda`
@@ -420,6 +443,12 @@ ALTER TABLE `produtos`
 --
 ALTER TABLE `produtos_tamanhos`
   ADD PRIMARY KEY (`id_prod`,`tamanho`);
+
+--
+-- Índices para tabela `subcategorias`
+--
+ALTER TABLE `subcategorias`
+  ADD PRIMARY KEY (`id_subcategoria`);
 
 --
 -- Índices para tabela `suporte`
@@ -465,6 +494,12 @@ ALTER TABLE `categorias`
   MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT de tabela `categorias_subcategorias`
+--
+ALTER TABLE `categorias_subcategorias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `marcas`
 --
 ALTER TABLE `marcas`
@@ -474,7 +509,13 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id_prod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_prod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT de tabela `subcategorias`
+--
+ALTER TABLE `subcategorias`
+  MODIFY `id_subcategoria` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `suporte`
@@ -492,17 +533,24 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT de tabela `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- Restrições para despejos de tabelas
 --
+
+--
+-- Limitadores para a tabela `categorias_subcategorias`
+--
+ALTER TABLE `categorias_subcategorias`
+  ADD CONSTRAINT `fk_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`),
+  ADD CONSTRAINT `fk_subcategoria` FOREIGN KEY (`id_subcategoria`) REFERENCES `subcategorias` (`id_subcategoria`);
 
 --
 -- Limitadores para a tabela `detalhe_venda`

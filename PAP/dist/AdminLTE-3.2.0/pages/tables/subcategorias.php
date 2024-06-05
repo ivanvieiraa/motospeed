@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -8,7 +6,6 @@ session_start();
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Motospeed | Dashboard</title>
-
   <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/images/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/images/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/images/favicon/favicon-16x16.png">
@@ -20,16 +17,10 @@ session_start();
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <script src="https://kit.fontawesome.com/d5954f6b26.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.7/css/jquery.dataTables.css">
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
+
   <style>
-    .checkbox-group {
-      display: flex;
-    }
-
-    .checkbox-group div {
-      margin-right: 20px;
-      /* Adiciona espaço entre as checkboxes */
-    }
-
     .content-wrapper {
       position: relative;
     }
@@ -47,75 +38,7 @@ session_start();
     .alert.hide {
       opacity: 0;
     }
-
-    /* Custom CSS for form */
-    form {
-      width: 80%;
-      height: auto;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    form label {
-      display: '';
-      margin-bottom: 5px;
-    }
-
-    form input[type="text"],
-    form input[type="email"],
-    form input[type="date"],
-    form input[type="password"] {
-      width: 100%;
-      padding: 5px;
-      /* margin-bottom: 15px; */
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-
-    form input[type="submit"] {
-      width: 100%;
-      padding: 10px;
-      background-color: #007bff;
-      border: none;
-      border-radius: 5px;
-      color: #fff;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    form input[type="submit"]:hover {
-      background-color: #0056b3;
-    }
-
-    /* Error message */
-    .alert-danger,
-    .alert-success {
-      padding: 10px 20px;
-      border-radius: 5px;
-      margin-bottom: 15px;
-    }
-
-    .alert-danger {
-      background-color: #f8d7da;
-      border-color: #f5c6cb;
-      color: #721c24;
-    }
-
-    .alert-success {
-      background-color: #d4edda;
-      border-color: #c3e6cb;
-      color: #155724;
-    }
-
-    .error {
-      border: 1px solid red !important;
-    }
   </style>
-
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -127,10 +50,8 @@ session_start();
         <img src="mstile-150x150.png" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Motospeed</span>
       </a>
-
       <!-- Sidebar -->
       <div class="sidebar">
-
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -176,25 +97,22 @@ session_start();
                   </a>
                 </li>
                 <li class="nav-item">
-                <li class="nav-item">
-                  <a href="marcas.php" class="nav-link active">
+                  <a href="./marcas.php" class="nav-link ">
                     <p>Marcas</p>
                   </a>
                 </li>
-                </a>
+                <li class="nav-item">
+                  <a href="categorias.php" class="nav-link">
+                    <p>Categorias</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="subcategorias.php" class="nav-link active">
+                    <p>Sub-Categorias</p>
+                  </a>
+                </li>
+              </ul>
             </li>
-            <li class="nav-item">
-              <a href="categorias.php" class="nav-link">
-                <p>Categorias</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="subcategorias.php" class="nav-link">
-                <p>Sub-Categorias</p>
-              </a>
-            </li>
-          </ul>
-          </li>
         </nav>
         <!-- /.sidebar-menu -->
       </div>
@@ -208,50 +126,86 @@ session_start();
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Marcas
+              <h1>Sub-Categorias
               </h1>
               <?php
               // Verifica se a mensagem de erro está definida na sessão
-              if (isset($_SESSION['mensagem'])) {
-                echo '<div id="alert" class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
+              if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] != "O Admin não pode ser desativado.") {
+                echo '<div id="alert" class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
                 unset($_SESSION['mensagem']);
+              } else {
+                if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "O Admin não pode ser desativado.") {
+                  echo '<div id="alert" class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
+                  unset($_SESSION['mensagem']);
+                }
               }
               ?>
             </div>
 
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item active">Gestão</li>
-                <li class="breadcrumb-item active"><a href="marcas.php">Marcas</a></li>
+                <li class="breadcrumb-item active">Gestão</a></li>
+                <li class="breadcrumb-item active">Sub-categorias</li>
                 <li class="breadcrumb-item active">
-                  Inserir marca
+                  &nbsp;<a href="criarSubCategoria.php"> <i class="fa-regular fa-square-plus fa-xl"></i></a>
                 </li>
               </ol>
             </div>
           </div>
         </div><!-- /.container-fluid -->
       </section>
+
       <!-- Main content -->
       <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <!-- left column -->
-            <div class="col-md-12">
-              <!-- general form elements -->
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form action="inserirMarca.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-                <label for="nome">Nome:</label>
-                <input type="text" name="nome" id="nome" value="" oninput="clearErrorMessage('nome-error')"><br>
-                <span id="nome-error" class="error-message"></span><br>
+        <div class="card">
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="example2" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Sub-categoria</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                // Inclua o arquivo de conexão
+                include 'ligacao.php';
+                // Consulta SQL para obter os dados da tabela
+                $sql = "SELECT * FROM subcategorias";
+                $result = mysqli_query($con, $sql);
+                // Loop através dos resultados da consulta e exibir cada linha na tabela
+                if (mysqli_num_rows($result) > 0) {
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td>" . $row["id_subcategoria"] . "</td>";
+                    echo "<td style='text-align:left'>" . ($row["subcategoria"] ? $row["subcategoria"] : "<a href='editCategoria.php?id_categoria=" . $row['id_subcategoria'] . "'><i>N/A</i></a>") . "</td>";
+                    echo "<td style='text-align:left'><a href='editSubCategoria.php?id_subcategoria=" . $row['id_subcategoria'] . "'><i class='fa-solid fa-pen-to-square'></i></a></td>";
+                    echo "</tr>";
+                  }
+                } else {
+                  echo "<tr><td colspan='4' style='text-align:center'>Sem resultados encontrados</td></tr>";
+                }
+                // Fechar a conexão
+                mysqli_close($con);
+                ?>
+              </tbody>
+            </table>
+          </div>
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              var alertBox = document.getElementById('alert');
+              if (alertBox) {
+                setTimeout(function() {
+                  alertBox.classList.add('hide');
+                }, 3000); // 5000 milissegundos = 5 segundos
+              }
+            });
+          </script>
 
-                <input type="submit" value="Criar">
-                <li class="breadcrumb-item active" style="list-style: none;">
-                  <a href="marcas.php"> <i class="fas fa-arrow-left"></i> Voltar</a>
-                </li>
-              </form>
-
-            </div>
+          <!-- /.card-body -->
+        </div>
       </section>
       <!-- /.content -->
     </div>
@@ -287,25 +241,26 @@ session_start();
   <script src="../../dist/js/demo.js"></script>
   <!-- Page specific script -->
   <script>
-    function validateForm() {
-      // Pegue o valor do campo de entrada
-      var nome = document.getElementById("nome").value;
-
-      // Verifique se o campo está vazio
-      if (nome.trim() == "") {
-        // Se estiver vazio, adicione a classe de erro ao campo
-        document.getElementById("nome").classList.add("error");
-        return false; // Retorna false para impedir o envio do formulário
-      }
-
-      return true; // Retorna true se a validação passar
-    }
-
-    function clearErrorMessage(id) {
-      // Esta função é chamada quando o usuário começa a digitar novamente, para limpar a mensagem de erro
-      document.getElementById(id).innerText = "";
-      document.getElementById("nome").classList.remove("error"); // Limpa também a classe de erro
-    }
+    $(function() {
+      $("#example1").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+    $(document).ready(function() {
+      $('#example2').DataTable();
+    });
   </script>
 </body>
 

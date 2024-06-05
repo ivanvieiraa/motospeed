@@ -187,6 +187,11 @@ session_start();
                 <p>Categorias</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="subcategorias.php" class="nav-link">
+                <p>Sub-Categorias</p>
+              </a>
+            </li>
           </ul>
           </li>
         </nav>
@@ -216,7 +221,7 @@ session_start();
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item active">Gestão</li>
-                <li class="breadcrumb-item active"><a href="marcas.php">Categorias</a></li>
+                <li class="breadcrumb-item active"><a href="categorias.php">Categorias</a></li>
                 <li class="breadcrumb-item active">
                   Inserir categoria
                 </li>

@@ -1,10 +1,10 @@
 <?php
-  session_start();
-  if ($_SESSION['adm'] != 1) {
-    header('Location: ../index.php');
-  }
+session_start();
+if ($_SESSION['adm'] != 1) {
+  header('Location: ../index.php');
+}
 
-  ?>
+?>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -109,6 +109,11 @@
                 <li class="nav-item">
                   <a href="./pages/tables/categorias.php" class="nav-link">
                     <p>Categorias</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="./pages/tables/subcategorias.php" class="nav-link">
+                    <p>Sub-Categorias</p>
                   </a>
                 </li>
               </ul>
@@ -254,7 +259,7 @@
                 <tbody>
                   <?php
                   // Inclua o arquivo de conexão
-                    include("../ligacao.php");
+                  include("../ligacao.php");
                   // Consulta SQL para obter os dados da tabela
                   $sql = "SELECT * FROM suporte";
                   $result = mysqli_query($con, $sql);

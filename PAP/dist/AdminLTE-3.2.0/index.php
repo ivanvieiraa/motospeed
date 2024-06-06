@@ -3,7 +3,81 @@ session_start();
 if ($_SESSION['adm'] != 1) {
   header('Location: ../index.php');
 }
+include('../ligacao.php');
+// Consulta SQL para obter o total de produtos para cada categoria
+$sqlMarcasG = "SELECT m.nome_marca AS marca, COUNT(p.id_prod) AS total_produtos
+                  FROM marcas m
+                  LEFT JOIN produtos p ON m.id_marca = p.id_marca
+                  GROUP BY m.nome_marca";
+$resultMarcasG = mysqli_query($con, $sqlMarcasG);
+
+// Inicializar arrays para armazenar os totais de produtos e rótulos de categoria
+$labels = [];
+$totalProdutos = [];
+
+// Loop através dos resultados da consulta e armazenar os totais de produtos e rótulos de categoria
+while ($rowMarcaG = mysqli_fetch_assoc($resultMarcasG)) {
+  $labels[] = $rowMarcaG['marca'];
+  $totalProdutos[] = $rowMarcaG['total_produtos'];
+}
+
+// Consulta SQL para obter as estatísticas de vendas por mês
+$sqlVendasMes = "SELECT MONTH(data_venda) AS mes, SUM(total) AS total_mes
+                FROM vendas
+                WHERE YEAR(data_venda) = YEAR(CURRENT_DATE())
+                GROUP BY MONTH(data_venda)";
+$resultVendasMes = mysqli_query($con, $sqlVendasMes);
+
+// Array de nomes dos meses em português
+$nomes_meses = array(
+  1 => 'Janeiro',
+  2 => 'Fevereiro',
+  3 => 'Março',
+  4 => 'Abril',
+  5 => 'Maio',
+  6 => 'Junho',
+  7 => 'Julho',
+  8 => 'Agosto',
+  9 => 'Setembro',
+  10 => 'Outubro',
+  11 => 'Novembro',
+  12 => 'Dezembro'
+);
+
+// Inicializar arrays para armazenar os nomes dos meses e os totais de vendas
+$nomes_meses_vendas = array();
+$totalVendasMes = array();
+
+// Loop através dos resultados da consulta e armazenar os nomes dos meses e os totais de vendas
+while ($rowVendasMes = mysqli_fetch_assoc($resultVendasMes)) {
+  $nome_mes = $nomes_meses[intval($rowVendasMes['mes'])]; // Obtém o nome do mês
+  $nomes_meses_vendas[] = $nome_mes;
+  $totalVendasMes[] = $rowVendasMes['total_mes'];
+}
+
+// Consulta SQL para obter produtos com estoque baixo
+$sqlEstoqueBaixo = "SELECT p.nome_prod AS produto, pt.tamanho, pt.stock, pt.id_prod
+                    FROM produtos p
+                    INNER JOIN produtos_tamanhos pt ON p.id_prod = pt.id_prod
+                    WHERE pt.stock <= 10";
+$resultEstoqueBaixo = mysqli_query($con, $sqlEstoqueBaixo);
+
+// Inicializar arrays para armazenar os produtos, tamanhos e estoques com baixo estoque
+$produtosEstoqueBaixo = [];
+$tamanhosEstoqueBaixo = [];
+$estoqueEstoqueBaixo = [];
+$idProdutosEstoqueBaixo = [];
+
+// Loop através dos resultados da consulta e armazenar os produtos, tamanhos, estoques e IDs com baixo estoque
+while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
+  $produtosEstoqueBaixo[] = $rowEstoqueBaixo['produto'] . ' (' . $rowEstoqueBaixo['tamanho'] . ')';
+  $estoqueEstoqueBaixo[] = $rowEstoqueBaixo['stock'];
+  $idProdutosEstoqueBaixo[] = $rowEstoqueBaixo['id_prod']; // Armazenar o ID do produto
+}
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -170,19 +244,19 @@ if ($_SESSION['adm'] != 1) {
                   <h3>
                     <?php
                     include("../ligacao.php");
-                    $sqlProd = "SELECT COUNT(*) FROM produtos";
-                    $resultProd = mysqli_query($con, $sqlProd);
-                    $rowProd = mysqli_fetch_array($resultProd);
-                    $prods = $rowProd[0];
-                    echo $prods;
+                    $sql = "SELECT COUNT(*) FROM users";
+                    $result = mysqli_query($con, $sql);
+                    $row = mysqli_fetch_array($result);
+                    $users = $row[0];
+                    echo $users;
                     ?>
 
                   </h3>
 
-                  <p>Produtos</p>
+                  <p>Utilizadores registados</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-bag"></i>
+                  <i class="ion ion-person-add"></i>
                 </div>
               </div>
             </div>
@@ -238,23 +312,101 @@ if ($_SESSION['adm'] != 1) {
                   <h3>
                     <?php
                     include("../ligacao.php");
-                    $sql = "SELECT COUNT(*) FROM users";
-                    $result = mysqli_query($con, $sql);
-                    $row = mysqli_fetch_array($result);
-                    $users = $row[0];
-                    echo $users;
+                    $sqlProd = "SELECT COUNT(*) FROM produtos";
+                    $resultProd = mysqli_query($con, $sqlProd);
+                    $rowProd = mysqli_fetch_array($resultProd);
+                    $prods = $rowProd[0];
+                    echo $prods;
                     ?>
                   </h3>
-                  <p>Utilizadores registados</p>
+                  <p>Produtos</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-person-add"></i>
+                  <i class="ion ion-bag"></i>
                 </div>
               </div>
             </div>
             <!-- ./col -->
           </div>
           <!-- /.row -->
+          <div class="row">
+
+
+            <!-- Coluna da esquerda -->
+            <div class="col-lg-6 col-12">
+              <!-- PIE CHART -->
+              <div class="card card-danger">
+                <div class="card-header">
+                  <h3 class="card-title">Quantidade de produtos por marca</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col-lg-6 -->
+
+            <!-- Coluna da direita -->
+            <div class="col-lg-6 col-12">
+              <!-- SECOND CHART -->
+              <div class="card card-success">
+                <div class="card-header">
+                  <h3 class="card-title">Total de vendas por mês</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col-lg-6 -->
+
+            <!-- Novo gráfico de barras para produtos com estoque baixo -->
+            <div class="col-lg-12 col-12">
+              <div class="card card-warning">
+                <div class="card-header">
+                  <h3 class="card-title">Produtos com stock baixo</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <?php if (empty($produtosEstoqueBaixo)) : ?>
+                    <p>Todos os produtos têm stock disponível.</p>
+                  <?php else : ?>
+                    <canvas id="estoqueBaixoChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                  <?php endif; ?>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
           <h3>Lista de pedidos de Suporte</h3>
           <?php
           // Verifica se a mensagem de erro está definida na sessão
@@ -390,8 +542,6 @@ if ($_SESSION['adm'] != 1) {
     </div>
   </div>
 
-
-
   <script>
     function showDetails(id, status) {
       // Fetch details from the server using AJAX
@@ -470,6 +620,138 @@ if ($_SESSION['adm'] != 1) {
   <script src="dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard.js"></script>
+
+  <script>
+    // Definir os dados do gráfico
+    var donutData = {
+      labels: <?php echo json_encode($labels); ?>,
+      datasets: [{
+        data: <?php echo json_encode($totalProdutos); ?>,
+        backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#605ca8', '#ff851b', '#39cccc', '#01ff70'], // Cores dos segmentos do gráfico
+      }]
+    };
+
+    // Renderizar o gráfico de pizza
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+    var pieOptions = {
+      maintainAspectRatio: false,
+      responsive: true,
+    };
+    new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: donutData,
+      options: pieOptions
+    });
+  </script>
+
+  <script>
+    // Definir os dados do gráfico de barras
+    var barData = {
+      labels: <?php echo json_encode($nomes_meses_vendas); ?>,
+      datasets: [{
+        label: 'Total de vendas',
+        backgroundColor: 'rgba(60, 141, 188, 0.8)', // Cor das barras
+        borderColor: 'rgba(60,141,188,0.8)',
+        borderWidth: 1,
+        data: <?php echo json_encode($totalVendasMes); ?>,
+      }]
+    };
+    // Renderizar o gráfico de barras
+    var barChartCanvas = $('#barChart').get(0).getContext('2d');
+    var barOptions = {
+      maintainAspectRatio: false,
+      responsive: true,
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem, data) {
+            var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+            var value = tooltipItem.yLabel.toFixed(2); // Formatar o número com duas casas decimais
+            return datasetLabel + ': ' + value + ' €';
+          }
+        }
+      }
+    };
+    new Chart(barChartCanvas, {
+      type: 'bar',
+      data: barData,
+      options: barOptions
+    });
+  </script>
+
+  <script>
+    // Calcular o total máximo atual e adicionar 10 a ele
+    var maxStock = <?php echo max($estoqueEstoqueBaixo); ?>;
+
+    // Definir os dados do gráfico de barras para produtos com estoque baixo
+    var estoqueBaixoData = {
+      labels: <?php echo json_encode($produtosEstoqueBaixo); ?>,
+      datasets: [{
+        label: 'Stock',
+        backgroundColor: 'rgba(255, 193, 7, 0.8)', // Cor das barras
+        borderColor: 'rgba(255, 193, 7, 1)',
+        borderWidth: 1,
+        data: <?php echo json_encode($estoqueEstoqueBaixo); ?>,
+        // Adicionar o tamanho do estoque aos rótulos das barras
+        datalabels: {
+          anchor: 'end',
+          align: 'end',
+          formatter: function(value, context) {
+            return value + " (" + context.dataset.data[context.dataIndex] + ")";
+          }
+        }
+      }]
+    };
+
+    // Renderizar o gráfico de barras para produtos com estoque baixo
+    var estoqueBaixoChartCanvas = $('#estoqueBaixoChart').get(0).getContext('2d');
+    var estoqueBaixoOptions = {
+      maintainAspectRatio: false,
+      responsive: true,
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            stepSize: 5, // Definir o passo para 5
+            max: maxStock // Definir o limite superior para 10 acima do total máximo
+          }
+        }]
+      },
+      plugins: {
+        datalabels: {
+          color: '#000',
+          font: {
+            weight: 'bold'
+          }
+        }
+      },
+      onClick: function(evt, elements) {
+        if (elements.length > 0) {
+          var datasetIndex = elements[0]._datasetIndex;
+          var index = elements[0]._index;
+          var stock = <?php echo json_encode($estoqueEstoqueBaixo); ?>[index]; // Obter o estoque do produto clicado
+          if (stock > 0) { // Verificar se o estoque é maior que 0
+            var id_prod = <?php echo json_encode($idProdutosEstoqueBaixo); ?>[index]; // Obter o ID do produto clicado
+            window.location.href = "./pages/tables/editProd.php?id_prod=" + id_prod; // Redirecionar para a página editProd.php com o ID do produto
+          }
+        }
+      }
+    };
+
+    new Chart(estoqueBaixoChartCanvas, {
+      type: 'bar',
+      data: estoqueBaixoData,
+      options: estoqueBaixoOptions
+    });
+  </script>
+
+  </script>
 </body>
 
 </html>

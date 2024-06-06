@@ -75,10 +75,10 @@ $pdf->writeHTML($html);
 $html = '<table cellpadding="5" cellspacing="0" border="0" style="width: 100%; background-color: #f2f2f2;">
             <thead>
                 <tr style="background-color: #ddd;">
-                    <th style="color: #333; padding: 8px;">Nome do produto</th>
-                    <th style="color: #333; padding: 8px;">Quantidade</th>
+                    <th style="color: #333; padding: 8px;">Descrição</th>
+                    <th style="color: #333; padding: 8px;">Qtd</th>
                     <th style="color: #333; padding: 8px;">Preço unitário</th>
-                    <th style="color: #333; padding: 8px;">Total</th>
+                    <th style="color: #333; padding: 8px;">Valor</th>
                 </tr>
             </thead>
             <tbody>';
@@ -93,7 +93,7 @@ while ($detalhe = mysqli_fetch_assoc($result_detalhes)) {
     $oddRow = !$oddRow;
     $html .= '<td style="color: #333; padding: 8px;">' . $detalhe['nome_prod'] . '</td>';
     $html .= '<td style="color: #333; padding: 8px;">' . $detalhe['quantidade'] . '</td>';
-    $html .= '<td style="color: #333; padding: 8px;">' . $detalhe['preco_uni'] . '€</td>';
+    $html .= '<td style="color: #333; padding: 8px;">' . number_format($detalhe['preco_uni'],2) . '€</td>';
     $html .= '<td style="color: #333; padding: 8px;">' . number_format($valor_total_liquido, 2) . '€</td>';
     $html .= '</tr>';
 }
@@ -103,8 +103,9 @@ $html .= '</tbody></table>';
 $pdf->writeHTML($html);
 
 // Write the total amount
-$pdf->writeHTML('<p style="text-align:right; margin-top:20px; color: #333;"><strong>Custos de envio:</strong> ' . number_format($venda['envio'], 2) . '€</p>');
-$pdf->writeHTML('<p style="text-align:right; color: #333;"><strong>Total da compra:</strong> ' . number_format($total_liquido + $venda['envio'], 2) . '€</p>');
+$pdf->writeHTML('<p style="text-align:right; margin-top:20px; color: #333;"><strong>Subtotal:</strong> ' . number_format($total_liquido, 2) . '€</p>');
+$pdf->writeHTML('<p style="text-align:right; margin-top:20px; color: #333;"><strong>Taxa de envio:</strong> ' . number_format($venda['envio'], 2) . '€</p>');
+$pdf->writeHTML('<p style="text-align:right; color: #333;"><strong>Total:</strong> ' . number_format($total_liquido + $venda['envio'], 2) . '€</p>');
 
 // Add space before "Obrigado pela sua compra!"
 $pdf->writeHTML('<br>');

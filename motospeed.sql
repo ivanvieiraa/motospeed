@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04-Jun-2024 às 16:42
+-- Tempo de geração: 07-Jun-2024 às 01:42
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -62,7 +62,18 @@ CREATE TABLE `detalhe_venda` (
 --
 
 INSERT INTO `detalhe_venda` (`id_venda`, `id_prod`, `quantidade`, `tamanho`, `preco_uni`) VALUES
-(65, 5, 1, 'XS', 1499);
+(66, 16, 1, 'M', 420),
+(67, 15, 1, 'S', 150),
+(68, 5, 1, 'S', 1499),
+(68, 17, 1, 'S', 449.9),
+(69, 9, 1, 'XL', 495.99),
+(69, 16, 1, 'M', 420),
+(70, 16, 1, 'M', 420),
+(71, 9, 1, 'XL', 495.99),
+(72, 21, 1, 'XS', 125),
+(73, 11, 1, 'XL', 539),
+(74, 26, 1, 'S', 116.99),
+(75, 22, 1, 'XS', 95);
 
 -- --------------------------------------------------------
 
@@ -112,7 +123,7 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`id_prod`, `nome_prod`, `preco_prod`, `desc_prod`, `foto_prod`, `id_marca`, `id_categoria`, `criado_a`, `alterado_a`, `status`) VALUES
-(2, 'Scorpion EXO 520 Air', 199.99, ' Capacete integral confeccionado em policarbonato injetado com homologação ECE 22-06 e projetado especificamente para proporcionar um nível aerodinâmico esportivo aliado ao conforto de um capacete de uso diário. O Exo-520 Evo Air destaca-se por incorporar o protetor solar Speedview® integrado, mecanismo de viseira Ellip-Tech®, interior acolchoado Kwikwick®2 e um sistema de ventilação eficaz.', 'uploads/produtos/scorpion-520air.png', 2, 1, '2024-03-19 17:36:29', '2024-05-11 15:22:12', 1),
+(2, 'Scorpion EXO 520 Air', 199.99, ' Capacete integral confeccionado em policarbonato injetado com homologação ECE 22-06 e projetado especificamente para proporcionar um nível aerodinâmico esportivo aliado ao conforto de um capacete de uso diário. O Exo-520 Evo Air destaca-se por incorporar o protetor solar Speedview® integrado, mecanismo de viseira Ellip-Tech®, interior acolchoado Kwikwick®2 e um sistema de ventilação eficaz.', 'uploads/produtos/scorpion-520air.png', 2, 1, '2024-03-19 17:36:29', '2024-06-06 22:53:32', 1),
 (5, 'AGV Pista GP RR', 1499, 'Capacete Agv Pista GP RR E2206 Futuro Carbonio Forgiato. O novo Pista GP RR é homologado de acordo com os regulamentos de corrida da FIM e os novos regulamentos ECE 22.06. A Pista GP RR Futuro Carbonio Forgiato foi fabricada com carcaça e asa PRO Spoiler em carbono forjado exclusivo e detalhes na cor Elettro Iridium. A estrutura de carbono forjado com acabamento fosco torna cada concha e cada PRO Spoiler uma peça única. Os detalhes e a tela na cor exclusiva Elettro Iridium são inspirados na potência silenciosa e limpa do futuro da mobilidade.', 'uploads/produtos/agv-pista.png', 3, 1, '2024-05-09 22:11:19', '2024-05-11 12:42:01', 1),
 (8, 'Shark Race-R PRO', 695, 'Capacete Shark Race-R Pro GP 06 Blank Matte Black . Shark evolui seu capacete mais esportivo e equipa o novo Race-R Pro GP 06 com os novos regulamentos ECE 22.06. A casca externa feita com estrutura COVA (fibra de carbono e aramida) oferece excelente desempenho aerodinâmico. Ele tem o recorde de velocidade na MotoGP capturado em 363,6 km/h! O spoiler traseiro destaca-se por melhorar o desempenho aerodinâmico e a estabilidade em alta velocidade. Este é o capacete topo de gama, fruto da experiência da Shark nos mais altos escalões de competição (MotoGP e SBK) com mais de 250 pódios.', 'uploads/produtos/shark.png', 7, 1, '2024-05-09 22:19:50', '2024-05-09 22:20:13', 1),
 (9, 'DAINESE AVRO 4 ', 495.99, 'Casaco de pele Dainese Avro 4 Preto Mate / Branco. Casaco desportivo confeccionado em pele bovina de primeira qualidade; destaca-se pelo seu conforto, segurança e design. Possui proteções certificadas nos ombros e cotovelos e inserções de alumínio nos ombros.', 'uploads/produtos/dainese-avro4.png', 4, 2, '2024-05-11 13:33:39', '2024-05-11 15:28:02', 1),
@@ -132,22 +143,12 @@ INSERT INTO `produtos` (`id_prod`, `nome_prod`, `preco_prod`, `desc_prod`, `foto
 (23, 'ALPINESTARS SMX-1', 80, 'Luvas Alpinestars SMX-1 Air V2 Preto / Branco. Luvas curtas de design agressivo confeccionadas em combinação de pele e malha 3D. Estão equipados com a inovadora proteção de carbono da Alpinestars nas dobradiças do punho e reforços em áreas críticas. ', 'uploads/produtos/apline-smx.webp', 1, 4, '2024-05-20 22:08:52', NULL, 1),
 (24, 'ALPINESTARS TOURER', 100.99, 'Luvas Alpinestars Tourer W-7 V2 Drystar Pretas . Luvas impermeáveis e isoladas para uso Touring no inverno e em baixas temperaturas. Confeccionada em mix de couro e tecido Softshell para maior durabilidade e conforto. A membrana impermeável Drystar® oferece respirabilidade e evita a entrada de água e, juntamente com o duplo isolamento Thinsulate™, oferece excelente proteção contra o frio.', 'uploads/produtos/alpine-tourer.webp', 1, 4, '2024-05-20 22:10:57', NULL, 1),
 (25, 'ARMURE KERR', 40, 'Armure Kerr Vented Lady Gloves Preto. Luvas curtas com ajuste específico para mulher, feitas de uma combinação de pele de cabra e malha de poliéster. Eles incorporam proteções de TPU nas articulações.', 'uploads/produtos/armure-kerr.webp', 9, 4, '2024-05-20 22:12:01', NULL, 1),
-(26, 'DAINESE UNRULY', 116.99, 'Luvas Dainese Unruly Ergo-Tek Preto / Vermelho. A construção das costas em malha sem costuras oferece grande elasticidade e liberdade de movimentos, que se combinam com os elevados níveis de segurança garantidos pela proteção dos nós dos dedos com tecnologia Ergo-Tek, concebida para garantir a total mobilidade da mão ao proteger os mais áreas expostas.', 'uploads/produtos/dainese-unruly.webp', 4, 4, '2024-05-20 22:14:28', NULL, 1);
-
--- --
--- -- Acionadores `produtos`
--- --
--- DELIMITER $$
--- CREATE TRIGGER `after_insert_produtos` AFTER INSERT ON `produtos` FOR EACH ROW BEGIN
---     INSERT INTO produtos_tamanhos (id_prod, tamanho, stock)
---     VALUES (NEW.id_prod, 'L', 0),
---            (NEW.id_prod, 'M', 0),
---            (NEW.id_prod, 'S', 0),
---            (NEW.id_prod, 'XL', 0),
---            (NEW.id_prod, 'XS', 0);
--- END
--- $$
--- DELIMITER ;
+(26, 'DAINESE UNRULY', 116.99, 'Luvas Dainese Unruly Ergo-Tek Preto / Vermelho. A construção das costas em malha sem costuras oferece grande elasticidade e liberdade de movimentos, que se combinam com os elevados níveis de segurança garantidos pela proteção dos nós dos dedos com tecnologia Ergo-Tek, concebida para garantir a total mobilidade da mão ao proteger os mais áreas expostas.', 'uploads/produtos/dainese-unruly.webp', 4, 4, '2024-05-20 22:14:28', NULL, 1),
+(27, 'ALPINESTARS TRACK V2 BLACK', 500, 'Calça de couro Alpinestars Track V2 Preto. Calça desportiva confeccionado em couro de primeira qualidade. Possui proteções internas homologadas nos joelhos e quadris, e dois tipos de deslizaderas externas (Sport e DFS) na zona dos joelhos para maior segurança.', 'uploads/produtos/track-v2.avif', 1, 3, '2024-06-05 01:16:47', NULL, 1),
+(28, 'DAINESE CARVE MASTER 3', 404, 'Calças Dainese Carve Master 3 Gore-Tex Preto / Ebony. É a terceira geração do icônico conjunto Carve Master, que se destaca por oferecer excelente conforto em todos os tipos de condições. Calças de alto rendimento e muito confortáveis para uso Sport-Touring.', 'uploads/produtos/dainese-carve_master_3.avif', 4, 3, '2024-06-07 00:15:53', NULL, 1),
+(29, 'SPORT MASTER GORE-TEX', 325, 'Botas Dainese Sport Master Gore-Tex pretas. Projetadas para os pilotos mais exigentes, as botas Sport Master combinam os segmentos de esporte e turismo com a máxima expressão. Feitas de microfibra e tecido D-Stone, as botas Dainese Sport Master Gore-Tex possuem membrana Gore-Tex impermeável e respirável para oferecer excelente desempenho em qualquer condição climática. ', 'uploads/produtos/dainese-sport_master_gore_tex_black_001-0-M-200148481.avif', 4, 5, '2024-06-07 00:16:47', '2024-06-07 00:38:17', 1),
+(30, 'ALPINESTARS BOGOTÁ PRO', 269, 'Apinestars Bogotá Pro Drystar Calça Vlaro Cinza / Cinza Escuro / Amarelo Fluo. Calças touring muito versáteis e funcionais, ideais para todo o tipo de condições climatéricas. Incorpora o sistema \"Liner to drop\" que permite diferentes configurações em diferentes condições meteorológicas.', 'uploads/produtos/alpinestars-bogot_pro_drystar_ice_gray_dark_gray_yellow_fluo_9195-2-M-2004767110.avif', 1, 3, '2024-06-07 00:17:37', NULL, 1),
+(31, 'ARMURE AREN WATERPROOF', 160, 'Calça Impermeável Armure Aren Cinzento / Verde / Vermelho. Calças versáteis estilo turismo / aventura com membrana impermeável, forro térmico removível e entradas de ar para se adaptarem perfeitamente a todos os tipos de condições climáticas.', 'uploads/produtos/armure-aren_waterproof_grey_green_red_36-4-M-2002425829.avif', 9, 3, '2024-06-07 00:18:32', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -166,16 +167,16 @@ CREATE TABLE `produtos_tamanhos` (
 --
 
 INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
-(2, 'L', 0),
-(2, 'M', 0),
-(2, 'S', 0),
-(2, 'XL', 0),
-(2, 'XS', 0),
+(2, 'L', 15),
+(2, 'M', 100),
+(2, 'S', 100),
+(2, 'XL', 100),
+(2, 'XS', 100),
 (5, 'L', 100),
 (5, 'M', 100),
-(5, 'S', 100),
+(5, 'S', 99),
 (5, 'XL', 100),
-(5, 'XS', 99),
+(5, 'XS', 100),
 (8, 'L', 100),
 (8, 'M', 100),
 (8, 'S', 100),
@@ -184,7 +185,7 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (9, 'L', 100),
 (9, 'M', 100),
 (9, 'S', 100),
-(9, 'XL', 100),
+(9, 'XL', 98),
 (9, 'XS', 100),
 (10, 'L', 100),
 (10, 'M', 100),
@@ -194,36 +195,36 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (11, 'L', 100),
 (11, 'M', 100),
 (11, 'S', 100),
-(11, 'XL', 100),
+(11, 'XL', 99),
 (11, 'XS', 100),
 (12, 'L', 100),
 (12, 'M', 100),
 (12, 'S', 100),
 (12, 'XL', 100),
 (12, 'XS', 100),
-(13, 'L', 100),
-(13, 'M', 100),
-(13, 'S', 100),
-(13, 'XL', 100),
-(13, 'XS', 100),
+(13, 'L', 20),
+(13, 'M', 20),
+(13, 'S', 2),
+(13, 'XL', 20),
+(13, 'XS', 20),
 (14, 'L', 100),
 (14, 'M', 100),
 (14, 'S', 100),
 (14, 'XL', 100),
 (14, 'XS', 100),
 (15, 'L', 95),
-(15, 'M', 0),
-(15, 'S', 100),
+(15, 'M', 20),
+(15, 'S', 99),
 (15, 'XL', 100),
 (15, 'XS', 100),
 (16, 'L', 100),
-(16, 'M', 100),
+(16, 'M', 97),
 (16, 'S', 100),
 (16, 'XL', 100),
 (16, 'XS', 100),
 (17, 'L', 100),
 (17, 'M', 100),
-(17, 'S', 100),
+(17, 'S', 99),
 (17, 'XL', 100),
 (17, 'XS', 100),
 (18, 'L', 100),
@@ -245,12 +246,12 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (21, 'M', 100),
 (21, 'S', 100),
 (21, 'XL', 100),
-(21, 'XS', 100),
+(21, 'XS', 500),
 (22, 'L', 100),
 (22, 'M', 100),
 (22, 'S', 100),
 (22, 'XL', 100),
-(22, 'XS', 100),
+(22, 'XS', 99),
 (23, 'L', 100),
 (23, 'M', 100),
 (23, 'S', 100),
@@ -268,9 +269,34 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (25, 'XS', 100),
 (26, 'L', 100),
 (26, 'M', 100),
-(26, 'S', 100),
+(26, 'S', 99),
 (26, 'XL', 100),
-(26, 'XS', 100);
+(26, 'XS', 100),
+(27, 'L', 100),
+(27, 'M', 100),
+(27, 'S', 50),
+(27, 'XL', 5),
+(27, 'XS', 100),
+(28, 'L', 100),
+(28, 'M', 100),
+(28, 'S', 100),
+(28, 'XL', 100),
+(28, 'XS', 100),
+(29, 'L', 100),
+(29, 'M', 100),
+(29, 'S', 100),
+(29, 'XL', 100),
+(29, 'XS', 100),
+(30, 'L', 100),
+(30, 'M', 100),
+(30, 'S', 100),
+(30, 'XL', 100),
+(30, 'XS', 100),
+(31, 'L', 100),
+(31, 'M', 100),
+(31, 'S', 100),
+(31, 'XL', 100),
+(31, 'XS', 100);
 
 -- --------------------------------------------------------
 
@@ -293,7 +319,7 @@ CREATE TABLE `suporte` (
 --
 
 INSERT INTO `suporte` (`id_suporte`, `email`, `assunto`, `mensagem`, `status`, `criado_a`, `atualizado_a`) VALUES
-(1, 'tiagoneto381@gmail.com', 'Conta desativada', 'Tentei fazer login e a minha conta foi desativada', 0, '2024-05-29 08:56:02', '2024-05-29 08:59:39');
+(2, 'ivannvieiraa@outlook.pt', 'Assunto teste', 'qwedfweiufweyvfwefwfe', 2, '2024-06-05 22:05:18', '2024-06-05 22:06:43');
 
 -- --------------------------------------------------------
 
@@ -344,7 +370,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id_user`, `nome`, `apelido`, `email`, `pass`, `data_nasc`, `foto`, `morada`, `codigop`, `adm`, `criado_a`, `alterado_a`, `status`) VALUES
 (49, 'Ivan', 'Vieira', 'motospeed2024@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '2006-10-07', 'uploads/users/mstile-150x150.png', 'Rua da solidariadade, Lote 16', '1675-629', 1, '2024-04-28 21:50:28', '2024-06-04 14:36:15', 1),
-(50, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', '2c42e5cf1cdbafea04ed267018ef1511', '2006-10-07', 'uploads/users/default.png', 'Rua da solidariadade, Lote 16', '1675-629', 0, '2024-04-28 22:05:41', '2024-06-04 11:17:54', 1);
+(50, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', '2c42e5cf1cdbafea04ed267018ef1511', '2006-10-07', 'uploads/users/default.png', 'R/C, 1 Andar', '1675-629', 0, '2024-04-28 22:05:41', '2024-06-06 22:55:26', 1);
 
 -- --------------------------------------------------------
 
@@ -370,7 +396,16 @@ CREATE TABLE `vendas` (
 --
 
 INSERT INTO `vendas` (`id_venda`, `id_user`, `data_venda`, `total`, `envio`, `nome`, `apelido`, `email`, `morada`, `codigop`) VALUES
-(65, 50, '2024-06-04', 1503.99, 4.99, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'Rua da solidariadade, Lote 16', '1675-629');
+(66, 50, '2024-05-02', 429.99, 9.99, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'R/C, 1 Andar', '1675-629'),
+(67, 49, '2024-05-21', 154.99, 4.99, 'Ivan', 'Vieira', 'motospeed2024@gmail.com', 'Rua da solidariadade, Lote 16', '1675-629'),
+(68, 49, '2024-05-15', 1953.89, 4.99, 'Ivan', 'Vieira', 'motospeed2024@gmail.com', 'Rua da solidariadade, Lote 16', '1675-629'),
+(69, 49, '2024-04-10', 915.99, 0, 'Ivan', 'Vieira', 'motospeed2024@gmail.com', 'Rua da solidariadade, Lote 16', '1675-629'),
+(70, 49, '2024-04-16', 420, 0, 'Ivan', 'Vieira', 'motospeed2024@gmail.com', 'Rua da solidariadade, Lote 16', '1675-629'),
+(71, 49, '2024-04-15', 495.99, 0, 'Ivan', 'Vieira', 'motospeed2024@gmail.com', 'Rua da solidariadade, Lote 16', '1675-629'),
+(72, 49, '2024-03-12', 125, 0, 'Ivan', 'Vieira', 'motospeed2024@gmail.com', 'Rua da solidariadade, Lote 16', '1675-629'),
+(73, 50, '2024-03-25', 539, 0, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'R/C, 1 Andar', '1675-629'),
+(74, 50, '2024-06-06', 116.99, 0, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'R/C, 1 Andar', '1675-629'),
+(75, 50, '2024-06-06', 95, 0, 'Ivan', 'Vieira', 'ivannvieiraa@outlook.pt', 'R/C, 1 Andar', '1675-629');
 
 -- --------------------------------------------------------
 
@@ -383,6 +418,15 @@ CREATE TABLE `wishlist` (
   `id_user` int(11) NOT NULL,
   `id_prod` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `wishlist`
+--
+
+INSERT INTO `wishlist` (`id`, `id_user`, `id_prod`) VALUES
+(98, 49, 5),
+(99, 49, 15),
+(100, 49, 2);
 
 --
 -- Índices para tabelas despejadas
@@ -468,19 +512,19 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de tabela `marcas`
 --
 ALTER TABLE `marcas`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id_prod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_prod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de tabela `suporte`
 --
 ALTER TABLE `suporte`
-  MODIFY `id_suporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_suporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `users`
@@ -492,13 +536,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT de tabela `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- Restrições para despejos de tabelas

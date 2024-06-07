@@ -381,31 +381,26 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
             <!-- /.col-lg-6 -->
 
             <!-- Novo gráfico de barras para produtos com estoque baixo -->
-            <div class="col-lg-12 col-12">
-              <div class="card card-warning">
-                <div class="card-header">
-                  <h3 class="card-title">Produtos com stock baixo</h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
+            <?php if (!empty($produtosEstoqueBaixo)) : ?>
+              <div class="col-lg-12 col-12">
+                <div class="card card-warning">
+                  <div class="card-header">
+                    <h3 class="card-title">Produtos com stock baixo</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="estoqueBaixoChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                   </div>
                 </div>
-                <div class="card-body">
-                  <?php if (empty($produtosEstoqueBaixo)) : ?>
-                    <p>Todos os produtos têm stock disponível.</p>
-                  <?php else : ?>
-                    <canvas id="estoqueBaixoChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                  <?php endif; ?>
-                </div>
               </div>
-            </div>
-
-
-
+            <?php endif; ?>
           </div>
           <h3>Lista de pedidos de Suporte</h3>
           <?php

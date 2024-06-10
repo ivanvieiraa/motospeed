@@ -220,6 +220,11 @@ include("ligacao.php");
                 <p>Categorias</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="./pages/tables/subcategorias.php" class="nav-link">
+                <p>Subcategorias</p>
+              </a>
+            </li>
           </ul>
           </li>
         </nav>
@@ -340,7 +345,7 @@ include("ligacao.php");
                 <select name="id_subcategoria" id="id_subcategoria" oninput="clearErrorMessage('subcategoria-error')">
                   <?php
                   // Consulta SQL para obter as categorias
-                  $sql_subcategorias = "SELECT * FROM subcategorias WHERE id_categoria = ".$row['id_categoria']."";
+                  $sql_subcategorias = "SELECT * FROM subcategorias WHERE id_categoria = " . $row['id_categoria'] . "";
                   $resultado_subcategorias = mysqli_query($con, $sql_subcategorias);
                   // Exibir as opções
                   while ($row_subcategoria = mysqli_fetch_assoc($resultado_subcategorias)) {

@@ -204,6 +204,11 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                     <p>Categorias</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="./pages/tables/subcategorias.php" class="nav-link">
+                    <p>Subcategorias</p>
+                  </a>
+                </li>
               </ul>
             </li>
         </nav>

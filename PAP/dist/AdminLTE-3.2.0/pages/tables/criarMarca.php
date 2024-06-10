@@ -112,7 +112,7 @@ session_start();
     }
 
     .error {
-      border: 1px solid red!important;
+      border: 1px solid red !important;
     }
   </style>
 
@@ -186,6 +186,11 @@ session_start();
             <li class="nav-item">
               <a href="categorias.php" class="nav-link">
                 <p>Categorias</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="./pages/tables/subcategorias.php" class="nav-link">
+                <p>Subcategorias</p>
               </a>
             </li>
           </ul>

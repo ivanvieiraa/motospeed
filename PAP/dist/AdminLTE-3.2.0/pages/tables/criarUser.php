@@ -188,6 +188,11 @@ session_start();
                 <p>Categorias</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="./pages/tables/subcategorias.php" class="nav-link">
+                <p>Subcategorias</p>
+              </a>
+            </li>
           </ul>
           </li>
         </nav>
@@ -270,7 +275,7 @@ session_start();
                       <label for="isActive">Estado:</label>
                       <input type="checkbox" name="status" id="statusCheckbox" value="1">
                       <span id="statusText">Não ativo</span>
-                      <input type="hidden" name="status" id="statusValue" value="1"> 
+                      <input type="hidden" name="status" id="statusValue" value="1">
                     </div>
                   </div>
 

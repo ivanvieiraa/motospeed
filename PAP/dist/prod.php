@@ -95,6 +95,8 @@ if ($id_user !== null) {
                         p.nome_prod,
                         c.nome_categoria,
                         c.id_categoria,
+                        s.id_subcategoria,
+                        s.nome_subcategoria,
                         m.nome_marca,
                         m.id_marca,
                         p.preco_prod,
@@ -102,7 +104,8 @@ if ($id_user !== null) {
                         p.desc_prod
                         FROM 
                         produtos p
-                        INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                        INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
+                        INNER JOIN categorias c ON s.id_categoria = c.id_categoria
                         INNER JOIN marcas m ON p.id_marca = m.id_marca
                         WHERE id_prod = $id_prod";
         $result2 = mysqli_query($con, $sqlProd);
@@ -121,6 +124,7 @@ if ($id_user !== null) {
                                     <li class="breadcrumb-item breadcrumb-light"><a href="index.php">Início</a></li>
                                     <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php">Produtos</a></li>
                                     <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_categoria=<?= $row2['id_categoria']; ?>"><?= $row2['nome_categoria']; ?></a></li>
+                                    <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_subcategoria=<?= $row2['id_subcategoria']; ?>"><?= $row2['nome_subcategoria']; ?></a></li>
                                     <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_marca=<?= $row2['id_marca']; ?>"><?= $row2['nome_marca']; ?></a></li>
                                     <li class="breadcrumb-item breadcrumb-light active" aria-current="page">
                                         <?= $row2['nome_prod'] ?>

@@ -77,16 +77,33 @@ session_start();
                           WHERE status = 1 AND (nome_prod LIKE '%$query%' OR desc_prod LIKE '%$query%')";
         } elseif (isset($_GET['id_categoria'])) {
             $id_categoria = $_GET['id_categoria'];
-            $sql_count = "SELECT c.nome_categoria, COUNT(*) AS total_produtos 
-                          FROM produtos p 
-                          INNER JOIN categorias c ON p.id_categoria = c.id_categoria 
-                          WHERE p.status = 1 AND p.id_categoria = $id_categoria";
+            $sql_count = "SELECT c.nome_categoria, COUNT(*) as total_produtos
+        FROM produtos p 
+        INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
+        INNER JOIN categorias c ON s.id_categoria = c.id_categoria 
+        WHERE p.status = 1 AND c.id_categoria = $id_categoria";
             $result = mysqli_query($con, $sql_count);
 
             if ($result) {
                 // Extrair os dados da consulta
                 $row = mysqli_fetch_assoc($result);
                 $nome_categoria = $row['nome_categoria'];
+            }
+        } elseif (isset($_GET['id_subcategoria'])) {
+            $id_subcategoria = $_GET['id_subcategoria'];
+            $sql_count = "SELECT s.nome_subcategoria, c.nome_categoria, c.id_categoria, COUNT(*) as total_produtos
+                          FROM produtos p 
+                          INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
+                          INNER JOIN categorias c ON s.id_categoria = c.id_categoria 
+                          WHERE p.status = 1 AND s.id_subcategoria = $id_subcategoria";
+            $result = mysqli_query($con, $sql_count);
+
+            if ($result) {
+                // Extrair os dados da consulta
+                $row = mysqli_fetch_assoc($result);
+                $nome_subcategoria = $row['nome_subcategoria'];
+                $nome_categoria = $row['nome_categoria'];
+                $id_categoria = $row['id_categoria'];
             }
         } elseif (isset($_GET['id_marca'])) {
             $id_marca = $_GET['id_marca'];
@@ -120,13 +137,18 @@ session_start();
                             <li class="breadcrumb-item"><a href="index.php">Início</a></li>
                             <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php">Produtos</a>
                                 <?php
-                                if (isset($id_categoria)) { ?>
+                                if (isset($id_categoria) || isset($nome_categoria)) { ?>
                             <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_categoria=<?= $id_categoria ?>"><?= $nome_categoria ?></a>
                             </li>
                         <?php } ?>
                         <?php
                         if (isset($id_marca)) { ?>
                             <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_marca=<?= $id_marca ?>"><?= $nome_marca ?></a>
+                            </li>
+                        <?php } ?>
+                        <?php
+                        if (isset($id_subcategoria)) { ?>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_subcategoria=<?= $id_subcategoria ?>"><?= $nome_subcategoria ?></a>
                             </li>
                         <?php } ?>
                         </ol>
@@ -166,7 +188,8 @@ session_start();
                                 p.desc_prod
                             FROM 
                                 produtos p
-                            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                           INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
+                            INNER JOIN categorias c ON s.id_categoria = c.id_categoria
                             INNER JOIN marcas m ON p.id_marca = m.id_marca
                             WHERE status = 1 AND (nome_prod LIKE '%$query%' OR desc_prod LIKE '%$query%')";
                 } elseif (isset($_GET['id_categoria'])) {
@@ -181,7 +204,8 @@ session_start();
                                 p.desc_prod
                             FROM 
                                 produtos p
-                            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                             INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
+                            INNER JOIN categorias c ON s.id_categoria = c.id_categoria
                             INNER JOIN marcas m ON p.id_marca = m.id_marca
                             WHERE status = 1 AND c.id_categoria = $id_categoria";
                 } elseif (isset($_GET['id_marca'])) {
@@ -196,9 +220,26 @@ session_start();
                                 p.desc_prod
                             FROM 
                                 produtos p
-                            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                            INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
+                            INNER JOIN categorias c ON s.id_categoria = c.id_categoria
                             INNER JOIN marcas m ON p.id_marca = m.id_marca
                             WHERE status = 1 AND m.id_marca = $id_marca";
+                } elseif (isset($_GET['id_subcategoria'])) {
+                    $id_subcategoria = $_GET['id_subcategoria'];
+                    $sqlProd = "SELECT DISTINCT 
+                                p.id_prod,
+                                p.nome_prod,
+                                c.nome_categoria,
+                                m.nome_marca,
+                                p.preco_prod,
+                                p.foto_prod,
+                                p.desc_prod
+                            FROM 
+                                produtos p
+                             INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
+                            INNER JOIN categorias c ON s.id_categoria = c.id_categoria
+                            INNER JOIN marcas m ON p.id_marca = m.id_marca
+                            WHERE status = 1 AND s.id_subcategoria = $id_subcategoria";
                 } else {
                     $sqlProd = "SELECT DISTINCT 
                                 p.id_prod,
@@ -210,7 +251,8 @@ session_start();
                                 p.desc_prod
                             FROM 
                                 produtos p
-                            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                           INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
+                            INNER JOIN categorias c ON s.id_categoria = c.id_categoria
                             INNER JOIN marcas m ON p.id_marca = m.id_marca
                             WHERE status = 1";
                 }
@@ -219,6 +261,7 @@ session_start();
                 $resultProd = mysqli_query($con, $sqlProd);
 
                 // Exibir produtos
+                if(mysqli_num_rows($resultProd) > 0){
                 while ($dados = mysqli_fetch_array($resultProd)) {
                 ?>
                     <div class="col-12 col-sm-4 col-lg-3">
@@ -242,6 +285,9 @@ session_start();
                     <!-- / Product-->
                 <?php
                 }
+            } else {
+                echo "<p class='text-center'>Não foram encontrados produtos...</p>";
+            }
                 ?>
             </div>
             <!-- / Products-->

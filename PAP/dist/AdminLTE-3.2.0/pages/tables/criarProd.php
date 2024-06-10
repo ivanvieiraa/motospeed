@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("ligacao.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -147,6 +148,7 @@ include("ligacao.php");
             width: 40%;
             /* Largura dos inputs dos tamanhos */
         }
+
         .campo-vazio {
             background-color: #ffcccc;
             /* Altera a cor de fundo para vermelho */
@@ -293,7 +295,7 @@ include("ligacao.php");
                                 <span id="marca-error" class="error-message"></span><br>
 
                                 <label for="categoria">Categoria:</label>
-                                <select name="categoria" id="categoria" oninput="clearErrorMessage('categoria-error')">
+                                <select name="categoria" id="categoria" onchange="showSubcategoria(this); sendCategoria(this.value)" oninput="clearErrorMessage('categoria-error')">
                                     <option value="" disabled selected>Selecione uma categoria</option>
                                     <?php
                                     // Consulta SQL para obter as categorias
@@ -306,6 +308,29 @@ include("ligacao.php");
                                     ?>
                                 </select><br>
                                 <span id="categoria-error" class="error-message"></span><br>
+
+                                <label for="subcategoria" id="subcategoria-label" style="display: none;">Subcategoria:</label>
+                                <select name="subcategoria" id="subcategoria" style="display: none;" oninput="clearErrorMessage('subcategoria-error')">
+                                    <option value="" disabled selected>Selecione uma subcategoria</option>
+                                    <!-- As opções de subcategoria serão preenchidas dinamicamente com JavaScript -->
+                                </select><br>
+                                <span id="subcategoria-error" class="error-message"></span><br>
+
+                                <script>
+                                    function sendCategoria(valor) {
+                                        var xhttp = new XMLHttpRequest();
+                                        xhttp.onreadystatechange = function() {
+                                            if (this.readyState == 4 && this.status == 200) {
+                                                document.getElementById("subcategoria").innerHTML = this.responseText;
+                                                document.getElementById("subcategoria-label").style.display = "block";
+                                                document.getElementById("subcategoria").style.display = "block";
+                                            }
+                                        };
+                                        xhttp.open("GET", "get_subcategorias.php?id_categoria=" + valor, true);
+                                        xhttp.send();
+                                    }
+                                </script>
+
 
                                 <label for="tamanho">Stock:</label><br>
                                 <!-- Container para os tamanhos -->
@@ -409,6 +434,7 @@ include("ligacao.php");
                                 }
                             </script>
                         </div>
+                    </div>
             </section>
             <!-- /.content -->
         </div>
@@ -457,6 +483,24 @@ include("ligacao.php");
 
                 reader.readAsmarcaURL(input.files[0]);
             }
+        }
+    </script>
+    <script>
+        function showSubcategoria(selectElement) {
+            var subcategoriaLabel = document.getElementById("subcategoria-label");
+            var subcategoriaSelect = document.getElementById("subcategoria");
+            if (selectElement.value !== "") {
+                subcategoriaLabel.style.display = "inline-block";
+                subcategoriaSelect.style.display = "inline-block";
+            } else {
+                subcategoriaLabel.style.display = "none";
+                subcategoriaSelect.style.display = "none";
+            }
+        }
+
+        // Função para atualizar o valor do input hidden com o ID da categoria selecionada
+        function updateHiddenInput(value) {
+            document.getElementById("id_categoria").value = value;
         }
     </script>
     <style>

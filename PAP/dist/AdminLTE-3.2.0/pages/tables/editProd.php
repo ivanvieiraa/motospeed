@@ -279,7 +279,9 @@ include("ligacao.php");
               $id_prod = $_GET['id_prod'];
 
               // Consulta SQL para obter os dados do produto
-              $sql = "SELECT * FROM produtos WHERE id_prod = '$id_prod'";
+              $sql = "SELECT * FROM produtos p
+                      INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
+                      INNER JOIN categorias c ON s.id_categoria = c.id_categoria WHERE id_prod = '$id_prod'";
               $result = mysqli_query($con, $sql);
 
               // Verifica se o produto existe
@@ -331,7 +333,23 @@ include("ligacao.php");
                   }
                   ?>
                 </select><br>
-                <span id="categoria-error" class="error-message"></span><br>
+                <span id="subcategoria-error" class="error-message"></span><br>
+
+                <!-- Selecionar a subcategoria -->
+                <label for="id_subcategoria">Subcategoria:</label>
+                <select name="id_subcategoria" id="id_subcategoria" oninput="clearErrorMessage('subcategoria-error')">
+                  <?php
+                  // Consulta SQL para obter as categorias
+                  $sql_subcategorias = "SELECT * FROM subcategorias WHERE id_categoria = ".$row['id_categoria']."";
+                  $resultado_subcategorias = mysqli_query($con, $sql_subcategorias);
+                  // Exibir as opções
+                  while ($row_subcategoria = mysqli_fetch_assoc($resultado_subcategorias)) {
+                    $selected = $row_subcategoria['id_subcategoria'] == $row['id_subcategoria'] ? 'selected' : '';
+                    echo "<option value='" . $row_subcategoria['id_subcategoria'] . "' $selected>" . $row_subcategoria['nome_subcategoria'] . "</option>";
+                  }
+                  ?>
+                </select><br>
+                <span id="subcategoria-error" class="error-message"></span><br>
 
                 <!-- Campo de estoque por tamanho -->
                 <label for="tamanho">Stock:</label><br>

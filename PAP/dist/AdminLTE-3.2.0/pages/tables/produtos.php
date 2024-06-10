@@ -240,7 +240,11 @@
                                 // Inclua o arquivo de conexão
                                 include 'ligacao.php';
                                 // Consulta SQL para obter os dados da tabela
-                                $sql = "SELECT * FROM produtos,marcas,categorias WHERE produtos.id_marca = marcas.id_marca AND produtos.id_categoria = categorias.id_categoria";
+                                $sql = "SELECT p.*, s.nome_subcategoria, c.nome_categoria, m.nome_marca
+                                        FROM produtos AS p
+                                        INNER JOIN subcategorias AS s ON p.id_subcategoria = s.id_subcategoria
+                                        INNER JOIN categorias AS c ON s.id_categoria = c.id_categoria
+                                        INNER JOIN marcas AS m ON p.id_marca = m.id_marca";
                                 $result = mysqli_query($con, $sql);
                                 // Loop através dos resultados da consulta e exibir cada linha na tabela
                                 if (mysqli_num_rows($result) > 0) {

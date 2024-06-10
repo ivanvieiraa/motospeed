@@ -9,12 +9,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome_prod = $_POST['nome_prod'];
     $desc_prod = $_POST['desc_prod'];
     $id_marca = $_POST['id_marca'];
-    $id_categoria = $_POST['id_categoria'];
+    $id_subcategoria = $_POST['id_subcategoria'];
     $preco_prod = $_POST['preco_prod'];
     $status = isset($_POST['isActive']) ? 1 : 0;
 
     // Atualize os dados na tabela de produtos
-    $sql = "UPDATE produtos SET nome_prod='$nome_prod', desc_prod='$desc_prod', id_marca=$id_marca, id_categoria=$id_categoria, preco_prod=$preco_prod, status=$status WHERE id_prod=$id_prod";
+    $sql = "UPDATE produtos SET nome_prod='$nome_prod', desc_prod='$desc_prod', id_marca=$id_marca, id_subcategoria=$id_subcategoria, preco_prod=$preco_prod, status=$status WHERE id_prod=$id_prod";
 
     if (mysqli_query($con, $sql)) {
         // Atualize os tamanhos na tabela de produtos_tamanhos

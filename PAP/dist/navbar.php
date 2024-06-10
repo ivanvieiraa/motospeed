@@ -134,8 +134,8 @@
                                                 <div class="col">
                                                     <h6 class="dropdown">Capacetes</h6>
                                                     <ul class="list-unstyled">
-                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Corrida</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Motocross</a>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php?id_subcategoria=1">Corrida</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php?id_subcategoria=2">Motocross</a>
                                                         </li>
                                                         <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="./produtos.php?id_categoria=1">Ver todos</a></li>
                                                     </ul>
@@ -146,8 +146,8 @@
                                                 <div class="col">
                                                     <h6 class="dropdown">Casacos</h6>
                                                     <ul class="list-unstyled">
-                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Cabedal</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Tecido</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php?id_subcategoria=3">Cabedal</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php?id_subcategoria=4">Tecido</a></li>
 
                                                         <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="./produtos.php?id_categoria=2">Ver todos</a></li>
                                                     </ul>
@@ -158,8 +158,8 @@
                                                 <div class="col">
                                                     <h6 class="dropdown">Luvas</h6>
                                                     <ul class="list-unstyled">
-                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Cabedal</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Tecido</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php?id_subcategoria=7">Cabedal</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php?id_subcategoria=8">Tecido</a></li>
 
                                                         <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="./produtos.php?id_categoria=4">Ver todas</a></li>
                                                     </ul>
@@ -170,8 +170,8 @@
                                                 <div class="col">
                                                     <h6 class="dropdown">Calças</h6>
                                                     <ul class="list-unstyled">
-                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Cabedal</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Tecido</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php?id_subcategoria=5">Cabedal</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php?id_subcategoria=6">Tecido</a></li>
 
                                                         <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="./produtos.php?id_categoria=3">Ver todas</a></li>
                                                     </ul>
@@ -182,8 +182,8 @@
                                                 <div class="col">
                                                     <h6 class="dropdown">Botas</h6>
                                                     <ul class="list-unstyled">
-                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Cabedal</a></li>
-                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php">Tecido</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php?id_subcategoria=9">Cabedal</a></li>
+                                                        <li class="dropdown-list-item"><a class="dropdown-item" href="./produtos.php?id_subcategoria=10">Tecido</a></li>
                                                         <li class="dropdown-list-item"><a class="dropdown-item dropdown-link-all" href="./produtos.php?id_categoria=5">Ver todas</a></li>
                                                     </ul>
                                                 </div>

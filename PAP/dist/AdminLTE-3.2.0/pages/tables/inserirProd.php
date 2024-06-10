@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
     $descricao = $_POST['desc'];
     $marca = $_POST['marca'];
-    $categoria = $_POST['categoria'];
+    $subcategoria = $_POST['subcategoria'];
     $preco = $_POST['preco'];
     $status = isset($_POST['status']) ? 1 : 0;
 
@@ -21,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verifica se o upload foi bem-sucedido
     if (move_uploaded_file($_FILES["foto"]["tmp_name"], "../../../$caminho_arquivo")) {
         // Insira os dados na tabela de produtos
-        $sql = "INSERT INTO produtos (nome_prod, desc_prod, foto_prod, preco_prod, id_marca, id_categoria, status) 
-                VALUES ('$nome', '$descricao', '$caminho_arquivo', $preco, $marca, $categoria, $status)";
+        $sql = "INSERT INTO produtos (nome_prod, desc_prod, foto_prod, preco_prod, id_marca, id_subcategoria, status) 
+                VALUES ('$nome', '$descricao', '$caminho_arquivo', $preco, $marca, $subcategoria, $status)";
 
         if (mysqli_query($con, $sql)) {
             // Obtenha o ID do produto recém-inserido

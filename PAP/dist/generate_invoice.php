@@ -91,7 +91,7 @@ while ($detalhe = mysqli_fetch_assoc($result_detalhes)) {
     $total_liquido += $valor_total_liquido;
     $html .= '<tr style="background-color: ' . ($oddRow ? '#fff' : '#f9f9f9') . ';">';
     $oddRow = !$oddRow;
-    $html .= '<td style="color: #333; padding: 8px;">' . $detalhe['nome_prod'] . '</td>';
+    $html .= '<td style="color: #333; padding: 8px;">' . $detalhe['nome_prod'] . ' (' . $detalhe['tamanho'] . ')</td>';
     $html .= '<td style="color: #333; padding: 8px;">' . $detalhe['quantidade'] . '</td>';
     $html .= '<td style="color: #333; padding: 8px;">' . number_format($detalhe['preco_uni'],2) . '€</td>';
     $html .= '<td style="color: #333; padding: 8px;">' . number_format($valor_total_liquido, 2) . '€</td>';

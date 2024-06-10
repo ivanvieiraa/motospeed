@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Limpar carrinho após a conclusão da venda
         unset($_SESSION['carrinho']);
-
+        
         // Redirecionar para página de confirmação ou exibir mensagem de sucesso
         header('location:confirmacao_compra.php?id_venda='.$id_venda.'');
         exit();

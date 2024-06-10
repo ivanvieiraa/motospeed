@@ -181,7 +181,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="./pages/tables/subcategorias.php" class="nav-link">
+              <a href="subcategorias.php" class="nav-link">
                 <p>Subcategorias</p>
               </a>
             </li>

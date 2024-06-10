@@ -224,7 +224,7 @@ include("ligacao.php");
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./pages/tables/subcategorias.php" class="nav-link">
+                                    <a href="subcategorias.php" class="nav-link">
                                         <p>Subcategorias</p>
                                     </a>
                                 </li>
@@ -277,15 +277,15 @@ include("ligacao.php");
                             <!-- form start -->
                             <form id="myForm" action="inserirProd.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
                                 <label for="nome">Nome:</label>
-                                <input type="text" name="nome" id="nome" value="" oninput="clearErrorMessage('nome-error')"><br>
+                                <input type="text" name="nome" id="nome" placeholder="Insira um nome" value="" oninput="clearErrorMessage('nome-error')"><br>
                                 <span id="nome-error" class="error-message"></span><br>
 
                                 <label for="desc">Descrição:</label><br>
-                                <textarea name="desc" id="desc" rows="2" cols="50" oninput="clearErrorMessage('desc-error')"></textarea><br>
+                                <textarea name="desc" id="desc" rows="2" cols="50" oninput="clearErrorMessage('desc-error')" placeholder="Insira uma descrição"></textarea><br>
                                 <span id="desc-error" class="error-message"></span><br>
 
                                 <label for="marca">Marca:</label>
-                                <select name="marca" id="marca" oninput="clearErrorMessage('marca-error')">
+                                <select name="marca" id="marca" oninput="clearErrorMessage('marca-error')" placeholder="Insira uma marca">
                                     <option value="" disabled selected>Selecione uma marca</option>
                                     <?php
                                     // Consulta SQL para obter as marcas
@@ -357,7 +357,7 @@ include("ligacao.php");
                                 <span id="tamanho-error" class="error-message"></span><br>
 
                                 <label for="preco">Preço:</label><br>
-                                <input type="number" name="preco" id="preco" oninput="clearErrorMessage('preco-error')" step="any">
+                                <input type="number" name="preco" id="preco" oninput="clearErrorMessage('preco-error')" step="any" placeholder="Valor">
                                 <i class="fa-solid fa-euro-sign fa-lg" style="color: #000000;"></i><br>
                                 <span id="preco-error" class="error-message"></span><br>
 

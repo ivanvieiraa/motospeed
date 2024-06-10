@@ -2,9 +2,9 @@
 session_start();
 include("ligacao.php");
 
-// Verifica se o ID do produto e a quantidade foram enviados
-if(isset($_POST['id_prod']) && isset($_POST['quantidade'])) {
-    // Obtém o ID do produto e a quantidade
+// Verifica se o ID do produto, a quantidade e o tamanho foram enviados
+if(isset($_POST['id_prod']) && isset($_POST['quantidade']) && isset($_POST['tamanho'])) {
+    // Obtém o ID do produto, a quantidade e o tamanho
     $id_prod = $_POST['id_prod'];
     $quantidade = $_POST['quantidade'];
     $tamanho = $_POST['tamanho'];
@@ -32,13 +32,20 @@ if(isset($_POST['id_prod']) && isset($_POST['quantidade'])) {
             $_SESSION['carrinho'] = array();
         }
 
-        // Verifica se o produto já está no carrinho
-        if(isset($_SESSION['carrinho'][$id_prod])) {
-            // Se o produto já está no carrinho, apenas atualiza a quantidade
-            $_SESSION['carrinho'][$id_prod]['quantidade'] += $quantidade;
-        } else {
-            // Se o produto ainda não está no carrinho, adiciona-o com os detalhes completos
-            $_SESSION['carrinho'][$id_prod] = $produto;
+        // Verifica se o produto já está no carrinho, considerando também o tamanho
+        $produto_existe = false;
+        foreach ($_SESSION['carrinho'] as $key => $item) {
+            if ($item['id_prod'] == $id_prod && $item['tamanho'] == $tamanho) {
+                // Se o produto com o mesmo ID e tamanho já estiver no carrinho, atualiza apenas a quantidade
+                $_SESSION['carrinho'][$key]['quantidade'] += $quantidade;
+                $produto_existe = true;
+                break;
+            }
+        }
+
+        // Se o produto não existir no carrinho, adiciona um novo item
+        if (!$produto_existe) {
+            $_SESSION['carrinho'][] = $produto;
         }
 
         // Redireciona para a página do carrinho
@@ -53,7 +60,7 @@ if(isset($_POST['id_prod']) && isset($_POST['quantidade'])) {
         exit;
     }
 } else {
-    // Se o ID do produto e a quantidade não foram enviados, redireciona para a página de produtos
+    // Se o ID do produto, a quantidade e o tamanho não foram enviados, redireciona para a página de produtos
     header('Location: produtos.php');
     exit;
 }

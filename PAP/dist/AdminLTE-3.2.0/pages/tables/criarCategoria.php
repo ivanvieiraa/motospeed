@@ -188,7 +188,7 @@ session_start();
               </a>
             </li>
             <li class="nav-item">
-              <a href="./pages/tables/subcategorias.php" class="nav-link">
+              <a href="subcategorias.php" class="nav-link">
                 <p>Subcategorias</p>
               </a>
             </li>
@@ -241,7 +241,7 @@ session_start();
               <!-- form start -->
               <form action="inserirCategoria.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
                 <label for="nome">Nome:</label>
-                <input type="text" name="nome" id="nome" value="" oninput="clearErrorMessage('nome-error')"><br>
+                <input type="text" name="nome" id="nome" value="" oninput="clearErrorMessage('nome-error')" placeholder="Insira um nome"><br>
                 <span id="nome-error" class="error-message"></span><br>
 
                 <input type="submit" value="Criar">

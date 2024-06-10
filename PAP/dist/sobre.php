@@ -78,7 +78,7 @@ session_start();
                         melhores marcas e produtos do mercado.</p>
                     <p class="lead">Priorizamos sempre os clientes, de modo a consquistar a melhor confiança alguma vez
                         vista no mundo dos Motards.</p>
-                    <a href="./produtos.php" class="btn btn-psuedo" role="button">produtos mais recentes</a>
+                    <a href="./produtos.php" class="btn btn-psuedo" role="button">produtos</a>
                 </div>
                 <div class="col-12 col-md-6 position-relative z-index-20 pe-0" data-aos="fade-left">
                     <picture class="w-50 d-block position-relative z-index-10 border border-white border-4 shadow-lg">

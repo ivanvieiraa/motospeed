@@ -7,6 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $emailVenda = $_POST['emailBilling'];
     $morada = $_POST['address'];
     $codigop = $_POST['zip'];
+
+    // Atualizar as variáveis de sessão com os novos valores dos campos do formulário
+    $_SESSION['nome'] = $nomeVenda;
+    $_SESSION['apelido'] = $apelidoVenda;
+    $_SESSION['email'] = $emailVenda;
+    $_SESSION['morada'] = $morada;
+    $_SESSION['codigop'] = $codigop;
 }
 
 // Função para calcular o subtotal do carrinho
@@ -122,7 +129,7 @@ $total = $subTotal + $custoEnvio;
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <div class="d-flex justify-content-start align-items-center">
                                         <span class="text-muted small me-2 f-w-36 fw-bolder">Dados de</span>
-                                        <span class="small"><?php echo $emailVenda ?></span>
+                                        <span class="small"><?php echo $_SESSION['email']; ?></span>
                                     </div>
                                     <a href="./checkout.php" class="text-muted small" role="button">Alterar</a>
                                 </li>

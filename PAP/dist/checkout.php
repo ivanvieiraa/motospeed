@@ -6,6 +6,14 @@ if (!isset($_SESSION)) {
   header('location:login_form.php');
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $_SESSION['nome'] = $_POST['firstNameBilling'];
+  $_SESSION['apelido'] = $_POST['lastNameBilling'];
+  $_SESSION['email'] = $_POST['emailBilling'];
+  $_SESSION['morada'] = $_POST['address'];
+  $_SESSION['codigop'] = $_POST['zip'];
+}
+
 ?>
 <!doctype html>
 <html lang="en">

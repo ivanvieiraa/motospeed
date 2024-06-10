@@ -184,7 +184,7 @@ session_start();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./pages/tables/subcategorias.php" class="nav-link">
+                            <a href="subcategorias.php" class="nav-link">
                                 <p>Subcategorias</p>
                             </a>
                         </li>
@@ -201,7 +201,7 @@ session_start();
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">
-                    <div class="row mb-2">
+                    <div class="row mb=2">
                         <div class="col-sm-6">
                             <h1>Categorias
                             </h1>
@@ -254,10 +254,14 @@ session_start();
                             if (mysqli_num_rows($result) > 0) {
                                 $row = mysqli_fetch_assoc($result);
                             } else {
-                                $_SESSION['mensagem'] = "Marca não encontrada";
+                                $_SESSION['mensagem'] = "Categoria não encontrada";
                                 header('Location: categorias.php');
                                 exit();
                             }
+                            
+                            // Consulta SQL para obter as subcategorias da categoria atual
+                            $sql_subcategorias = "SELECT * FROM subcategorias WHERE id_categoria = '$id_categoria'";
+                            $result_subcategorias = mysqli_query($con, $sql_subcategorias);
                             ?>
                             <form action="updateCategoria.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
                                 <input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
@@ -265,6 +269,22 @@ session_start();
                                 <label for="nome">Nome:</label>
                                 <input type="text" name="nome" id="nome" value="<?= $row['nome_categoria'] ?>" oninput="clearErrorMessage('nome-error')"><br>
                                 <span id="nome-error" class="error-message"></span><br>
+
+                                <h3>Subcategorias</h3>
+                                <ul>
+                                    <?php
+                                    if (mysqli_num_rows($result_subcategorias) > 0) {
+                                        while ($row_subcategoria = mysqli_fetch_assoc($result_subcategorias)) {
+                                            echo '<li>' . $row_subcategoria['nome_subcategoria'] . '</li>';
+                                        }
+                                    } else {
+                                        echo '<li>Nenhuma subcategoria encontrada</li>';
+                                    }
+                                    ?>
+                                </ul>
+
+                                <label for="nova_subcategoria">Adicionar nova subcategoria:</label>
+                                <input type="text" name="nova_subcategoria" id="nova_subcategoria" placeholder="Insira um nome"><br><br>
 
                                 <input type="submit" value="Editar">
                                 <li class="breadcrumb-item active" style="list-style: none;">

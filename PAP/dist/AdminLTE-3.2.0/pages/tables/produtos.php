@@ -176,7 +176,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./pages/tables/subcategorias.php" class="nav-link">
+                                    <a href="subcategorias.php" class="nav-link">
                                         <p>Subcategorias</p>
                                     </a>
                                 </li>
@@ -305,14 +305,7 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Versão</b> 3.2.0
-            </div>
-            <strong>Copyright &copy; Motospeed 2024 . </strong> All rights reserved.
-        </footer>
-
-        <!-- Control Sidebar -->
+         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
         </aside>

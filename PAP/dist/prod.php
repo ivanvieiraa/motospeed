@@ -156,12 +156,11 @@ if ($id_user !== null) {
                                 <div class="sticky-top top-5">
                                     <div class="pb-3" data-aos="fade-in">
                                         <h1 class="mb-1 fs-2 fw-bold"><?= $row2['nome_prod'] ?>
-                                            <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted">
+                                            <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted" style="display: <?= ($id_user != null) ? "block" : "none" ?>">
                                                 <a href="#" style="text-decoration: none;" class="wishlist-icon" data-id-prod="<?= $row2['id_prod']; ?>">
                                                     <i class="<?= $isInWishlist ? 'ri-heart-fill' : 'ri-heart-line'; ?>"></i>
                                                 </a>
                                             </span>
-
                                         </h1>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p class="fs-4 m-0"><?= $row2['preco_prod'] ?>€</p>

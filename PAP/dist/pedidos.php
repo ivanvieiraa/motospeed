@@ -65,6 +65,7 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d5954f6b26.js" crossorigin="anonymous"></script>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon/apple-touch-icon.png">
@@ -170,7 +171,7 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
                                                 </h5>
                                                 <div class="d-flex align-items-center">
                                                     <a style="text-decoration: none; color: orangered; font-weight: bold; font-size: large; margin-right: 20px;" href="generate_invoice.php?id_venda=<?= $id_venda ?>">
-                                                        Emitir fatura
+                                                        <i class="fa-solid fa-file-pdf fa-lg" style="color: #ff0000;"></i>
                                                     </a>
                                                     <a style="color: green; font-size: large; font-weight: bold;">
                                                         Total do Pedido: <?php echo htmlspecialchars(number_format($venda['total'], 2)); ?>€

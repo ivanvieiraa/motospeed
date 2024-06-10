@@ -3,7 +3,7 @@ session_start();
 include("ligacao.php");
 
 if (!isset($_SESSION['id_user'])) {
-    echo json_encode(['success' => false, 'message' => 'User not logged in']);
+    echo json_encode(['success' => false, 'message' => 'Não tem sessão iniciada!']);
     exit;
 }
 

@@ -189,7 +189,7 @@ session_start();
               </a>
             </li>
             <li class="nav-item">
-              <a href="./pages/tables/subcategorias.php" class="nav-link">
+              <a href="subcategorias.php" class="nav-link">
                 <p>Subcategorias</p>
               </a>
             </li>
@@ -242,19 +242,19 @@ session_start();
               <!-- form start -->
               <form action="inserirUser.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
                 <label for="nome">Nome:</label>
-                <input type="text" name="nome" id="nome" value="" oninput="clearErrorMessage('nome-error')"><br>
+                <input type="text" name="nome" id="nome" value="" oninput="clearErrorMessage('nome-error')" placeholder="Insira um nome"><br>
                 <span id="nome-error" class="error-message"></span><br>
 
                 <label for="apelido">Apelido:</label>
-                <input type="text" name="apelido" id="apelido" oninput="clearErrorMessage('apelido-error')"><br>
+                <input type="text" name="apelido" id="apelido" oninput="clearErrorMessage('apelido-error')" placeholder="Insira um apelido"><br>
                 <span id="apelido-error" class="error-message"></span><br>
 
                 <label for="email">Email:</label>
-                <input type="email" name="email" id="email" oninput="clearErrorMessage('email-error')"><br>
+                <input type="email" name="email" id="email" oninput="clearErrorMessage('email-error')" placeholder="Insira um email"><br>
                 <span id="email-error" class="error-message"></span><br>
 
                 <label for="pass">Password:</label>
-                <input type="password" name="pass" id="pass" oninput="clearErrorMessage('pass-error')"><br>
+                <input type="password" name="pass" id="pass" oninput="clearErrorMessage('pass-error')" placeholder="Insira uma passowrd"><br>
                 <span id="pass-error" class="error-message"></span><br>
 
                 <label for="data">Data de Nascimento:</label>
@@ -262,11 +262,11 @@ session_start();
                 <span id="data-error" class="error-message"></span><br>
 
                 <label for="morada">Morada:</label>
-                <input type="text" name="morada" id="morada" oninput="clearErrorMessage('morada-error')"><br>
+                <input type="text" name="morada" id="morada" oninput="clearErrorMessage('morada-error')" placeholder="Insira uma morada"><br>
                 <span id="morada-error" class="error-message"></span><br>
 
                 <label for="codp">Código Postal:</label>
-                <input type="text" name="codp" id="codp" oninput="clearErrorMessage('codp-error')"><br>
+                <input type="text" name="codp" id="codp" oninput="clearErrorMessage('codp-error')" placeholder="Insira um código postal"><br>
                 <span id="codp-error" class="error-message"></span><br>
 
                 <div class="form-group">

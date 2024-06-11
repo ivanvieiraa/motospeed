@@ -224,7 +224,7 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example2" class="table table-bordered table-hover">
+                        <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -349,12 +349,11 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#example1_wrapper .justify-content-center .col-md-12:eq(0)');
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,
-                "searching": false,
+                "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
@@ -362,7 +361,7 @@
             });
         });
         $(document).ready(function() {
-            $('#example2').DataTable();
+            $('#example2').DataTable({});
         });
     </script>
     <script>

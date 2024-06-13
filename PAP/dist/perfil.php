@@ -187,8 +187,9 @@ $user_data = mysqli_fetch_assoc($result);
                                 <b>Morada</b> <input type="text" name="morada" class="form-control" value="<?php echo htmlspecialchars($user_data['morada']); ?>" placeholder="Insira a sua morada">
                             </li>
                             <li class="list-group-item">
-                                <b>Código Postal</b> <input type="text" name="codp" class="form-control" value="<?php echo htmlspecialchars($user_data['codigop']); ?>" placeholder="Insira o seu código postal">
+                                <b>Código Postal</b> <input type="text" name="codp" id="codp" class="form-control" value="<?php echo htmlspecialchars($user_data['codigop']); ?>" placeholder="Ex:.1234-123">
                             </li>
+
                             <li class="list-group-item">
                                 <b>Password</b> <input type="password" name="password" class="form-control" value="<?php echo htmlspecialchars($user_data['pass']); ?>" required placeholder="Insira a sua password">
                             </li>
@@ -239,22 +240,25 @@ $user_data = mysqli_fetch_assoc($result);
                 if (zipInput.value.trim() !== initialZipValue) {
                     let isValid = true;
 
-                    // Validar o código postal
-                    const zip = zipInput.value.trim();
-                    const zipRegex = /^\d{4}-\d{3}$/;
+                    // Verificar se o campo não está vazio
+                    if (zipInput.value.trim() !== '') {
+                        // Validar o código postal
+                        const zip = zipInput.value.trim();
+                        const zipRegex = /^\d{4}-\d{3}$/;
 
-                    if (!zipRegex.test(zip)) {
-                        isValid = false;
-                        zipInput.classList.add('is-invalid');
-                        const errorMessage = document.createElement('div');
-                        errorMessage.classList.add('invalid-feedback');
-                        errorMessage.textContent = 'Código postal inválido';
-                        zipInput.parentNode.appendChild(errorMessage);
-                    } else {
-                        zipInput.classList.remove('is-invalid');
-                        const errorMessage = zipInput.parentNode.querySelector('.invalid-feedback');
-                        if (errorMessage) {
-                            errorMessage.parentNode.removeChild(errorMessage);
+                        if (!zipRegex.test(zip)) {
+                            isValid = false;
+                            zipInput.classList.add('is-invalid');
+                            const errorMessage = document.createElement('div');
+                            errorMessage.classList.add('invalid-feedback');
+                            errorMessage.textContent = 'Código postal inválido';
+                            zipInput.parentNode.appendChild(errorMessage);
+                        } else {
+                            zipInput.classList.remove('is-invalid');
+                            const errorMessage = zipInput.parentNode.querySelector('.invalid-feedback');
+                            if (errorMessage) {
+                                errorMessage.parentNode.removeChild(errorMessage);
+                            }
                         }
                     }
 

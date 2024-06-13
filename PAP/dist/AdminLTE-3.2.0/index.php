@@ -44,6 +44,7 @@ $nomes_meses = array(
   12 => 'Dezembro'
 );
 
+
 // Inicializar arrays para armazenar os nomes dos meses e os totais de vendas
 $nomes_meses_vendas = array();
 $totalVendasMes = array();
@@ -130,16 +131,57 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
     .alert.hide {
       opacity: 0;
     }
+
+    /* Remover o estilo padrão do select */
+    .customSelect {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: none;
+      border: none;
+      padding: 1px;
+      font-size: 16px;
+      color: #333;
+      border: none;
+      border-radius: 4px;
+      background-color: none;
+      padding: 5px;
+      outline: none;
+      width: 100%;
+    }
+
+    /* Estilizar o select quando estiver focado */
+    .customSelect:focus {
+      border-color: #007BFF;
+    }
+
+    /* Estilizar as opções */
+    .customSelect option {
+      color: #333;
+      background-color: none;
+    }
+
+    /* Estilo específico para cada valor de opção */
+    .status-resolvido {
+      color: green;
+      font-weight: bold;
+    }
+
+    .status-nao-resolvido {
+      color: red;
+      font-weight: bold;
+    }
+
+    .status-analise {
+      color: orange;
+      font-weight: bold;
+    }
   </style>
 
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
-
-
-
-
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="index.php" class="brand-link">
@@ -454,12 +496,13 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                       echo "<td style='text-align:left'>" . $row["assunto"] . "</td>";
                       echo "<td style='text-align:left'>" . $row["email"] . "</td>";
                       echo "<td style='text-align:left'>" . $row["criado_a"] . "</td>";
-                      if ($row['status'] == 0)
-                        echo "<td style='text-align:left; color:red; font-weight: bold;'>Não resolvido</td>";
-                      if ($row['status'] == 1)
-                        echo "<td style='text-align:left; color:green; font-weight: bold;'>Resolvido</td>";
-                      if ($row['status'] == 2)
-                        echo "<td style='text-align:left; color:orange; font-weight: bold;'>Em análise</td>";
+                      echo "<td class='status-cell'>";
+                      echo "<select class='customSelect' data-id='" . $row["id_suporte"] . "'>";
+                      echo "<option value='0'" . ($row['status'] == 0 ? ' selected' : '') . ">Não resolvido</option>";
+                      echo "<option value='1'" . ($row['status'] == 1 ? ' selected' : '') . ">Resolvido</option>";
+                      echo "<option value='2'" . ($row['status'] == 2 ? ' selected' : '') . ">Em análise</option>";
+                      echo "</select>";
+                      echo "</td>";
                       echo "<td style='cursor: pointer;'><i class='fa-solid fa-eye' onclick='showDetails(" . $row["id_suporte"] . "," . $row["status"] . ")'></i></td>";
                       echo "</tr>";
                     }
@@ -470,6 +513,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                   mysqli_close($con);
                   ?>
                 </tbody>
+
               </table>
             </div>
             <script>
@@ -580,7 +624,50 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
       }
     });
   </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      function updateSelectColor(selectElement) {
+        var status = selectElement.val();
+        // Limpa as classes de cor existentes
+        selectElement.removeClass('status-resolvido status-nao-resolvido status-analise');
 
+        // Adiciona a classe de cor correspondente ao status selecionado
+        if (status == 0) {
+          selectElement.addClass('status-nao-resolvido');
+        } else if (status == 1) {
+          selectElement.addClass('status-resolvido');
+        } else if (status == 2) {
+          selectElement.addClass('status-analise');
+        }
+      }
+
+      $('.customSelect').each(function() {
+        updateSelectColor($(this));
+      });
+
+      $('.customSelect').change(function() {
+        var id = $(this).data('id');
+        var status = $(this).val();
+        var selectElement = $(this);
+
+        $.ajax({
+          url: 'atualizar_status.php',
+          method: 'POST',
+          data: {
+            id: id,
+            status: status
+          },
+          success: function(response) {
+            updateSelectColor(selectElement);
+          },
+          error: function(xhr, status, error) {
+            console.error('Erro ao atualizar status:', error);
+          }
+        });
+      });
+    });
+  </script>
   <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
@@ -615,7 +702,6 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
   <script src="dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard.js"></script>
-
   <script>
     // Definir os dados do gráfico
     var donutData = {

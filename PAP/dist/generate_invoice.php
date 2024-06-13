@@ -65,7 +65,10 @@ $html = '<table cellpadding="5" cellspacing="0" border="0">
                 </td>
                 <td style="width: 50%;">
                     <h2 style="color: #333;">Detalhes de compra</h2>
-                    <p><strong>Número de compra:</strong> ' . $venda['id_venda'] . '<br><strong>Data da compra:</strong> ' .date("d/m/Y", strtotime($venda['data_venda'])) . '</p>
+                    <p>
+                    <strong>Número de cliente:</strong> ' . $venda['id_user'] . '<br>
+                    <strong>Número de compra:</strong> ' . $venda['id_venda'] . '<br>
+                    <strong>Data da compra:</strong> ' .date("d/m/Y", strtotime($venda['data_venda'])) . '</p>
                 </td>
             </tr>
         </table>';

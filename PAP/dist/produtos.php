@@ -64,156 +64,137 @@ session_start();
         <?php
         include('ligacao.php');
 
-        // Variáveis de controle
         $sql_count = "";
         $nome_categoria = "";
+        $nome_subcategoria = "";
         $nome_marca = "";
+        $filtros = [];
 
-        // Verifica se a pesquisa está definida na URL
-        if (isset($_GET['query'])) {
-            $query = mysqli_real_escape_string($con, $_GET['query']);
-            $sql_count = "SELECT COUNT(*) as total_produtos 
-                          FROM produtos 
-                          WHERE status = 1 AND (nome_prod LIKE '%$query%' OR desc_prod LIKE '%$query%')";
-        } elseif (isset($_GET['id_categoria'])) {
-            $id_categoria = $_GET['id_categoria'];
-            $sql_count = "SELECT c.nome_categoria, COUNT(*) as total_produtos
-        FROM produtos p 
-        INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
-        INNER JOIN categorias c ON s.id_categoria = c.id_categoria 
-        WHERE p.status = 1 AND c.id_categoria = $id_categoria";
-            $result = mysqli_query($con, $sql_count);
-
-            if ($result) {
-                // Extrair os dados da consulta
-                $row = mysqli_fetch_assoc($result);
-                $nome_categoria = $row['nome_categoria'];
+        if (isset($_GET['id_categoria'])) {
+            $id_categoria = intval($_GET['id_categoria']);
+            $sql_categoria = "SELECT nome_categoria FROM categorias WHERE id_categoria = $id_categoria";
+            $result_categoria = mysqli_query($con, $sql_categoria);
+            if (mysqli_num_rows($result_categoria) > 0) {
+                $row_categoria = mysqli_fetch_assoc($result_categoria);
+                $nome_categoria = $row_categoria['nome_categoria'];
             }
-        } elseif (isset($_GET['id_subcategoria'])) {
-            $id_subcategoria = $_GET['id_subcategoria'];
-            $sql_count = "SELECT s.nome_subcategoria, c.nome_categoria, c.id_categoria, COUNT(*) as total_produtos
-                          FROM produtos p 
-                          INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
-                          INNER JOIN categorias c ON s.id_categoria = c.id_categoria 
-                          WHERE p.status = 1 AND s.id_subcategoria = $id_subcategoria";
-            $result = mysqli_query($con, $sql_count);
-
-            if ($result) {
-                // Extrair os dados da consulta
-                $row = mysqli_fetch_assoc($result);
-                $nome_subcategoria = $row['nome_subcategoria'];
-                $nome_categoria = $row['nome_categoria'];
-                $id_categoria = $row['id_categoria'];
-            }
-        } elseif (isset($_GET['id_marca'])) {
-            $id_marca = $_GET['id_marca'];
-            $sql_count = "SELECT m.nome_marca, COUNT(*) AS total_produtos 
-                          FROM produtos p 
-                          INNER JOIN marcas m ON p.id_marca = m.id_marca 
-                          WHERE p.status = 1 AND p.id_marca = $id_marca";
-            $result = mysqli_query($con, $sql_count);
-
-            if ($result) {
-                // Extrair os dados da consulta
-                $row = mysqli_fetch_assoc($result);
-                $nome_marca = $row['nome_marca'];
-            }
-        } else {
-            // Se não houver categoria ou pesquisa definida, contar todos os produtos com status = 1
-            $sql_count = "SELECT COUNT(*) as total_produtos FROM produtos WHERE status = 1";
         }
 
-        // Executa a consulta SQL para contar produtos
-        $result_count = mysqli_query($con, $sql_count);
-        $row_count = mysqli_fetch_assoc($result_count);
-        $total_produtos = $row_count['total_produtos'];
-        ?>
-        <div class="container-fluid" data-aos="fade-in">
-            <!-- Category Toolbar-->
-            <div class="d-flex justify-content-between items-center pt-5 pb-4 flex-column flex-lg-row">
-                <div>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.php">Início</a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php">Produtos</a>
+        if (isset($_GET['id_subcategoria'])) {
+            $id_subcategoria = intval($_GET['id_subcategoria']);
+            $sql_subcategoria = "SELECT nome_subcategoria FROM subcategorias WHERE id_subcategoria = $id_subcategoria";
+            $result_subcategoria = mysqli_query($con, $sql_subcategoria);
+            if (mysqli_num_rows($result_subcategoria) > 0) {
+                $row_subcategoria = mysqli_fetch_assoc($result_subcategoria);
+                $nome_subcategoria = $row_subcategoria['nome_subcategoria'];
+            }
+        }
+
+        if (isset($_GET['id_marca'])) {
+            $id_marca = intval($_GET['id_marca']);
+            $sql_marca = "SELECT nome_marca FROM marcas WHERE id_marca = $id_marca";
+            $result_marca = mysqli_query($con, $sql_marca);
+            if (mysqli_num_rows($result_marca) > 0) {
+                $row_marca = mysqli_fetch_assoc($result_marca);
+                $nome_marca = $row_marca['nome_marca'];
+            }
+        }
+
+        if (isset($_GET['query'])) {
+        $query = mysqli_real_escape_string($con, $_GET['query']);
+        $filtros[] = "(nome_prod LIKE '%$query%' OR desc_prod LIKE '%$query%' OR c.nome_categoria LIKE '%$query%' OR m.nome_marca LIKE '%$query%' OR s.nome_subcategoria LIKE '%$query%')";
+        }
+
+        if (isset($_GET['id_categoria'])) {
+        $id_categoria = intval($_GET['id_categoria']);
+        $filtros[] = "c.id_categoria = $id_categoria";
+        }
+
+        if (isset($_GET['id_subcategoria'])) {
+        $id_subcategoria = intval($_GET['id_subcategoria']);
+        $filtros[] = "s.id_subcategoria = $id_subcategoria";
+        }
+
+        if (isset($_GET['id_marca'])) {
+        $id_marca = intval($_GET['id_marca']);
+        $filtros[] = "m.id_marca = $id_marca";
+        }
+
+        if (isset($_GET['preco_min'])) {
+        $preco_min = floatval($_GET['preco_min']);
+        $filtros[] = "p.preco_prod >= $preco_min";
+        }
+
+        if (isset($_GET['preco_max'])) {
+        $preco_max = floatval($_GET['preco_max']);
+        $filtros[] = "p.preco_prod <= $preco_max"; } $filtroSQL="" ; if (count($filtros)> 0) {
+            $filtroSQL = " AND " . implode(" AND ", $filtros);
+            }
+
+            $sql_count = "SELECT COUNT(*) as total_produtos
+            FROM produtos p
+            INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria
+            INNER JOIN categorias c ON s.id_categoria = c.id_categoria
+            INNER JOIN marcas m ON p.id_marca = m.id_marca
+            WHERE p.status = 1 $filtroSQL";
+
+            $result_count = mysqli_query($con, $sql_count);
+            $row_count = mysqli_fetch_assoc($result_count);
+            $total_produtos = $row_count['total_produtos'];
+            ?>
+
+
+            <div class="container-fluid" data-aos="fade-in">
+                <!-- Category Toolbar-->
+                <div class="d-flex justify-content-between items-center pt-5 pb-4 flex-column flex-lg-row">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.php">Início</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php">Produtos</a></li>
                                 <?php
-                                if (isset($id_categoria) || isset($nome_categoria)) { ?>
-                            <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_categoria=<?= $id_categoria ?>"><?= $nome_categoria ?></a>
-                            </li>
-                        <?php } ?>
-                        <?php
-                        if (isset($id_marca)) { ?>
-                            <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_marca=<?= $id_marca ?>"><?= $nome_marca ?></a>
-                            </li>
-                        <?php } ?>
-                        <?php
-                        if (isset($id_subcategoria)) { ?>
-                            <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_subcategoria=<?= $id_subcategoria ?>"><?= $nome_subcategoria ?></a>
-                            </li>
-                        <?php } ?>
-                        </ol>
-                    </nav>
-                    <!-- Exibir a contagem de produtos -->
-                    <h1 class="fw-bold fs-3 mb-2">Produtos (<?php echo $total_produtos; ?>)</h1>
-                </div>
-                <div class="d-flex justify-content-end align-items-center mt-4 mt-lg-0 flex-column flex-md-row">
+                                if (isset($_GET['query'])) {
+                                    echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?query=' . $query . '">Pesquisa</a></li>';
+                                    echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?query=' . $query . '">' . $query . '</a></li>';
+                                }
+                                ?>
+                                <?php
+                                if (isset($id_categoria))
+                                    echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_categoria=' . $id_categoria . '">' . $nome_categoria . '</a></li>';
+                                ?>
+                                <?php
+                                if (isset($id_marca))
+                                    echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_marca=' . $id_marca . '">' . $nome_marca . '</a></li>';
+                                ?>
+                                <?php
+                                if (isset($id_subcategoria))
+                                    echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_subcategoria=' . $id_subcategoria . '">' . $nome_subcategoria . '</a></li>';
+                                ?>
 
-                    <!-- Filter Trigger-->
-                    <button class="btn bg-light p-3 me-md-3 d-flex align-items-center fs-7 lh-1 w-100 mb-2 mb-md-0 w-md-auto " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">
-                        <i class="ri-equalizer-line me-2"></i> Filtros
-                    </button>
-                    <!-- / Filter Trigger-->
+                            </ol>
+                        </nav>
+                        <!-- Exibir a contagem de produtos -->
+                        <h1 class="fw-bold fs-3 mb-2">Produtos (<?php echo $total_produtos; ?>)</h1>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-center mt-4 mt-lg-0 flex-column flex-md-row">
 
-                    <!-- Sort Options-->
-                    <select class="form-select form-select-sm border-0 bg-light p-3 pe-5 lh-1 fs-7">
-                        <option selected>Ordenar por preço</option>
-                        <option value="1">Crescente</option>
-                        <option value="2">Decrescente</option>
-                    </select>
-                    <!-- / Sort Options-->
-                </div>
-            </div> <!-- /Category Toolbar-->
+                        <!-- Filter Trigger-->
+                        <button class="btn bg-light p-3 me-md-3 d-flex align-items-center fs-7 lh-1 w-100 mb-2 mb-md-0 w-md-auto " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">
+                            <i class="ri-equalizer-line me-2"></i> Filtrar produtos
+                        </button>
+                        <!-- / Filter Trigger-->
+                    </div>
+                </div> <!-- /Category Toolbar-->
 
-            <div class="row g-4">
-                <?php
-                if (isset($_GET['query'])) {
-                    $query = mysqli_real_escape_string($con, $_GET['query']);
-                    $sqlProd = "SELECT DISTINCT 
+                <div class="row g-4">
+                    <?php
+                    if (isset($_GET['query'])) {
+                        $query = mysqli_real_escape_string($con, $_GET['query']);
+                        $sqlProd = "SELECT DISTINCT 
                                 p.id_prod,
                                 p.nome_prod,
                                 c.nome_categoria,
-                                m.nome_marca,
-                                p.preco_prod,
-                                p.foto_prod,
-                                p.desc_prod
-                            FROM 
-                                produtos p
-                           INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
-                            INNER JOIN categorias c ON s.id_categoria = c.id_categoria
-                            INNER JOIN marcas m ON p.id_marca = m.id_marca
-                            WHERE status = 1 AND (nome_prod LIKE '%$query%' OR desc_prod LIKE '%$query%')";
-                } elseif (isset($_GET['id_categoria'])) {
-                    $id_categoria = $_GET['id_categoria'];
-                    $sqlProd = "SELECT DISTINCT 
-                                p.id_prod,
-                                p.nome_prod,
-                                c.nome_categoria,
-                                m.nome_marca,
-                                p.preco_prod,
-                                p.foto_prod,
-                                p.desc_prod
-                            FROM 
-                                produtos p
-                             INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
-                            INNER JOIN categorias c ON s.id_categoria = c.id_categoria
-                            INNER JOIN marcas m ON p.id_marca = m.id_marca
-                            WHERE status = 1 AND c.id_categoria = $id_categoria";
-                } elseif (isset($_GET['id_marca'])) {
-                    $id_marca = $_GET['id_marca'];
-                    $sqlProd = "SELECT DISTINCT 
-                                p.id_prod,
-                                p.nome_prod,
-                                c.nome_categoria,
+                                s.nome_subcategoria,
                                 m.nome_marca,
                                 p.preco_prod,
                                 p.foto_prod,
@@ -223,84 +204,67 @@ session_start();
                             INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
                             INNER JOIN categorias c ON s.id_categoria = c.id_categoria
                             INNER JOIN marcas m ON p.id_marca = m.id_marca
-                            WHERE status = 1 AND m.id_marca = $id_marca";
-                } elseif (isset($_GET['id_subcategoria'])) {
-                    $id_subcategoria = $_GET['id_subcategoria'];
-                    $sqlProd = "SELECT DISTINCT 
+                            WHERE status = 1 AND (nome_prod LIKE '%$query%' OR desc_prod LIKE '%$query%' OR c.nome_categoria LIKE '%$query%' OR m.nome_marca LIKE '%$query%' OR s.nome_subcategoria LIKE '%$query%')";
+                    } else {
+                        $sqlProd = "SELECT DISTINCT 
                                 p.id_prod,
                                 p.nome_prod,
                                 c.nome_categoria,
+                                s.nome_subcategoria,
                                 m.nome_marca,
                                 p.preco_prod,
                                 p.foto_prod,
                                 p.desc_prod
                             FROM 
                                 produtos p
-                             INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
+                            INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
                             INNER JOIN categorias c ON s.id_categoria = c.id_categoria
                             INNER JOIN marcas m ON p.id_marca = m.id_marca
-                            WHERE status = 1 AND s.id_subcategoria = $id_subcategoria";
-                } else {
-                    $sqlProd = "SELECT DISTINCT 
-                                p.id_prod,
-                                p.nome_prod,
-                                c.nome_categoria,
-                                m.nome_marca,
-                                p.preco_prod,
-                                p.foto_prod,
-                                p.desc_prod
-                            FROM 
-                                produtos p
-                           INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
-                            INNER JOIN categorias c ON s.id_categoria = c.id_categoria
-                            INNER JOIN marcas m ON p.id_marca = m.id_marca
-                            WHERE status = 1";
-                }
+                            WHERE p.status = 1 $filtroSQL";
+                    }
+                    $resultProd = mysqli_query($con, $sqlProd);
 
-                // Executa a consulta SQL para obter os produtos
-                $resultProd = mysqli_query($con, $sqlProd);
-
-                // Exibir produtos
-                if(mysqli_num_rows($resultProd) > 0){
-                while ($dados = mysqli_fetch_array($resultProd)) {
-                ?>
-                    <div class="col-12 col-sm-4 col-lg-3">
-                        <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
-                            <div class="card-img position-relative">
-                                <div class="card-badges">
-                                </div>
-                                <picture class="position-relative overflow-hidden d-block bg-light">
-                                    <img class="w-100 img-fluid position-relative z-index-10" title="" src="<?= $dados['foto_prod']; ?>" alt="">
-                                </picture>
-                                <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
-                                    <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i>Ver detalhe do produto</button>
+                    // Exibir produtos
+                    if (mysqli_num_rows($resultProd) > 0) {
+                        while ($dados = mysqli_fetch_array($resultProd)) {
+                    ?>
+                            <div class="col-12 col-sm-4 col-lg-3">
+                                <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
+                                    <div class="card-img position-relative">
+                                        <div class="card-badges">
+                                        </div>
+                                        <picture class="position-relative overflow-hidden d-block bg-light">
+                                            <img class="w-100 img-fluid position-relative z-index-10" title="" src="<?= $dados['foto_prod']; ?>" alt="">
+                                        </picture>
+                                        <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
+                                            <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i>Ver detalhe do produto</button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body px-0">
+                                        <a class="text-decoration-none link-cover" href="./prod.php?id_prod=<?= $dados['id_prod'] ?>"><?= $dados['nome_prod']; ?></a>
+                                        <p class="mt-2 mb-0 large"><?= $dados['preco_prod']; ?>€</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-body px-0">
-                                <a class="text-decoration-none link-cover" href="./prod.php?id_prod=<?= $dados['id_prod'] ?>"><?= $dados['nome_prod']; ?></a>
-                                <p class="mt-2 mb-0 large"><?= $dados['preco_prod']; ?>€</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- / Product-->
-                <?php
-                }
-            } else {
-                echo "<p class='text-center'>Não foram encontrados produtos...</p>";
-            }
-                ?>
-            </div>
-            <!-- / Products-->
+                            <!-- / Product-->
+                    <?php
+                        }
+                    } else {
+                        echo "<p class='text-center'>Não foram encontrados produtos...</p>";
+                    }
+                    ?>
+                </div>
+                <!-- / Products-->
 
-            <!-- Pagination-->
-            <div class="d-flex flex-column f-w-44 mx-auto my-5 text-center">
-                <a href="#" class="btn btn-outline-dark btn-sm mt-5 align-self-center py-3 px-4 border-2">Voltar ao topo</a>
-            </div> <!-- / Pagination-->
-        </div>
 
-        <!-- /Page Content -->
+                <!-- /Page Content -->
     </section>
     <!-- / Main Section-->
+    <!-- Pagination-->
+    <div class="d-flex flex-column f-w-44 mx-auto my-5 text-center">
+        <a href="#" class="btn btn-outline-dark btn-sm mt-5 align-self-center py-3 px-4 border-2">Voltar ao topo</a>
+    </div> <!-- / Pagination-->
+    </div>
 
     <!-- Footer -->
     <?php include("footer.php"); ?>
@@ -318,10 +282,10 @@ session_start();
                 <div>
                     <!-- Price Filter -->
                     <div class="py-4 widget-filter widget-filter-price border-top">
-                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-price" role="button" aria-expanded="false" aria-controls="filter-modal-price">
+                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-price" role="button" aria-expanded="true" aria-controls="filter-modal-price">
                             Preço
                         </a>
-                        <div id="filter-modal-price" class="collapse hide">
+                        <div id="filter-modal-price" class="collapse show">
                             <div class="filter-price mt-6"></div>
                             <div class="d-flex justify-content-between align-items-center mt-7">
                                 <div class="input-group mb-0 me-2 border">
@@ -330,7 +294,7 @@ session_start();
                                 </div>
                                 <div class="input-group mb-0 ms-2 border">
                                     <span class="input-group-text bg-transparent fs-7 p-2 text-muted border-0">€</span>
-                                    <input type="number" min="00" max="1000" step="1" class="filter-max form-control-sm flex-grow-1 text-muted border-0">
+                                    <input type="number" min="00" max="5000" step="1" class="filter-max form-control-sm flex-grow-1 text-muted border-0">
                                 </div>
                             </div>
                         </div>
@@ -338,10 +302,10 @@ session_start();
                     <!-- / Price Filter -->
                     <!-- Brands Filter -->
                     <div class="py-4 widget-filter border-top">
-                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-brands" role="button" aria-expanded="false" aria-controls="filter-modal-brands">
+                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-brands" role="button" aria-expanded="true" aria-controls="filter-modal-brands">
                             Marcas
                         </a>
-                        <div id="filter-modal-brands" class="collapse hide">
+                        <div id="filter-modal-brands" class="collapse show">
                             <div class="simplebar-wrapper">
                                 <div class="filter-options" data-pixr-simplebar>
                                     <?php
@@ -351,7 +315,7 @@ session_start();
                                         while ($rowMarcas = mysqli_fetch_assoc($resultMarcas)) {
                                     ?>
                                             <div class="form-group form-check-custom mb-1">
-                                                <input type="checkbox" class="form-check-input marca-checkbox" id="marca_<?php echo $rowMarcas['id_marca']; ?>" value="<?php echo $rowMarcas['id_marca']; ?>">
+                                                <input type="checkbox" class="form-check-input marca-checkbox" id="marca_<?php echo $rowMarcas['id_marca']; ?>" value="<?php echo $rowMarcas['id_marca']; ?>" <?php if (isset($_GET['id_marca']) && $_GET['id_marca'] == $rowMarcas['id_marca']) echo 'checked'; ?>>
                                                 <label class="form-check-label fw-normal text-body flex-grow-1 d-flex align-items-center" for="marca_<?php echo $rowMarcas['id_marca']; ?>">
                                                     <?php echo $rowMarcas['nome_marca']; ?>
                                                 </label>
@@ -367,10 +331,10 @@ session_start();
                     <!-- / Brands Filter -->
                     <!-- Brands Filter -->
                     <div class="py-4 widget-filter border-top">
-                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-category" role="button" aria-expanded="false" aria-controls="filter-modal-category">
+                        <a class="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron" data-bs-toggle="collapse" href="#filter-modal-category" role="button" aria-expanded="true" aria-controls="filter-modal-category">
                             Categorias
                         </a>
-                        <div id="filter-modal-category" class="collapse hide">
+                        <div id="filter-modal-category" class="collapse show">
                             <div class="simplebar-wrapper">
                                 <div class="filter-options" data-pixr-simplebar>
                                     <?php
@@ -380,7 +344,7 @@ session_start();
                                         while ($rowCategorias = mysqli_fetch_assoc($resultCategorias)) {
                                     ?>
                                             <div class="form-group form-check-custom mb-1">
-                                                <input type="checkbox" class="form-check-input categoria-checkbox" id="categoria_<?php echo $rowCategorias['id_categoria']; ?>" value="<?php echo $rowCategorias['id_categoria']; ?>">
+                                                <input type="checkbox" class="form-check-input categoria-checkbox" id="categoria_<?php echo $rowCategorias['id_categoria']; ?>" value="<?php echo $rowCategorias['id_categoria']; ?>" <?php if (isset($_GET['id_categoria']) && $_GET['id_categoria'] == $rowCategorias['id_categoria']) echo 'checked'; ?>>
                                                 <label class="form-check-label fw-normal text-body flex-grow-1 d-flex align-items-center" for="categoria_<?php echo $rowCategorias['id_categoria']; ?>">
                                                     <?php echo $rowCategorias['nome_categoria']; ?>
                                                 </label>
@@ -393,13 +357,55 @@ session_start();
                             </div>
                         </div>
                     </div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            // Verificar filtros aplicados via navbar e marcar checkboxes
+                            <?php if (isset($_GET['id_categoria'])) : ?>
+                                document.getElementById('categoria_<?php echo $_GET['id_categoria']; ?>').checked = true;
+                            <?php endif; ?>
+                            <?php if (isset($_GET['id_marca'])) : ?>
+                                document.getElementById('marca_<?php echo $_GET['id_marca']; ?>').checked = true;
+                            <?php endif; ?>
+
+                            // Capturar valores dos filtros e atualizar a URL
+                            document.querySelector('.btn[data-bs-dismiss="offcanvas"]').addEventListener('click', function() {
+                                let filtros = [];
+
+                                // Capturar categorias selecionadas
+                                document.querySelectorAll('.categoria-checkbox:checked').forEach(function(checkbox) {
+                                    filtros.push('id_categoria=' + checkbox.value);
+                                });
+
+                                // Capturar marcas selecionadas
+                                document.querySelectorAll('.marca-checkbox:checked').forEach(function(checkbox) {
+                                    filtros.push('id_marca=' + checkbox.value);
+                                });
+
+                                // Capturar intervalo de preço
+                                let precoMin = document.querySelector('.filter-min').value;
+                                let precoMax = document.querySelector('.filter-max').value;
+                                if (precoMin) {
+                                    filtros.push('preco_min=' + precoMin);
+                                }
+                                if (precoMax) {
+                                    filtros.push('preco_max=' + precoMax);
+                                }
+
+                                // Atualizar a URL com os filtros
+                                let queryString = filtros.join('&');
+                                window.location.href = 'produtos.php?' + queryString;
+                            });
+                        });
+                    </script>
+
                     <!-- / Brands Filter -->
                 </div>
                 <!-- / Filters-->
 
                 <!-- Filter Button-->
                 <div class="border-top pt-3">
-                    <a href="#" class="btn btn-dark mt-2 d-block hover-lift-sm hover-boxshadow" data-bs-dismiss="offcanvas" aria-label="Close">Done</a>
+                    <a href="#" class="btn btn-dark mt-2 d-block hover-lift-sm hover-boxshadow" data-bs-dismiss="offcanvas" aria-label="Close">Aplicar filtros</a>
                 </div>
                 <!-- /Filter Button-->
             </div>

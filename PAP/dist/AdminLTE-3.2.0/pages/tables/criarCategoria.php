@@ -187,11 +187,6 @@ session_start();
                 <p>Categorias</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="subcategorias.php" class="nav-link">
-                <p>Subcategorias</p>
-              </a>
-            </li>
           </ul>
           </li>
         </nav>

@@ -110,6 +110,18 @@ session_start();
             border-color: #c3e6cb;
             color: #155724;
         }
+
+        .error-input {
+            border: 2px solid red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            display: block;
+        }
     </style>
 </head>
 
@@ -181,11 +193,6 @@ session_start();
                         <li class="nav-item">
                             <a href="categorias.php" class="nav-link">
                                 <p>Categorias</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="subcategorias.php" class="nav-link">
-                                <p>Subcategorias</p>
                             </a>
                         </li>
                     </ul>
@@ -263,7 +270,7 @@ session_start();
                                 <input type="hidden" name="id_marca" value="<?php echo $id_marca; ?>">
 
                                 <label for="nome">Nome:</label>
-                                <input type="text" name="nome" id="nome" value="<?= $row['nome_marca'] ?>" oninput="clearErrorMessage('nome-error')"><br>
+                                <input placeholder="Insira uma marca" type="text" name="nome" id="nome" value="<?= $row['nome_marca'] ?>" oninput="clearErrorMessage('nome-error')"><br>
                                 <span id="nome-error" class="error-message"></span><br>
 
                                 <input type="submit" value="Editar">
@@ -307,6 +314,32 @@ session_start();
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
     <!-- Page specific script -->
+
+    <script>
+        function validateForm() {
+            var nome = document.getElementById('nome');
+            var isValid = true;
+
+            if (nome.value.trim() == '') {
+                displayErrorMessage('nome-error', 'Insira um nome!');
+                nome.classList.add('error-input');
+                isValid = false;
+            } else {
+                clearErrorMessage('nome-error');
+                nome.classList.remove('error-input');
+            }
+
+            return isValid;
+        }
+
+        function displayErrorMessage(id, message) {
+            document.getElementById(id).innerHTML = message;
+        }
+
+        function clearErrorMessage(id) {
+            document.getElementById(id).innerHTML = '';
+        }
+    </script>
 </body>
 
 </html>

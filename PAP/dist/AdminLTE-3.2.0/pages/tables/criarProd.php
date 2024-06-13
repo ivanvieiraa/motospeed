@@ -223,11 +223,6 @@ include("ligacao.php");
                                         <p>Categorias</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="subcategorias.php" class="nav-link">
-                                        <p>Subcategorias</p>
-                                    </a>
-                                </li>
                             </ul>
                         </li>
                 </nav>
@@ -349,7 +344,7 @@ include("ligacao.php");
                                     while ($row = mysqli_fetch_assoc($resultado)) {
                                         echo "<div class='tamanho-input'>";
                                         echo "<label for='tamanho_" . $row['tamanho'] . "'>" . $row['tamanho'] . ":</label>";
-                                        echo "<input type='number' min=0 value=0 name='tamanho[" . $row['tamanho'] . "]' id='tamanho_" . $row['tamanho'] . "'><br>";
+                                        echo "<input type='number' min=0 value=100 name='tamanho[" . $row['tamanho'] . "]' id='tamanho_" . $row['tamanho'] . "'><br>";
                                         echo "</div>";
                                     }
                                     ?>

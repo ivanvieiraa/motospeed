@@ -110,6 +110,18 @@ session_start();
             border-color: #c3e6cb;
             color: #155724;
         }
+
+        .error-input {
+            border: 2px solid red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            display: block;
+        }
     </style>
 </head>
 
@@ -183,11 +195,6 @@ session_start();
                                 <p>Categorias</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="subcategorias.php" class="nav-link">
-                                <p>Subcategorias</p>
-                            </a>
-                        </li>
                     </ul>
                     </li>
                 </nav>
@@ -258,7 +265,7 @@ session_start();
                                 header('Location: categorias.php');
                                 exit();
                             }
-                            
+
                             // Consulta SQL para obter as subcategorias da categoria atual
                             $sql_subcategorias = "SELECT * FROM subcategorias WHERE id_categoria = '$id_categoria'";
                             $result_subcategorias = mysqli_query($con, $sql_subcategorias);
@@ -267,7 +274,7 @@ session_start();
                                 <input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
 
                                 <label for="nome">Nome:</label>
-                                <input type="text" name="nome" id="nome" value="<?= $row['nome_categoria'] ?>" oninput="clearErrorMessage('nome-error')"><br>
+                                <input placeholder="Insira uma categoria" type="text" name="nome" id="nome" value="<?= $row['nome_categoria'] ?>" oninput="clearErrorMessage('nome-error')"><br>
                                 <span id="nome-error" class="error-message"></span><br>
 
                                 <h3>Subcategorias</h3>
@@ -327,6 +334,32 @@ session_start();
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
     <!-- Page specific script -->
+    <script>
+        function validateForm() {
+            var nome = document.getElementById('nome');
+            var isValid = true;
+
+            if (nome.value.trim() == '') {
+                displayErrorMessage('nome-error', 'Insira um nome!');
+                nome.classList.add('error-input');
+                isValid = false;
+            } else {
+                clearErrorMessage('nome-error');
+                nome.classList.remove('error-input');
+            }
+
+            return isValid;
+        }
+
+        function displayErrorMessage(id, message) {
+            document.getElementById(id).innerHTML = message;
+        }
+
+        function clearErrorMessage(id) {
+            document.getElementById(id).innerHTML = '';
+        }
+    </script>
+
 </body>
 
 </html>

@@ -179,12 +179,7 @@
               <a href="categorias.php" class="nav-link">
                 <p>Categorias</p>
               </a>
-            </li>
-            <li class="nav-item">
-              <a href="subcategorias.php" class="nav-link">
-                <p>Subcategorias</p>
-              </a>
-            </li>
+            </li>>
           </ul>
           </li>
         </nav>
@@ -256,15 +251,15 @@
             <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
 
             <label for="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" value="<?php echo $row['nome']; ?>" oninput="clearErrorMessage('nome-error')"><br>
+            <input type="text" placeholder="Insira um nome" name="nome" id="nome" value="<?php echo $row['nome']; ?>" oninput="clearErrorMessage('nome-error')"><br>
             <span id="nome-error" class="error-message"></span><br>
 
             <label for="apelido">Apelido:</label>
-            <input type="text" name="apelido" id="apelido" value="<?php echo $row['apelido']; ?>" oninput="clearErrorMessage('apelido-error')"><br>
+            <input type="text" placeholder="Insira um apelido" name="apelido" id="apelido" value="<?php echo $row['apelido']; ?>" oninput="clearErrorMessage('apelido-error')"><br>
             <span id="apelido-error" class="error-message"></span><br>
 
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email" value="<?php echo $row['email']; ?>" oninput="clearErrorMessage('email-error')"><br>
+            <input type="email" placeholder="Insira um email" name="email" id="email" value="<?php echo $row['email']; ?>" oninput="clearErrorMessage('email-error')"><br>
             <span id="email-error" class="error-message"></span><br>
 
             <label for="data">Data de Nascimento:</label>
@@ -272,11 +267,12 @@
             <span id="data-error" class="error-message"></span><br>
 
             <label for="morada">Morada:</label>
-            <input type="text" name="morada" id="morada" value="<?php echo $row['morada']; ?>" oninput="clearErrorMessage('morada-error')"><br>
+            <input type="text" placeholder="Insira uma morada" name="morada" id="morada" value="<?php echo $row['morada']; ?>" oninput="clearErrorMessage('morada-error')"><br>
             <span id="morada-error" class="error-message"></span><br>
 
-            <label for="codp">Código Postal:</label>
-            <input type="text" name="codp" id="codp" value="<?php echo $row['codigop']; ?>" oninput="clearErrorMessage('codp-error')"><br>
+            <label for="codigo_postal">Código Postal:</label>
+            <input type="text" placeholder="Insira um código postal (Ex:.1111-000)" id="codp" name="codp" value="<?php echo $row['codigop']; ?>"><br>
+
             <span id="codp-error" class="error-message"></span><br>
             <div class="form-group">
               <div class="checkbox-group">
@@ -313,46 +309,49 @@
           </form>
           <script>
             function validateForm() {
-              var nome = document.getElementById('nome').value;
-              var apelido = document.getElementById('apelido').value;
-              var email = document.getElementById('email').value;
-              var data = document.getElementById('data').value;
-              var morada = document.getElementById('morada').value;
-              var codp = document.getElementById('codp').value;
+              let isValid = true;
+              let nome = document.getElementById('nome');
+              let apelido = document.getElementById('apelido');
+              let email = document.getElementById('email');
+              let codigoPostal = document.getElementById('codp');
 
-              if (nome.trim() == '') {
-                displayErrorMessage('nome-error', 'Insira um nome!');
-                return false;
+              // Reset borders to default
+              nome.style.borderColor = '';
+              apelido.style.borderColor = '';
+              email.style.borderColor = '';
+              codigoPostal.style.borderColor = '';
+
+              if (nome.value.trim() === '') {
+                nome.style.borderColor = 'red';
+                isValid = false;
               }
-              if (apelido.trim() == '') {
-                displayErrorMessage('apelido-error', 'Insira um apelido!');
-                return false;
+
+              if (apelido.value.trim() === '') {
+                apelido.style.borderColor = 'red';
+                isValid = false;
               }
-              if (email.trim() == '') {
-                displayErrorMessage('email-error', 'Insira um email!');
-                return false;
+
+              if (!validateEmail(email.value)) {
+                email.style.borderColor = 'red';
+                isValid = false;
               }
-              // if (data.trim() == '') {
-              //   displayErrorMessage('data-error', 'Insira uma data de nascimento!');
-              //   return false;
-              // }
-              // if (morada.trim() == '') {
-              //   displayErrorMessage('morada-error', 'Insira uma morada!');
-              //   return false;
-              // }
-              // if (codp.trim() == '') {
-              //   displayErrorMessage('codp-error', 'Insira um código postal!');
-              //   return false;
-              // }
-              return true;
+
+              if (codigoPostal.value.trim() !== '' && !validateCodigoPostal(codigoPostal.value)) {
+                codigoPostal.style.borderColor = 'red';
+                isValid = false;
+              }
+
+              return isValid;
             }
 
-            function displayErrorMessage(id, message) {
-              document.getElementById(id).innerHTML = message;
+            function validateEmail(email) {
+              const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              return re.test(String(email).toLowerCase());
             }
 
-            function clearErrorMessage(id) {
-              document.getElementById(id).innerHTML = '';
+            function validateCodigoPostal(codigoPostal) {
+              const re = /^\d{4}-\d{3}$/;
+              return re.test(codigoPostal);
             }
           </script>
         </div>

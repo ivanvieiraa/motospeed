@@ -75,7 +75,7 @@ include("ligacao.php");
     select {
       width: 100%;
       padding: 5px;
-      /* margin-bottom: 15px; */
+      margin-bottom: 15px;
       border: 1px solid #ccc;
       border-radius: 5px;
       box-sizing: border-box;
@@ -149,6 +149,14 @@ include("ligacao.php");
       width: 40%;
       /* Largura dos inputs dos tamanhos */
     }
+
+    .error-input {
+      border-color: red;
+    }
+
+    .error-message {
+      color: red;
+    }
   </style>
 </head>
 
@@ -218,11 +226,6 @@ include("ligacao.php");
             <li class="nav-item">
               <a href="categorias.php" class="nav-link">
                 <p>Categorias</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="subcategorias.php" class="nav-link">
-                <p>Subcategorias</p>
               </a>
             </li>
           </ul>
@@ -302,73 +305,61 @@ include("ligacao.php");
                 <input type="hidden" name="id_prod" value="<?php echo $id_prod; ?>">
 
                 <label for="nome_prod">Nome:</label>
-                <input type="text" name="nome_prod" id="nome_prod" value="<?php echo $row['nome_prod']; ?>" oninput="clearErrorMessage('nome-prod-error')"><br>
+                <input type="text" placeholder="Insira um nome" name="nome_prod" id="nome_prod" value="<?php echo $row['nome_prod']; ?>" oninput="clearErrorMessage('nome-prod-error', this)">
                 <span id="nome-prod-error" class="error-message"></span><br>
 
                 <label for="desc_prod">Descrição do Produto:</label>
-                <textarea name="desc_prod" id="desc_prod" rows="5" oninput="clearErrorMessage('desc-prod-error')"><?php echo $row['desc_prod']; ?></textarea><br>
+                <textarea placeholder="Insira uma descrição" name="desc_prod" id="desc_prod" rows="5" oninput="clearErrorMessage('desc-prod-error', this)"><?php echo $row['desc_prod']; ?></textarea>
                 <span id="desc-prod-error" class="error-message"></span><br>
 
                 <label for="id_marca">Marca:</label>
-                <select name="id_marca" id="id_marca" oninput="clearErrorMessage('marca-error')">
+                <select name="id_marca" id="id_marca" oninput="clearErrorMessage('marca-error', this)">
                   <?php
-                  // Consulta SQL para obter as marcas
                   $sql_marcas = "SELECT * FROM marcas";
                   $resultado_marcas = mysqli_query($con, $sql_marcas);
-                  // Exibir as opções
                   while ($row_marca = mysqli_fetch_assoc($resultado_marcas)) {
                     $selected = $row_marca['id_marca'] == $row['id_marca'] ? 'selected' : '';
                     echo "<option value='" . $row_marca['id_marca'] . "' $selected>" . $row_marca['nome_marca'] . "</option>";
                   }
                   ?>
-                </select><br>
+                </select>
                 <span id="marca-error" class="error-message"></span><br>
 
-                <!-- Selecionar a categoria -->
                 <label for="id_categoria">Categoria:</label>
-                <select name="id_categoria" id="id_categoria" oninput="clearErrorMessage('categoria-error')">
+                <select name="id_categoria" id="id_categoria" oninput="clearErrorMessage('categoria-error', this)">
                   <?php
-                  // Consulta SQL para obter as categorias
                   $sql_categorias = "SELECT * FROM categorias";
                   $resultado_categorias = mysqli_query($con, $sql_categorias);
-                  // Exibir as opções
                   while ($row_categoria = mysqli_fetch_assoc($resultado_categorias)) {
                     $selected = $row_categoria['id_categoria'] == $row['id_categoria'] ? 'selected' : '';
                     echo "<option value='" . $row_categoria['id_categoria'] . "' $selected>" . $row_categoria['nome_categoria'] . "</option>";
                   }
                   ?>
-                </select><br>
-                <span id="subcategoria-error" class="error-message"></span><br>
+                </select>
+                <span id="categoria-error" class="error-message"></span><br>
 
-                <!-- Selecionar a subcategoria -->
                 <label for="id_subcategoria">Subcategoria:</label>
-                <select name="id_subcategoria" id="id_subcategoria" oninput="clearErrorMessage('subcategoria-error')">
+                <select name="id_subcategoria" id="id_subcategoria" oninput="clearErrorMessage('subcategoria-error', this)">
                   <?php
-                  // Consulta SQL para obter as categorias
                   $sql_subcategorias = "SELECT * FROM subcategorias WHERE id_categoria = " . $row['id_categoria'] . "";
                   $resultado_subcategorias = mysqli_query($con, $sql_subcategorias);
-                  // Exibir as opções
                   while ($row_subcategoria = mysqli_fetch_assoc($resultado_subcategorias)) {
                     $selected = $row_subcategoria['id_subcategoria'] == $row['id_subcategoria'] ? 'selected' : '';
                     echo "<option value='" . $row_subcategoria['id_subcategoria'] . "' $selected>" . $row_subcategoria['nome_subcategoria'] . "</option>";
                   }
                   ?>
-                </select><br>
+                </select>
                 <span id="subcategoria-error" class="error-message"></span><br>
 
-                <!-- Campo de estoque por tamanho -->
                 <label for="tamanho">Stock:</label><br>
                 <div class="tamanho-container">
                   <?php
-                  // Consulta SQL para obter o estoque de cada tamanho associado a este produto
                   $sql_estoque_tamanho = "SELECT pt.tamanho, t.tamanho, pt.stock FROM produtos_tamanhos pt INNER JOIN tamanhos t ON pt.tamanho = t.tamanho WHERE pt.id_prod = $id_prod ORDER BY pt.tamanho DESC";
                   $resultado_estoque_tamanho = mysqli_query($con, $sql_estoque_tamanho);
-
-                  // Exibir os campos de estoque para cada tamanho
                   while ($row_estoque_tamanho = mysqli_fetch_assoc($resultado_estoque_tamanho)) {
                     echo "<div class='tamanho-input'>";
                     echo "<label for='tamanho_" . $row_estoque_tamanho['tamanho'] . "'>" . $row_estoque_tamanho['tamanho'] . ":</label>";
-                    echo "<input type='number' min='0' name='tamanho[" . $row_estoque_tamanho['tamanho'] . "]' id='tamanho_" . $row_estoque_tamanho['tamanho'] . "' value='" . $row_estoque_tamanho['stock'] . "'><br>";
+                    echo "<input type='number' min='0' name='tamanho[" . $row_estoque_tamanho['tamanho'] . "]' id='tamanho_" . $row_estoque_tamanho['tamanho'] . "' value='" . $row_estoque_tamanho['stock'] . "' oninput='clearErrorMessage(\"tamanho-error\", this)'><br>";
                     echo "</div>";
                   }
                   ?>
@@ -377,8 +368,8 @@ include("ligacao.php");
 
 
                 <label for="preco_prod">Preço do Produto:</label>
-                <input type="number" name="preco_prod" id="preco_prod" value="<?php echo $row['preco_prod']; ?>" oninput="clearErrorMessage('preco-prod-error')">
-                <i class="fa-solid fa-euro-sign fa-lg" style="color: #000000;"></i><br>
+                <input placeholder="Preço" type="number" name="preco_prod" id="preco_prod" value="<?php echo $row['preco_prod']; ?>" oninput="clearErrorMessage('preco-prod-error', this)">
+                <i class="fa-solid fa-euro-sign fa-lg" style="color: #000000;"></i>
                 <span id="preco-prod-error" class="error-message"></span><br>
 
                 <div style="display: flex; align-items: center;">
@@ -476,46 +467,72 @@ include("ligacao.php");
 
               <script>
                 function validateForm() {
-                  var nome = document.getElementById('nome').value;
-                  var apelido = document.getElementById('apelido').value;
-                  var email = document.getElementById('email').value;
-                  var data = document.getElementById('data').value;
-                  var morada = document.getElementById('morada').value;
-                  var codp = document.getElementById('codp').value;
+                  var isValid = true;
+                  var nome_prod = document.getElementById('nome_prod');
+                  var desc_prod = document.getElementById('desc_prod');
+                  var id_marca = document.getElementById('id_marca');
+                  var id_categoria = document.getElementById('id_categoria');
+                  var id_subcategoria = document.getElementById('id_subcategoria');
+                  var preco_prod = document.getElementById('preco_prod');
+                  var tamanho_inputs = document.querySelectorAll('.tamanho-input input[type="number"]');
 
-                  if (nome.trim() == '') {
-                    displayErrorMessage('nome-error', 'Insira um nome!');
-                    return false;
+                  // Clear all previous errors
+                  clearAllErrors();
+
+                  if (nome_prod.value.trim() == '') {
+                    displayErrorMessage('nome-prod-error', 'Insira o nome do produto!', nome_prod);
+                    isValid = false;
                   }
-                  if (apelido.trim() == '') {
-                    displayErrorMessage('apelido-error', 'Insira um apelido!');
-                    return false;
+
+                  if (desc_prod.value.trim() == '') {
+                    displayErrorMessage('desc-prod-error', 'Insira a descrição do produto!', desc_prod);
+                    isValid = false;
                   }
-                  if (email.trim() == '') {
-                    displayErrorMessage('email-error', 'Insira um email!');
-                    return false;
+
+                  if (id_marca.value.trim() == '') {
+                    displayErrorMessage('marca-error', 'Selecione a marca!', id_marca);
+                    isValid = false;
                   }
-                  // if (data.trim() == '') {
-                  //   displayErrorMessage('data-error', 'Insira uma data de nascimento!');
-                  //   return false;
-                  // }
-                  // if (morada.trim() == '') {
-                  //   displayErrorMessage('morada-error', 'Insira uma morada!');
-                  //   return false;
-                  // }
-                  // if (codp.trim() == '') {
-                  //   displayErrorMessage('codp-error', 'Insira um código postal!');
-                  //   return false;
-                  // }
-                  return true;
+
+                  if (id_categoria.value.trim() == '') {
+                    displayErrorMessage('categoria-error', 'Selecione a categoria!', id_categoria);
+                    isValid = false;
+                  }
+
+                  if (id_subcategoria.value.trim() == '') {
+                    displayErrorMessage('subcategoria-error', 'Selecione a subcategoria!', id_subcategoria);
+                    isValid = false;
+                  }
+
+                  if (preco_prod.value.trim() == '' || parseFloat(preco_prod.value) <= 0) {
+                    displayErrorMessage('preco-prod-error', 'Insira um preço válido!', preco_prod);
+                    isValid = false;
+                  }
+
+                  return isValid;
                 }
 
-                function displayErrorMessage(id, message) {
+                function displayErrorMessage(id, message, input) {
                   document.getElementById(id).innerHTML = message;
+                  input.classList.add('error-input');
                 }
 
-                function clearErrorMessage(id) {
+                function clearErrorMessage(id, input) {
                   document.getElementById(id).innerHTML = '';
+                  input.classList.remove('error-input');
+                }
+
+                function clearAllErrors() {
+                  var errorMessages = document.querySelectorAll('.error-message');
+                  var errorInputs = document.querySelectorAll('.error-input');
+
+                  errorMessages.forEach(function(message) {
+                    message.innerHTML = '';
+                  });
+
+                  errorInputs.forEach(function(input) {
+                    input.classList.remove('error-input');
+                  });
                 }
               </script>
             </div>

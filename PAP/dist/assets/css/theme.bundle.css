@@ -5362,7 +5362,7 @@ fieldset:disabled .btn {
 .dropdown-menu {
     position: absolute;
     top: 100%;
-    z-index: 1000;
+    z-index: 9999;
     display: none;
     min-width: 10rem;
     padding: .5rem 0;

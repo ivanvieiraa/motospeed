@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS motospeed;
+CREATE DATABASE motospeed;
+USE motospeed;

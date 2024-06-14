@@ -93,6 +93,7 @@ if ($id_user !== null) {
         $sqlProd = "SELECT DISTINCT 
                         p.id_prod,
                         p.nome_prod,
+                        s.nome_subcategoria,
                         c.nome_categoria,
                         c.id_categoria,
                         m.nome_marca,
@@ -102,7 +103,8 @@ if ($id_user !== null) {
                         p.desc_prod
                         FROM 
                         produtos p
-                        INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                        INNER JOIN subcategorias s ON s.id_subcategoria = p.id_subcategoria
+                        INNER JOIN categorias c ON s.id_categoria = c.id_categoria
                         INNER JOIN marcas m ON p.id_marca = m.id_marca
                         WHERE id_prod = $id_prod";
         $result2 = mysqli_query($con, $sqlProd);
@@ -339,6 +341,7 @@ if ($id_user !== null) {
                         p.id_prod,
                         p.nome_prod,
                         c.nome_categoria,
+                        s.nome_subcategoria,
                         c.id_categoria,
                         m.nome_marca,
                         m.id_marca,
@@ -347,10 +350,11 @@ if ($id_user !== null) {
                         p.desc_prod
                         FROM 
                         produtos p
-                        INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                        INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria
+                        INNER JOIN categorias c ON s.id_categoria = c.id_categoria
                         INNER JOIN marcas m ON p.id_marca = m.id_marca
                         WHERE id_prod != $id_prod
-                        LIMIT 10";
+                        LIMIT 5";
                             $result3 = mysqli_query($con, $moreProd); ?>
                             <div class="col-12 aos-init aos-animate" data-aos="fade-up">
                                 <h3 class="fs-4 fw-bolder mt-7 mb-4">Produtos que poderás gostar</h3>

@@ -38,6 +38,25 @@
     .alert.hide {
       opacity: 0;
     }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+    }
   </style>
 </head>
 
@@ -155,20 +174,19 @@
         <div class="card">
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="utilizadores" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>ID <img src="sort.png" width="12px" height="12px"></th>
                   <th>Foto</th>
-                  <th>Nome</th>
-                  <th>Apelido</th>
-                  <th>Email</th>
-                  <th>Data de Nascimento</th>
-                  <th>Morada</th>
-                  <th>Código Postal</th>
-                  <th>Administrador</th>
-                  <th>Criado em</th>
-                  <th>Alterado em</th>
+                  <th>Nome <img src="sort.png" width="12px" height="12px"></th>
+                  <th>Email <img src="sort.png" width="12px" height="12px"></th>
+                  <th>Data de Nascimento <img src="sort.png" width="12px" height="12px"></th>
+                  <th>Morada <img src="sort.png" width="12px" height="12px"></th>
+                  <th>Código Postal <img src="sort.png" width="12px" height="12px"></th>
+                  <th>Administrador <img src="sort.png" width="12px" height="12px"></th>
+                  <th>Criado em <img src="sort.png" width="12px" height="12px"></th>
+                  <th>Alterado em <img src="sort.png" width="12px" height="12px"></th>
                   <th>Estado</th>
                   <th>Ações</th>
                 </tr>
@@ -187,7 +205,6 @@
                     echo "<td>" . $row["id_user"] . "</td>";
                     echo "<td style='text-align:left'><img style='border-radius:50%' src='../../../" . $row['foto'] . "' width='50px' height='50px'></td>";
                     echo "<td style='text-align:left'>" . ($row["nome"] ? $row["nome"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:left'>" . ($row["apelido"] ? $row["apelido"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
                     echo "<td style='text-align:left'>" . ($row["email"] ? $row["email"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
                     echo "<td style='text-align:left'>" . ($row["data_nasc"] ? $row["data_nasc"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
                     echo "<td style='text-align:left'>" . ($row["morada"] ? $row["morada"] : "<a href='editUser.php?id_user=" . $row['id_user'] . "'><i>N/A</i></a>") . "</td>";
@@ -262,24 +279,36 @@
   <!-- Page specific script -->
   <script>
     $(function() {
-      $("#example1").DataTable({
+      $("#utilizadores").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
+        "language": {
+          "decimal": "",
+          "emptyTable": "Nenhum registro encontrado",
+          "info": "A mostrar _START_ a _END_ de _TOTAL_ resultados",
+          "infoEmpty": "A mostrar 0 a 0 of de resultados",
+          "infoFiltered": "(filtrado de _MAX_ resultados)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Show _MENU_ entries",
+          "loadingRecords": "A carregar...",
+          "processing": "",
+          "searchPlaceholder": 'Realizar pesquisa',
+          "search": "Pesquisa:",
+          "zeroRecords": "Não foram encontrados resultados",
+          "paginate": {
+            "first": "Primeiro",
+            "last": "Último",
+            "next": "Próximo",
+            "previous": "Anterior"
+          },
+          "aria": {
+            "orderable": "Ordenar por coluna",
+            "orderableReverse": "Reverter ordenação"
+          }
+        }
       });
-    });
-    $(document).ready(function() {
-      $('#example2').DataTable();
     });
   </script>
 </body>

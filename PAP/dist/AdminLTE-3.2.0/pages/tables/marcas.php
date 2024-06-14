@@ -38,6 +38,25 @@
     .alert.hide {
       opacity: 0;
     }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+    }
   </style>
 </head>
 
@@ -155,11 +174,11 @@
         <div class="card">
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="marcas" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Marca</th>
+                  <th>ID <img src="sort.png" width="12px" height="12px"></th>
+                  <th>Marca <img src="sort.png" width="12px" height="12px"></th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -237,24 +256,36 @@
   <!-- Page specific script -->
   <script>
     $(function() {
-      $("#example1").DataTable({
+      $("#marcas").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
+        "language": {
+          "decimal": "",
+          "emptyTable": "Nenhum registro encontrado",
+          "info": "A mostrar _START_ a _END_ de _TOTAL_ resultados",
+          "infoEmpty": "A mostrar 0 a 0 of de resultados",
+          "infoFiltered": "(filtrado de _MAX_ resultados)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Show _MENU_ entries",
+          "loadingRecords": "A carregar...",
+          "processing": "",
+          "searchPlaceholder": 'Realizar pesquisa',
+          "search": "Pesquisa:",
+          "zeroRecords": "Não foram encontrados resultados",
+          "paginate": {
+            "first": "Primeiro",
+            "last": "Último",
+            "next": "Próximo",
+            "previous": "Anterior"
+          },
+          "aria": {
+            "orderable": "Ordenar por coluna",
+            "orderableReverse": "Reverter ordenação"
+          }
+        }
       });
-    });
-    $(document).ready(function() {
-      $('#example2').DataTable();
     });
   </script>
 </body>

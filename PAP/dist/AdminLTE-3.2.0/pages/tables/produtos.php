@@ -100,6 +100,7 @@
         th,
         td {
             border: 1px solid #ccc;
+            cursor: pointer;
         }
 
         th,
@@ -107,6 +108,7 @@
             padding: 10px;
             text-align: left;
         }
+        
     </style>
 </head>
 
@@ -219,18 +221,18 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example1" class="table table-bordered table-hover">
+                        <table id="produtos" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>ID <img src="sort.png" width="12px" height="12px"></th>
                                     <th>Foto</th>
-                                    <th>Nome</th>
-                                    <th>Preço</th>
-                                    <th>Descrição</th>
-                                    <th>Marca</th>
-                                    <th>Categoria</th>
-                                    <th>Criado em</th>
-                                    <th>Alterado em</th>
+                                    <th>Nome <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Preço <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Descrição <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Marca <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Categoria <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Criado em <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Alterado em <img src="sort.png" width="12px" height="12px"></th>
                                     <th>Estado</th>
                                     <th>Ações</th>
                                 </tr>
@@ -300,7 +302,7 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-         <!-- Control Sidebar -->
+        <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
         </aside>
@@ -340,23 +342,36 @@
     <!-- Page specific script -->
     <script>
         $(function() {
-            $("#example1").DataTable({
+            $("#produtos").DataTable({
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-            }).buttons().container().appendTo('#example1_wrapper .justify-content-center .col-md-12:eq(0)');
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
+                "language": {
+                    "decimal": "",
+                    "emptyTable": "Nenhum registro encontrado",
+                    "info": "A mostrar _START_ a _END_ de _TOTAL_ resultados",
+                    "infoEmpty": "A mostrar 0 a 0 of de resultados",
+                    "infoFiltered": "(filtrado de _MAX_ resultados)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Show _MENU_ entries",
+                    "loadingRecords": "A carregar...",
+                    "processing": "",
+                    "searchPlaceholder": 'Realizar pesquisa',
+                    "search": "Pesquisa:",
+                    "zeroRecords": "Não foram encontrados resultados",
+                    "paginate": {
+                        "first": "Primeiro",
+                        "last": "Último",
+                        "next": "Próximo",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "orderable": "Ordenar por coluna",
+                        "orderableReverse": "Reverter ordenação"
+                    }
+                }
             });
-        });
-        $(document).ready(function() {
-            $('#example2').DataTable({});
         });
     </script>
     <script>

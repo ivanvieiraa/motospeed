@@ -87,18 +87,18 @@ if (!$result_desejos) {
             position: relative;
             overflow: hidden;
             height: 210px;
-            /* Aumentando a altura das imagens em 10 pixels */
+            background-color: white;
         }
 
         .wishlist-image img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            /* Alterando de "cover" para "contain" */
         }
 
         .wishlist-details {
             padding: 15px;
+            background-color: white;
         }
 
         .wishlist-details h6 {
@@ -159,7 +159,7 @@ if (!$result_desejos) {
                                     <div class="wishlist-item">
                                         <div class="wishlist-image">
                                             <img class="img-fluid" src="<?= $row['foto_prod']; ?>" alt="<?= $row['nome_prod']; ?>">
-                                            <a href="remove_wishlist.php?id_prod=<?= $row['id_prod']; ?>" class="remove-item" title="Remover da lista de desejos"><i class="ri-close-line"></i></a>
+                                            <a href="remove_wishlist.php?id_prod=<?= $row['id_prod']; ?>" class="remove-item" title="Remover da lista de desejos"><i class="ri-heart-fill"></i></a>
                                         </div>
                                         <div class="wishlist-details">
                                             <h6><a style="text-decoration: none;" href="prod.php?id_prod=<?=$row['id_prod'];?>"><?= $row['nome_prod']; ?></a></h6>

@@ -29,6 +29,10 @@ if ($id_user !== null) {
     $isInWishlist = mysqli_num_rows($resultWishlist) > 0;
 }
 
+// Query for recommended products
+$sqlRecommended = "SELECT * FROM produtos WHERE id_prod != $id_prod ORDER BY RAND() LIMIT 15";
+$resultRecommended = mysqli_query($con, $sqlRecommended);
+
 ?>
 
 <!doctype html>
@@ -334,8 +338,71 @@ if ($id_user !== null) {
         }
                 ?>
                         </div>
-
                         <!-- /Page Content -->
+                        <div class="col-12 aos-init aos-animate" data-aos="fade-up" bis_skin_checked="1">
+                            <h3 class="fs-4 fw-bolder mt-7 mb-4">Produtos que poderá gostar</h3>
+                            <!-- Swiper Latest -->
+                            <div class="swiper-container swiper-container-initialized swiper-container-horizontal" data-swiper="" data-options="{
+            &quot;spaceBetween&quot;: 10,
+            &quot;loop&quot;: true,
+            &quot;autoplay&quot;: {
+              &quot;delay&quot;: 5000,
+              &quot;disableOnInteraction&quot;: false
+            },
+            &quot;navigation&quot;: {
+              &quot;nextEl&quot;: &quot;.swiper-next&quot;,
+              &quot;prevEl&quot;: &quot;.swiper-prev&quot;
+            },   
+            &quot;breakpoints&quot;: {
+              &quot;600&quot;: {
+                &quot;slidesPerView&quot;: 2
+              },
+              &quot;1024&quot;: {
+                &quot;slidesPerView&quot;: 3
+              },       
+              &quot;1400&quot;: {
+                &quot;slidesPerView&quot;: 4
+              }
+            }
+        }" bis_skin_checked="1">
+                                <div class="swiper-wrapper" style="transform: translate3d(-5762.25px, 0px, 0px); transition-duration: 0ms;" bis_skin_checked="1">
+                                    <?php
+                                    while ($product = mysqli_fetch_array($resultRecommended)) {
+                                        echo '
+                    <div class="swiper-slide" data-swiper-slide-index="0" style="width: 433.25px; margin-right: 10px;" bis_skin_checked="1">
+                        <!-- Card Product-->
+                        <div class="card border border-transparent position-relative overflow-hidden h-100 transparent" bis_skin_checked="1">
+                            <div class="card-img position-relative" bis_skin_checked="1">
+                                <div class="card-badges" bis_skin_checked="1">
+                                </div>
+                                <picture class="position-relative overflow-hidden d-block bg-light">
+                                    <img class="w-100 img-fluid position-relative z-index-10" title="" src="' . $product['foto_prod'] . '" alt="">
+                                </picture>
+                                <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2" bis_skin_checked="1">
+                                    <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i>Ver detalhe do produto</button>
+                                </div>
+                            </div>
+                            <div class="card-body px-0" bis_skin_checked="1">
+                                <a class="text-decoration-none link-cover" href="./prod.php?id_prod=' . $product['id_prod'] . '">' . $product['nome_prod'] . '</a>
+                                <p class="mt-2 mb-0 small"><span class="text">€' . $product['preco_prod'] . '</span></p>
+                            </div>
+                        </div>
+                        <!--/ Card Product-->
+                    </div>
+                    ';
+                                    }
+                                    ?>
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="swiper-prev top-50 start-0 z-index-30 cursor-pointer transition-all bg-white px-3 py-4 position-absolute z-index-30 top-50 start-0 mt-n8 d-flex justify-content-center align-items-center opacity-50-hover" bis_skin_checked="1">
+                                    <i class="ri-arrow-left-s-line ri-lg"></i>
+                                </div>
+                                <div class="swiper-next top-50 end-0 z-index-30 cursor-pointer transition-all bg-white px-3 py-4 position-absolute z-index-30 top-50 end-0 mt-n8 d-flex justify-content-center align-items-center opacity-50-hover" bis_skin_checked="1">
+                                    <i class="ri-arrow-right-s-line ri-lg"></i>
+                                </div>
+                            </div>
+                            <!-- / Swiper Latest-->
+                        </div>
     </section>
     <!-- / Main Section-->
 

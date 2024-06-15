@@ -112,6 +112,9 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
   <script src="https://kit.fontawesome.com/d5954f6b26.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css">
+
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
 
 
   <!-- SweetAlert2 CDN -->
@@ -470,7 +473,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
           <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="listapedidos" class="table table-bordered table-hover">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -832,6 +835,40 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
     });
   </script>
 
+  <script>
+    $(function() {
+      $("#listapedidos").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        dom: '<lf<t>ip>',
+        "language": {
+          "decimal": "",
+          "emptyTable": "Nenhum registro encontrado",
+          "info": "A mostrar _START_ a _END_ de _TOTAL_ resultados",
+          "infoEmpty": "A mostrar 0 a 0 of de resultados",
+          "infoFiltered": "(filtrado de _MAX_ resultados)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Show _MENU_ entries",
+          "loadingRecords": "A carregar...",
+          "processing": "",
+          "search": "Pesquisa:",
+          "searchPlaceholder": 'Realizar pesquisa',
+          "zeroRecords": "Não foram encontrados resultados",
+          "paginate": {
+            "first": "Primeiro",
+            "last": "Último",
+            "next": "Próximo",
+            "previous": "Anterior"
+          },
+          "aria": {
+            "orderable": "Ordenar por coluna",
+            "orderableReverse": "Reverter ordenação"
+          }
+        }
+      });
+    });
   </script>
 </body>
 

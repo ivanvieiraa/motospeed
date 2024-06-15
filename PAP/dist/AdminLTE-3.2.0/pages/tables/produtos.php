@@ -342,6 +342,7 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
+                dom: '<lf<t>ip>',
                 "language": {
                     "decimal": "",
                     "emptyTable": "Nenhum registro encontrado",

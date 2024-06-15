@@ -326,7 +326,7 @@ include("ligacao.php");
                 <span id="marca-error" class="error-message"></span><br>
 
                 <label for="id_categoria">Categoria:</label>
-                <select name="id_categoria" id="id_categoria" oninput="clearErrorMessage('categoria-error', this)">
+                <select name="id_categoria" id="id_categoria" oninput="updateSubcategories(this.value)">
                   <?php
                   $sql_categorias = "SELECT * FROM categorias";
                   $resultado_categorias = mysqli_query($con, $sql_categorias);
@@ -341,7 +341,7 @@ include("ligacao.php");
                 <label for="id_subcategoria">Subcategoria:</label>
                 <select name="id_subcategoria" id="id_subcategoria" oninput="clearErrorMessage('subcategoria-error', this)">
                   <?php
-                  $sql_subcategorias = "SELECT * FROM subcategorias WHERE id_categoria = " . $row['id_categoria'] . "";
+                  $sql_subcategorias = "SELECT * FROM subcategorias WHERE id_categoria = " . $row['id_categoria'];
                   $resultado_subcategorias = mysqli_query($con, $sql_subcategorias);
                   while ($row_subcategoria = mysqli_fetch_assoc($resultado_subcategorias)) {
                     $selected = $row_subcategoria['id_subcategoria'] == $row['id_subcategoria'] ? 'selected' : '';
@@ -350,6 +350,30 @@ include("ligacao.php");
                   ?>
                 </select>
                 <span id="subcategoria-error" class="error-message"></span><br>
+
+                <script>
+                  function updateSubcategories(id_categoria) {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'get_subcategoriass.php', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function() {
+                      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        const subcategorias = JSON.parse(xhr.responseText);
+                        const subcategoriaSelect = document.getElementById('id_subcategoria');
+                        subcategoriaSelect.innerHTML = ''; // Limpa as opções atuais
+
+                        subcategorias.forEach(function(subcategoria) {
+                          const option = document.createElement('option');
+                          option.value = subcategoria.id_subcategoria;
+                          option.textContent = subcategoria.nome_subcategoria;
+                          subcategoriaSelect.appendChild(option);
+                        });
+                      }
+                    };
+                    xhr.send('id_categoria=' + id_categoria);
+                  }
+                </script>
+
 
                 <label for="tamanho">Stock:</label><br>
                 <div class="tamanho-container">

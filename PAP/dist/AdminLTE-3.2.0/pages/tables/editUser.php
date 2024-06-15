@@ -272,8 +272,8 @@
 
             <label for="codigo_postal">Código Postal:</label>
             <input type="text" placeholder="Insira um código postal (Ex:.1111-000)" id="codp" name="codp" value="<?php echo $row['codigop']; ?>"><br>
-
             <span id="codp-error" class="error-message"></span><br>
+
             <div class="form-group">
               <div class="checkbox-group">
                 <div>
@@ -285,23 +285,75 @@
                   <input type="hidden" name="status" id="statusValue" value="<?php echo ($row['status'] == 1) ? 1 : 0; ?>">
 
                   <script>
-                    // Função para atualizar o texto ao lado da checkbox
-                    document.getElementById('statusCheckbox').addEventListener('change', function() {
+                    // Função para atualizar o texto ao lado da checkbox de status
+                    function updateStatusText() {
+                      var statusCheckbox = document.getElementById('statusCheckbox');
                       var statusText = document.getElementById('statusText');
                       var statusValue = document.getElementById('statusValue');
 
-                      if (this.checked) {
+                      if (statusCheckbox.checked) {
                         statusText.textContent = "Ativo";
                         statusValue.value = 1;
                       } else {
                         statusText.textContent = "Não ativo";
                         statusValue.value = 0;
                       }
+                    }
+
+                    document.getElementById('statusCheckbox').addEventListener('change', function() {
+                      updateStatusText();
                     });
                   </script>
                 </div>
               </div>
             </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <div>
+                  <label for="isAdmin">Administrador:</label>
+                  <input type="checkbox" name="admin" id="admCheckbox" value="1" <?php echo ($row['adm'] == 1) ? "checked" : ""; ?>>
+                  <span id="adminText">
+                    <?php echo ($row['adm'] == 1) ? "Sim" : "Não"; ?>
+                  </span>
+                  <input type="hidden" name="admin" id="adminValue" value="<?php echo ($row['adm'] == 1) ? 1 : 0; ?>">
+
+                  <script>
+                    // Função para atualizar o texto ao lado da checkbox de admin
+                    function updateAdminText() {
+                      var admCheckbox = document.getElementById('admCheckbox');
+                      var adminText = document.getElementById('adminText');
+                      var adminValue = document.getElementById('adminValue');
+                      var statusCheckbox = document.getElementById('statusCheckbox');
+
+                      if (admCheckbox.checked) {
+                        adminText.textContent = "Sim";
+                        adminValue.value = 1;
+                        // Marcar e desativar o checkbox de status
+                        statusCheckbox.checked = true;
+                        statusCheckbox.disabled = true;
+                        updateStatusText();
+                      } else {
+                        adminText.textContent = "Não";
+                        adminValue.value = 0;
+                        // Ativar o checkbox de status
+                        statusCheckbox.disabled = false;
+                      }
+                    }
+
+                    document.getElementById('admCheckbox').addEventListener('change', function() {
+                      updateAdminText();
+                    });
+
+                    // Inicialização ao carregar a página
+                    window.onload = function() {
+                      updateAdminText();
+                    }
+                  </script>
+                </div>
+              </div>
+            </div>
+
             <input type="submit" value="Editar">
             <li class="breadcrumb-item active" style="list-style: none;">
               <a href="utilizadores.php"> <i class="fas fa-arrow-left"></i> Voltar</a>

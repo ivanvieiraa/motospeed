@@ -60,7 +60,7 @@ while ($rowVendasMes = mysqli_fetch_assoc($resultVendasMes)) {
 $sqlEstoqueBaixo = "SELECT p.nome_prod AS produto, pt.tamanho, pt.stock, pt.id_prod
                     FROM produtos p
                     INNER JOIN produtos_tamanhos pt ON p.id_prod = pt.id_prod
-                    WHERE pt.stock <= 10";
+                    WHERE pt.stock <= 20";
 $resultEstoqueBaixo = mysqli_query($con, $sqlEstoqueBaixo);
 
 // Inicializar arrays para armazenar os produtos, tamanhos e estoques com baixo estoque
@@ -799,7 +799,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
         yAxes: [{
           ticks: {
             beginAtZero: true,
-            stepSize: 5, // Definir o passo para 5
+            stepSize: 1, // Definir o passo para 5
             max: maxStock // Definir o limite superior para 10 acima do total máximo
           }
         }]

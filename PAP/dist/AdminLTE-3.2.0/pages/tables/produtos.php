@@ -231,8 +231,6 @@
                                     <th>Descrição <img src="sort.png" width="12px" height="12px"></th>
                                     <th>Marca <img src="sort.png" width="12px" height="12px"></th>
                                     <th>Categoria <img src="sort.png" width="12px" height="12px"></th>
-                                    <th>Criado em <img src="sort.png" width="12px" height="12px"></th>
-                                    <th>Alterado em <img src="sort.png" width="12px" height="12px"></th>
                                     <th>Estado</th>
                                     <th>Ações</th>
                                 </tr>
@@ -258,15 +256,13 @@
                                         echo "<td style='text-align:left'>" . ($row["preco_prod"] ? number_format($row["preco_prod"], 2, ',', '.') . '€' : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
                                         echo "<td style='text-align:left'>";
                                         echo "<div class='description-cell'>";
-                                        echo "<span class='short-desc'>" . htmlspecialchars(substr($row['desc_prod'], 0, 40)) . "...</span>";
+                                        echo "<span class='short-desc'>" . htmlspecialchars(substr($row['desc_prod'], 0, 20)) . "...</span>";
                                         echo "<span class='full-desc' style='display: none;'>" . htmlspecialchars($row['desc_prod']) . "</span>";
                                         echo "<button class='btn btn-link show-more-btn'>Ver Mais</button>";
                                         echo "</div>";
                                         echo "</td>";
                                         echo "<td style='text-align:left'>" . ($row["nome_marca"] ? $row["nome_marca"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
                                         echo "<td style='text-align:left'>" . ($row["nome_categoria"] ? $row["nome_categoria"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                                        echo "<td style='text-align:left'>" . ($row["criado_a"] ? $row["criado_a"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                                        echo "<td style='text-align:left'>" . ($row["alterado_a"] ? $row["alterado_a"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
                                         if ($row['status'] == 1) {
                                             echo "<td style='text-align:left'><a href='statusProd.php?id_prod=" . $row['id_prod'] . "' title='Desativar Produto'><i class='fa-solid fa-circle' style='color: #4dff00;'></i></a></td>";
                                         }

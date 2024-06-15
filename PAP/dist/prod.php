@@ -21,6 +21,20 @@ if (mysqli_num_rows($resultTamanhos) > 0) {
     }
 }
 
+$sqlStatus = "SELECT status FROM produtos WHERE id_prod = $id_prod";
+$resultStatus = mysqli_query($con,$sqlStatus);
+
+$status = true;
+if (mysqli_num_rows($resultStatus) > 0){
+    while($produto = mysqli_fetch_array($resultStatus)){
+        if($produto['status'] == 0){
+            $status = false;
+            break;
+        }
+    }
+}
+
+
 // Verifica se o produto já está na lista de desejos do usuário apenas se o usuário estiver logado
 $isInWishlist = false;
 if ($id_user !== null) {
@@ -169,7 +183,7 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p class="fs-4 m-0"><?= $row2['preco_prod'] ?>€</p>
                                         </div>
-                                        <div class="border-top mt-4 mb-3 product-option" style="display: <?= ($tamanhosDisponivel === true) ? "block" : "none" ?>">
+                                        <div class="border-top mt-4 mb-3 product-option" style="display: <?= ($tamanhosDisponivel && $status === true) ? "block" : "none" ?>">
                                             <small class="text-uppercase pt-4 d-block fw-bolder">
                                                 <span class="text-muted">Tamanhos disponíveis</span> :
                                             </small>
@@ -191,17 +205,21 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                         </div>
                                         <div class="border-top mt-4 mb-3 product-option">
                                             <small class="text-uppercase pt-4 d-block fw-bolder">
-                                                <span class="text-muted" style="display: <?= ($tamanhosDisponivel === true) ? "block" : "none" ?>">Quantidade</span>
+                                                <span class="text-muted" style="display: <?= ($tamanhosDisponivel && $status === true ) ? "block" : "none" ?>">Quantidade</span>
                                             </small>
 
                                             <form id="formAddToCart" action="adicionar_ao_carrinho.php" method="POST">
                                                 <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
-                                                    <div class="form-check-option2 form-check-rounded" style="display: <?= ($tamanhosDisponivel === true) ? "block" : "none" ?>">
+                                                    <div class="form-check-option2 form-check-rounded" style="display: <?= ($tamanhosDisponivel && $status === true) ? "block" : "none" ?>">
                                                         <input type="number" name="quantidade" value="1" min="1" max="1" id="quantidadeInput" onchange="checkQuantity(this)">
                                                     </div>
                                                 </div>
                                                 <div id="outOfStockMessage" class="mt-4 mb-3 product-option" style="display: <?= ($tamanhosDisponivel === false) ? "block" : "none" ?>">
                                                     <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Fora de stock</small>
+                                                </div>
+
+                                                <div id="inactiveMessage" class="mt-4 mb-3 product-option" style="display: <?= ($status === false) ? "block" : "none" ?>">
+                                                    <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Este produto está temporáriamente indisponível</small>
                                                 </div>
 
                                                 <button id="btnAddToCart" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow" style="display: <?= ($tamanhosDisponivel === true) ? "block" : "none" ?>">Adicionar ao carrinho</button>

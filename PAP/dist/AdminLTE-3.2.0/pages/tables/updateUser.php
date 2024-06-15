@@ -11,6 +11,7 @@ $morada = $_POST['morada'];
 $codigop = $_POST['codp'];
 // $pass = $_POST['password'];
 $status = $_POST['status'];
+$admin = $_POST['admin'];
 
 // Verificar se o email fornecido é diferente do email atual do usuário
 $sql_email_atual = "SELECT email FROM users WHERE id_user = '$id_user'";
@@ -61,7 +62,8 @@ $sql = "UPDATE users SET
         data_nasc = '$data',
         morada = '$morada', 
         codigop = '$codigop',
-        status = $status ";
+        status = $status,
+        adm = $admin ";
 
 if (!empty($pass)) {
     // Se uma nova senha foi fornecida, atualize-a

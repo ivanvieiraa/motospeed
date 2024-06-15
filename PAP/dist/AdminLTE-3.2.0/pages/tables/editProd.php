@@ -392,7 +392,7 @@ include("ligacao.php");
 
 
                 <label for="preco_prod">Preço do Produto:</label>
-                <input placeholder="Preço" type="number" name="preco_prod" id="preco_prod" value="<?php echo $row['preco_prod']; ?>" oninput="clearErrorMessage('preco-prod-error', this)">
+                <input placeholder="Preço" step="any" type="number" name="preco_prod" id="preco_prod" value="<?php echo $row['preco_prod']; ?>" oninput="clearErrorMessage('preco-prod-error', this)">
                 <i class="fa-solid fa-euro-sign fa-lg" style="color: #000000;"></i>
                 <span id="preco-prod-error" class="error-message"></span><br>
 

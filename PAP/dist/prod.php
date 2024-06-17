@@ -222,7 +222,7 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                                     <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Este produto está temporáriamente indisponível</small>
                                                 </div>
 
-                                                <button id="btnAddToCart" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow" style="display: <?= ($tamanhosDisponivel === true) ? "block" : "none" ?>">Adicionar ao carrinho</button>
+                                                <button id="btnAddToCart" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow" style="display: <?= ($tamanhosDisponivel === true &&  $status=== true) ? "block" : "none" ?>">Adicionar ao carrinho</button>
 
                                                 <input type="hidden" name="id_prod" value="<?= $id_prod ?>">
                                                 <input type="hidden" name="tamanho" id="tamanhoSelecionado"> <!-- Campo oculto para o tamanho -->

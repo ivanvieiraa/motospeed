@@ -11,14 +11,16 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/images/favicon/favicon-16x16.png">
   <link rel="mask-icon" href="./assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <script src="https://kit.fontawesome.com/d5954f6b26.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.7/css/jquery.dataTables.css">
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
 
   <style>
     .content-wrapper {
@@ -144,11 +146,11 @@
               </h1>
               <?php
               // Verifica se a mensagem de erro está definida na sessão
-              if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] != "Já existe uma marca com esse nome!") {
+              if (isset($_SESSION['mensagem']) && ($_SESSION['mensagem'] != "Já existe uma marca com esse nome!" && $_SESSION['mensagem'] != "Esta marca não pode ser eliminada porque tem produtos associados!" )) {
                 echo '<div id="alert" class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
                 unset($_SESSION['mensagem']);
               } else {
-                if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "Já existe uma marca com esse nome!") {
+                if (isset($_SESSION['mensagem']) &&( $_SESSION['mensagem'] == "Já existe uma marca com esse nome!" || $_SESSION['mensagem'] == "Esta marca não pode ser eliminada porque tem produtos associados!" )) {
                   echo '<div id="alert" class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
                   unset($_SESSION['mensagem']);
                 }
@@ -195,7 +197,10 @@
                     echo "<tr>";
                     echo "<td>" . $row["id_marca"] . "</td>";
                     echo "<td style='text-align:left'>" . ($row["nome_marca"] ? $row["nome_marca"] : "<a href='editMarca.php?id_marca=" . $row['id_marca'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:left'><a href='editMarca.php?id_marca=" . $row['id_marca'] . "'><i class='fa-solid fa-pen-to-square'></i></a></td>";
+                    echo "<td style='text-align:left'><a style='margin-right: 5px;' href='editMarca.php?id_marca=" . $row['id_marca'] . "'><i class='fa-solid fa-pen-to-square'></i></a>";
+                    echo "<a href='#' class='delete-marca-btn' data-id='" . $row['id_marca'] . "'>
+                    <i class='fa-solid fa-trash' style='color: #ff0000;'></i>
+                  </a></td>";
                     echo "</tr>";
                   }
                 } else {
@@ -207,11 +212,54 @@
               </tbody>
             </table>
           </div>
+          <!-- Modal -->
+          <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+            aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Tem certeza de que deseja remover esta marca ?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-danger" id="confirmDeleteButton">Remover</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- JavaScript no final do corpo do documento -->
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
           <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            $(document).ready(function () {
+              // Manipulador de clique para abrir o modal
+              $('.delete-marca-btn').on('click', function (event) {
+                event.preventDefault();
+                var id_marca = $(this).data('id');
+                $('#confirmDeleteModal').modal('show');
+
+                // Manipulador de clique para o botão de confirmação dentro do modal
+                $('#confirmDeleteButton').off('click').on('click', function () {
+                  // Redireciona para a página de remoção do usuário
+                  window.location.href = 'removeMarca.php?id_marca=' + id_marca;
+                });
+              });
+            });
+          </script>
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
               var alertBox = document.getElementById('alert');
               if (alertBox) {
-                setTimeout(function() {
+                setTimeout(function () {
                   alertBox.classList.add('hide');
                 }, 3000); // 5000 milissegundos = 5 segundos
               }
@@ -255,7 +303,7 @@
   <script src="../../dist/js/demo.js"></script>
   <!-- Page specific script -->
   <script>
-    $(function() {
+    $(function () {
       $("#marcas").DataTable({
         "responsive": true,
         "lengthChange": false,

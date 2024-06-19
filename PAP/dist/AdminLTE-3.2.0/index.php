@@ -612,7 +612,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
           <p><strong>Email:</strong> <span id="support-email"></span></p>
           <p style="display: none;"><strong>Recebido a:</strong> <span id="support-date"></span></p>
           <p style="display: none;"><strong>Estado:</strong> <span id="support-status"></span></p>
-          <p><strong>Mensagem:</strong> <span id="support-description"></span></p>
+          <p><strong>Mensagem:</strong><br> <span id="support-description"></span></p>
 
           <form id="responseForm" method="POST" action="resposta.php">
             <input type="hidden" name="support_id" id="form-support-id">

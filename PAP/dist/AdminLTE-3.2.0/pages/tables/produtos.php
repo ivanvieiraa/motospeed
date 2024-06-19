@@ -41,15 +41,8 @@
             opacity: 0;
         }
 
-        /* Styles for the modal */
-        .modal-title {
-            font-size: 30px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            text-align: center;
-        }
-
-        .modal {
+        /* Estilos específicos para o modal de "Ver Mais" */
+        .view-more-modal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -61,7 +54,7 @@
             background-color: rgba(0, 0, 0, 0.4);
         }
 
-        .modal-content {
+        .view-more-content {
             background-color: #fff;
             margin: 15% auto;
             padding: 20px;
@@ -69,48 +62,22 @@
             width: 50%;
         }
 
-        .modal-close {
+        .view-more-close {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
+            cursor: pointer;
         }
 
-        .modal-text {
+        .view-more-title {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 5px;
             text-align: center;
         }
-
-        .modal-button {
-            background-color: #D19C97;
-            color: #FFFFFF;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        .modal-button:hover {
-            background-color: #EDF1FF;
-            color: #1C1C1C;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid #ccc;
-            cursor: pointer;
-        }
-
-        th,
-        td {
-            padding: 10px;
-            text-align: left;
-        }
     </style>
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -198,11 +165,11 @@
                             </h1>
                             <?php
                             // Verifica se a mensagem de erro está definida na sessão
-                            if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] != "Já existe um produto com esse nome!") {
+                            if (isset($_SESSION['mensagem']) && ($_SESSION['mensagem'] != "Já existe um produto com esse nome!" && $_SESSION['mensagem'] != "Este produto não pode ser eliminado, porque já foi comprado!")) {
                                 echo '<div id="alert" class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
                                 unset($_SESSION['mensagem']);
                             } else {
-                                if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "Já existe um produto com esse nome!") {
+                                if (isset($_SESSION['mensagem']) &&( $_SESSION['mensagem'] == "Já existe um produto com esse nome!" || $_SESSION['mensagem'] == "Este produto não pode ser eliminado, porque já foi comprado!")) {
                                     echo '<div id="alert" class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
                                     unset($_SESSION['mensagem']);
                                 }
@@ -228,141 +195,150 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-    <table id="produtos" class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>ID <img src="sort.png" width="12px" height="12px"></th>
-                <th>Foto</th>
-                <th>Nome <img src="sort.png" width="12px" height="12px"></th>
-                <th>Preço <img src="sort.png" width="12px" height="12px"></th>
-                <th>Descrição <img src="sort.png" width="12px" height="12px"></th>
-                <th>Marca <img src="sort.png" width="12px" height="12px"></th>
-                <th>Categoria <img src="sort.png" width="12px" height="12px"></th>
-                <th>Estado</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            include 'ligacao.php';
-            $sql = "SELECT p.*, s.nome_subcategoria, c.nome_categoria, m.nome_marca
+                        <table id="produtos" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Foto</th>
+                                    <th>Nome <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Preço <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Descrição <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Marca <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Categoria <img src="sort.png" width="12px" height="12px"></th>
+                                    <th>Estado</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include 'ligacao.php';
+                                $sql = "SELECT p.*, s.nome_subcategoria, c.nome_categoria, m.nome_marca
                     FROM produtos AS p
                     INNER JOIN subcategorias AS s ON p.id_subcategoria = s.id_subcategoria
                     INNER JOIN categorias AS c ON s.id_categoria = c.id_categoria
                     INNER JOIN marcas AS m ON p.id_marca = m.id_marca";
-            $result = mysqli_query($con, $sql);
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td>" . $row["id_prod"] . "</td>";
-                    echo "<td style='text-align:left'><img style='border-radius:50%' src='../../../" . $row['foto_prod'] . "' width='50px' height='50px'></td>";
-                    echo "<td style='text-align:left'>" . ($row["nome_prod"] ? $row["nome_prod"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:left'>" . ($row["preco_prod"] ? number_format($row["preco_prod"], 2, ',', '.') . '€' : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:left'>";
-                    echo "<div class='description-cell'>";
-                    echo "<span class='short-desc'>" . htmlspecialchars(substr($row['desc_prod'], 0, 20)) . "...</span>";
-                    echo "<span class='full-desc' style='display: none;'>" . htmlspecialchars($row['desc_prod']) . "</span>";
-                    echo "<button class='btn btn-link show-more-btn'>Ver Mais</button>";
-                    echo "</div>";
-                    echo "</td>";
-                    echo "<td style='text-align:left'>" . ($row["nome_marca"] ? $row["nome_marca"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                    echo "<td style='text-align:left'>" . ($row["nome_categoria"] ? $row["nome_categoria"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
-                    if ($row['status'] == 1) {
-                        echo "<td style='text-align:left'><a href='statusProd.php?id_prod=" . $row['id_prod'] . "' title='Desativar Produto'><i class='fa-solid fa-circle' style='color: #4dff00;'></i></a></td>";
-                    }
-                    if ($row['status'] == 0) {
-                        echo "<td style='text-align:left'><a href='statusProd.php?id_prod=" . $row['id_prod'] . "' title='Ativar Produto'><i class='fa-solid fa-circle' style='color: #ff0000;'></i></a></td>  ";
-                    }
-                    echo "<td style='text-align:left'><a style='margin-right: 5px;' href='editProd.php?id_prod=" . $row['id_prod'] . "'><i class='fa-solid fa-pen-to-square'></i></a>";
-                    echo "<a href='#' class='delete-prod-btn' data-id='" . $row['id_prod'] . "'>
+                                $result = mysqli_query($con, $sql);
+                                if (mysqli_num_rows($result) > 0) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo "<tr>";
+                                        echo "<td>" . $row["id_prod"] . "</td>";
+                                        echo "<td style='text-align:left'><img style='border-radius:50%' src='../../../" . $row['foto_prod'] . "' width='50px' height='50px'></td>";
+                                        echo "<td style='text-align:left'>" . ($row["nome_prod"] ? $row["nome_prod"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        echo "<td style='text-align:left'>" . ($row["preco_prod"] ? number_format($row["preco_prod"], 2, ',', '.') . '€' : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        echo "<td style='text-align:left'>";
+                                        echo "<div class='description-cell'>";
+                                        echo "<span class='short-desc'>" . htmlspecialchars(substr($row['desc_prod'], 0, 20)) . "...</span>";
+                                        echo "<span class='full-desc' style='display: none;'>" . htmlspecialchars($row['desc_prod']) . "</span>";
+                                        echo "<button class='btn btn-link show-more-btn'>Ver Mais</button>";
+                                        echo "</div>";
+                                        echo "</td>";
+                                        echo "<td style='text-align:left'>" . ($row["nome_marca"] ? $row["nome_marca"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        echo "<td style='text-align:left'>" . ($row["nome_categoria"] ? $row["nome_categoria"] : "<a href='editProd.php?id_prod=" . $row['id_prod'] . "'><i>N/A</i></a>") . "</td>";
+                                        if ($row['status'] == 1) {
+                                            echo "<td style='text-align:left'><a href='statusProd.php?id_prod=" . $row['id_prod'] . "' title='Desativar Produto'><i class='fa-solid fa-circle' style='color: #4dff00;'></i></a></td>";
+                                        }
+                                        if ($row['status'] == 0) {
+                                            echo "<td style='text-align:left'><a href='statusProd.php?id_prod=" . $row['id_prod'] . "' title='Ativar Produto'><i class='fa-solid fa-circle' style='color: #ff0000;'></i></a></td>  ";
+                                        }
+                                        echo "<td style='text-align:left'><a style='margin-right: 5px;' href='editProd.php?id_prod=" . $row['id_prod'] . "'><i class='fa-solid fa-pen-to-square'></i></a>";
+                                        echo "<a href='#' class='delete-produto-btn' data-id='" . $row['id_prod'] . "'>
                     <i class='fa-solid fa-trash' style='color: #ff0000;'></i>
                   </a></td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='12' style='text-align:center'>Sem resultados encontrados</td></tr>";
-            }
-            mysqli_close($con);
-            ?>
-        </tbody>
-    </table>
-    <!-- Modal for "Ver Mais" -->
-    <div id="viewMoreModal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" style="cursor: pointer;">&times;</span>
-            <h2 class="modal-title">Descrição Completa</h2>
-            <p class="modal-text" id="viewMoreText"></p>
-        </div>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var showMoreBtns = document.querySelectorAll('.show-more-btn');
-            var viewMoreModal = document.getElementById("viewMoreModal");
-            var viewMoreText = document.getElementById("viewMoreText");
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='12' style='text-align:center'>Sem resultados encontrados</td></tr>";
+                                }
+                                mysqli_close($con);
+                                ?>
+                            </tbody>
+                        </table>
+                        <!-- Modal -->
+                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+                            aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Tem certeza de que deseja remover este produto ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-danger"
+                                            id="confirmDeleteButton">Remover</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            showMoreBtns.forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    var container = this.parentElement;
-                    var fullDesc = container.querySelector('.full-desc').textContent;
+                        <!-- JavaScript no final do corpo do documento -->
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+                        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-                    viewMoreText.textContent = fullDesc;
-                    viewMoreModal.style.display = "block";
-                });
-            });
+                        <script>
+                            $(document).ready(function () {
+                                // Manipulador de clique para abrir o modal
+                                $('.delete-produto-btn').on('click', function (event) {
+                                    event.preventDefault();
+                                    var id_prod = $(this).data('id');
+                                    $('#confirmDeleteModal').modal('show');
 
-            var viewMoreModalClose = document.querySelector("#viewMoreModal .modal-close");
-            viewMoreModalClose.onclick = function () {
-                viewMoreModal.style.display = "none";
-            };
+                                    // Manipulador de clique para o botão de confirmação dentro do modal
+                                    $('#confirmDeleteButton').off('click').on('click', function () {
+                                        // Redireciona para a página de remoção do usuário
+                                        window.location.href = 'removeProd.php?id_prod=' + id_prod;
+                                    });
+                                });
+                            });
+                        </script>
+                        <!-- Modal for "Ver Mais" -->
+                        <!-- Modal for "Ver Mais" -->
+                        <div id="viewMoreModal" class="view-more-modal">
+                            <div class="view-more-content">
+                                <span class="view-more-close">&times;</span>
+                                <h2 class="view-more-title">Descrição Completa</h2>
+                                <p class="modal-text" id="viewMoreText"></p>
+                            </div>
+                        </div>
 
-            window.onclick = function (event) {
-                if (event.target == viewMoreModal) {
-                    viewMoreModal.style.display = "none";
-                }
-            };
-        });
-    </script>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var showMoreBtns = document.querySelectorAll('.show-more-btn');
+                                var viewMoreModal = document.getElementById("viewMoreModal");
+                                var viewMoreText = document.getElementById("viewMoreText");
 
-    <!-- Modal -->
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
-        aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Tem certeza de que deseja remover este produto?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Remover</button>
-                </div>
-            </div>
-        </div>
-    </div>
+                                showMoreBtns.forEach(function (btn) {
+                                    btn.addEventListener('click', function () {
+                                        var container = this.parentElement;
+                                        var fullDesc = container.querySelector('.full-desc').textContent;
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                                        viewMoreText.textContent = fullDesc;
+                                        viewMoreModal.style.display = "block";
+                                    });
+                                });
 
-    <script>
-        $(document).ready(function () {
-            $('.delete-prod-btn').on('click', function (event) {
-                event.preventDefault();
-                var id_prod = $(this).data('id');
-                $('#confirmDeleteModal').modal('show');
+                                var viewMoreModalClose = document.querySelector("#viewMoreModal .view-more-close");
+                                viewMoreModalClose.onclick = function () {
+                                    viewMoreModal.style.display = "none";
+                                };
 
-                $('#confirmDeleteButton').off('click').on('click', function () {
-                    window.location.href = 'removeProd.php?id_prod=' + id_prod;
-                });
-            });
-        });
-    </script>
-</div>
+                                window.onclick = function (event) {
+                                    if (event.target == viewMoreModal) {
+                                        viewMoreModal.style.display = "none";
+                                    }
+                                };
+                            });
+                        </script>
+
+
+                    </div>
 
                 </div>
             </section>
@@ -454,7 +430,6 @@
         }
 
     </script>
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var alertBox = document.getElementById('alert');

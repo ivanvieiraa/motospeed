@@ -3,7 +3,7 @@ session_start();
 if ($_SESSION['adm'] != 1) {
   header('Location: ../index.php');
 }
-include('../ligacao.php');
+include ('../ligacao.php');
 // Consulta SQL para obter o total de produtos para cada categoria
 $sqlMarcasG = "SELECT m.nome_marca AS marca, COUNT(p.id_prod) AS total_produtos
                   FROM marcas m
@@ -92,7 +92,8 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
   <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon/favicon-16x16.png">
   <link rel="mask-icon" href="./assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -112,9 +113,6 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
   <script src="https://kit.fontawesome.com/d5954f6b26.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css">
-
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
 
 
   <!-- SweetAlert2 CDN -->
@@ -288,7 +286,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                 <div class="inner">
                   <h3>
                     <?php
-                    include("../ligacao.php");
+                    include ("../ligacao.php");
                     $sql = "SELECT COUNT(*) FROM users";
                     $result = mysqli_query($con, $sql);
                     $row = mysqli_fetch_array($result);
@@ -311,7 +309,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                 <div class="inner">
                   <h3>
                     <?php
-                    include("../ligacao.php");
+                    include ("../ligacao.php");
                     $sqlMarcass = "SELECT COUNT(*) FROM marcas";
                     $resultMarca = mysqli_query($con, $sqlMarcass);
                     $rowMarca = mysqli_fetch_array($resultMarca);
@@ -334,13 +332,14 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                 <div class="inner">
                   <h3>
                     <?php
-                    include("../ligacao.php");
+                    include ("../ligacao.php");
                     $sql = "SELECT SUM(total) FROM vendas";
                     $result = mysqli_query($con, $sql);
                     $row = mysqli_fetch_array($result);
                     $total = $row[0];
                     echo number_format($total, 2);
-                    ?><sup style="font-size: 20px">€</sup></h3>
+                    ?><sup style="font-size: 20px">€</sup>
+                  </h3>
 
                   <p>Total de vendas</p>
                 </div>
@@ -356,7 +355,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                 <div class="inner">
                   <h3>
                     <?php
-                    include("../ligacao.php");
+                    include ("../ligacao.php");
                     $sqlProd = "SELECT COUNT(*) FROM produtos";
                     $resultProd = mysqli_query($con, $sqlProd);
                     $rowProd = mysqli_fetch_array($resultProd);
@@ -393,7 +392,8 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                   </div>
                 </div>
                 <div class="card-body">
-                  <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                  <canvas id="pieChart"
+                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -417,7 +417,8 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                   </div>
                 </div>
                 <div class="card-body">
-                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                  <canvas id="barChart"
+                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -426,7 +427,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
             <!-- /.col-lg-6 -->
 
             <!-- Novo gráfico de barras para produtos com estoque baixo -->
-            <?php if (!empty($produtosEstoqueBaixo)) : ?>
+            <?php if (!empty($produtosEstoqueBaixo)): ?>
               <div class="col-lg-12 col-12">
                 <div class="card card-warning">
                   <div class="card-header">
@@ -441,7 +442,8 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                     </div>
                   </div>
                   <div class="card-body">
-                    <canvas id="estoqueBaixoChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    <canvas id="estoqueBaixoChart"
+                      style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                   </div>
                 </div>
               </div>
@@ -461,10 +463,10 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
           }
           ?>
           <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
               var alertBox = document.getElementById('alert');
               if (alertBox) {
-                setTimeout(function() {
+                setTimeout(function () {
                   alertBox.classList.add('hide');
                 }, 3000); // 5000 milissegundos = 5 segundos
               }
@@ -487,7 +489,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                 <tbody>
                   <?php
                   // Inclua o arquivo de conexão
-                  include("../ligacao.php");
+                  include ("../ligacao.php");
                   // Consulta SQL para obter os dados da tabela
                   $sql = "SELECT * FROM suporte";
                   $result = mysqli_query($con, $sql);
@@ -506,24 +508,71 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                       echo "<option value='2'" . ($row['status'] == 2 ? ' selected' : '') . ">Em análise</option>";
                       echo "</select>";
                       echo "</td>";
-                      echo "<td style='cursor: pointer;'><i class='fa-solid fa-eye' onclick='showDetails(" . $row["id_suporte"] . "," . $row["status"] . ")'></i></td>";
+                      echo "<td style='cursor: pointer;'><i style='margin-right: 5px;' class='fa-solid fa-eye' onclick='showDetails(" . $row["id_suporte"] . "," . $row["status"] . ")'></i>";
+                      if ($row['status'] == 1) {
+                        echo "<a href='#' class='delete-suporte-btn' data-id='" . $row['id_suporte'] . "'>
+                        <i class='fa-solid fa-trash' style='color: #ff0000;'></i>
+                      </a></td>";
+                      }
                       echo "</tr>";
                     }
                   } else {
-                    echo "<tr><td colspan='12' style='text-align:center'>Sem resultados encontrados</td></tr>";
+                    echo "<tr><td colspan='12' style='text-align:center'>Não foram submetidos pedidos de suporte</td></tr>";
                   }
                   // Fechar a conexão
                   mysqli_close($con);
                   ?>
                 </tbody>
-
               </table>
             </div>
+            <!-- Modal -->
+            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+              aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Tem certeza de que deseja remover este pedido de suporte ?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Remover</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- JavaScript no final do corpo do documento -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
             <script>
-              document.addEventListener('DOMContentLoaded', function() {
+              $(document).ready(function () {
+                // Manipulador de clique para abrir o modal
+                $('.delete-suporte-btn').on('click', function (event) {
+                  event.preventDefault();
+                  var id_suporte = $(this).data('id');
+                  $('#confirmDeleteModal').modal('show');
+
+                  // Manipulador de clique para o botão de confirmação dentro do modal
+                  $('#confirmDeleteButton').off('click').on('click', function () {
+                    // Redireciona para a página de remoção do usuário
+                    window.location.href = 'removeSuporte.php?id_suporte=' + id_suporte;
+                  });
+                });
+              });
+            </script>
+            <script>
+              document.addEventListener('DOMContentLoaded', function () {
                 var alertBox = document.getElementById('alert');
                 if (alertBox) {
-                  setTimeout(function() {
+                  setTimeout(function () {
                     alertBox.classList.add('hide');
                   }, 3000); // 5000 milissegundos = 5 segundos
                 }
@@ -547,7 +596,8 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
   <!-- ./wrapper -->
 
   <!-- Modal HTML -->
-  <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document"> <!-- Use modal-lg or modal-xl for larger size -->
       <div class="modal-content">
         <div class="modal-header">
@@ -615,7 +665,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
         .catch(error => console.error('Error:', error));
     }
     // Adicione um evento de escuta para o envio do formulário
-    document.getElementById('responseForm').addEventListener('submit', function(event) {
+    document.getElementById('responseForm').addEventListener('submit', function (event) {
       // Verifique se o campo de mensagem está vazio
       if (document.getElementById('response-message').value.trim() === '') {
         // Se estiver vazio, impeça o envio do formulário
@@ -629,7 +679,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
   </script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       function updateSelectColor(selectElement) {
         var status = selectElement.val();
         // Limpa as classes de cor existentes
@@ -643,13 +693,14 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
         } else if (status == 2) {
           selectElement.addClass('status-analise');
         }
+
       }
 
-      $('.customSelect').each(function() {
+      $('.customSelect').each(function () {
         updateSelectColor($(this));
       });
 
-      $('.customSelect').change(function() {
+      $('.customSelect').change(function () {
         var id = $(this).data('id');
         var status = $(this).val();
         var selectElement = $(this);
@@ -661,10 +712,11 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
             id: id,
             status: status
           },
-          success: function(response) {
+          success: function (response) {
             updateSelectColor(selectElement);
+            window.location.reload();
           },
-          error: function(xhr, status, error) {
+          error: function (xhr, status, error) {
             console.error('Erro ao atualizar status:', error);
           }
         });
@@ -705,6 +757,46 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
   <script src="dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.7/css/jquery.dataTables.css">
+  <script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
+  <script>
+    $(function() {
+      $("#listapedidos").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        dom: '<lf<t>ip>',
+        "language": {
+          "decimal": "",
+          "emptyTable": "Nenhum registro encontrado",
+          "info": "A mostrar _START_ a _END_ de _TOTAL_ resultados",
+          "infoEmpty": "A mostrar 0 a 0 of de resultados",
+          "infoFiltered": "(filtrado de _MAX_ resultados)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Show _MENU_ entries",
+          "loadingRecords": "A carregar...",
+          "processing": "",
+          "search": "Pesquisa:",
+          "searchPlaceholder": 'Realizar pesquisa',
+          "zeroRecords": "Não foram encontrados resultados",
+          "paginate": {
+            "first": "Primeiro",
+            "last": "Último",
+            "next": "Próximo",
+            "previous": "Anterior"
+          },
+          "aria": {
+            "orderable": "Ordenar por coluna",
+            "orderableReverse": "Reverter ordenação"
+          }
+        }
+      });
+    });
+  </script>
+
   <script>
     // Definir os dados do gráfico
     var donutData = {
@@ -754,7 +846,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
       },
       tooltips: {
         callbacks: {
-          label: function(tooltipItem, data) {
+          label: function (tooltipItem, data) {
             var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
             var value = tooltipItem.yLabel.toFixed(2); // Formatar o número com duas casas decimais
             return datasetLabel + ': ' + value + ' €';
@@ -786,7 +878,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
         datalabels: {
           anchor: 'end',
           align: 'end',
-          formatter: function(value, context) {
+          formatter: function (value, context) {
             return value + " (" + context.dataset.data[context.dataIndex] + ")";
           }
         }
@@ -815,7 +907,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
           }
         }
       },
-      onClick: function(evt, elements) {
+      onClick: function (evt, elements) {
         if (elements.length > 0) {
           var datasetIndex = elements[0]._datasetIndex;
           var index = elements[0]._index;
@@ -832,42 +924,6 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
       type: 'bar',
       data: estoqueBaixoData,
       options: estoqueBaixoOptions
-    });
-  </script>
-
-  <script>
-    $(function() {
-      $("#listapedidos").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        dom: '<lf<t>ip>',
-        "language": {
-          "decimal": "",
-          "emptyTable": "Nenhum registro encontrado",
-          "info": "A mostrar _START_ a _END_ de _TOTAL_ resultados",
-          "infoEmpty": "A mostrar 0 a 0 of de resultados",
-          "infoFiltered": "(filtrado de _MAX_ resultados)",
-          "infoPostFix": "",
-          "thousands": ",",
-          "lengthMenu": "Show _MENU_ entries",
-          "loadingRecords": "A carregar...",
-          "processing": "",
-          "search": "Pesquisa:",
-          "searchPlaceholder": 'Realizar pesquisa',
-          "zeroRecords": "Não foram encontrados resultados",
-          "paginate": {
-            "first": "Primeiro",
-            "last": "Último",
-            "next": "Próximo",
-            "previous": "Anterior"
-          },
-          "aria": {
-            "orderable": "Ordenar por coluna",
-            "orderableReverse": "Reverter ordenação"
-          }
-        }
-      });
     });
   </script>
 </body>

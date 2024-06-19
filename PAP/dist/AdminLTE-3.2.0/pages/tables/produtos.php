@@ -195,11 +195,16 @@
                             <h1>Produtos
                             </h1>
                             <?php
-                            // Verifica se a mensagem de erro está definida na sessão
-                            if (isset($_SESSION['mensagem'])) {
-                                echo '<div id="alert" class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
-                                unset($_SESSION['mensagem']);
-                            }
+                                          // Verifica se a mensagem de erro está definida na sessão
+              if (isset($_SESSION['mensagem']) &&  $_SESSION['mensagem'] != "Já existe um produto com esse nome!") {
+                echo '<div id="alert" class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
+                unset($_SESSION['mensagem']);
+              } else {
+                if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "Já existe um produto com esse nome!") {
+                  echo '<div id="alert" class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
+                  unset($_SESSION['mensagem']);
+                }
+              }
                             ?>
                         </div>
 

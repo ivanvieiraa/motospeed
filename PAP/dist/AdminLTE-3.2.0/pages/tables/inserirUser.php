@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result2 = mysqli_query($con, $sql2);
 
     if (mysqli_num_rows($result2) > 0) {
-        $_SESSION['mensagem'] = "Este email já está registado !";
+        $_SESSION['mensagem'] = "O email introduzido já foi registado! !";
         $_SESSION['nome_value'] = $nome;
         $_SESSION['apelido_value'] = $apelido;
         $_SESSION['email_value'] = $email;

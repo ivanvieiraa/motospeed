@@ -149,11 +149,11 @@
               </h1>
               <?php
               // Verifica se a mensagem de erro está definida na sessão
-              if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] != "O Admin não pode ser desativado.") {
+              if (isset($_SESSION['mensagem']) &&  $_SESSION['mensagem'] != "Já existe uma categoria com esse nome!") {
                 echo '<div id="alert" class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
                 unset($_SESSION['mensagem']);
               } else {
-                if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "O Admin não pode ser desativado.") {
+                if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "Já existe uma categoria com esse nome!") {
                   echo '<div id="alert" class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
                   unset($_SESSION['mensagem']);
                 }

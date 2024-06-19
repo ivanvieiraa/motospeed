@@ -25,7 +25,7 @@ if ($email != $email_atual) {
     $result_email_existente = mysqli_query($con, $sql_email_existente);
 
     if (mysqli_num_rows($result_email_existente) > 0) {
-        $_SESSION['mensagem'] = "Este email já está registado!";
+        $_SESSION['mensagem'] = "O email introduzido já foi registado!";
         header("Location: ./editUser.php?id_user=$id_user");
         exit();
     }

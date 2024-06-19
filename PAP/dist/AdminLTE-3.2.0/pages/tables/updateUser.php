@@ -54,6 +54,20 @@ if ($adm == 1 && $status == 0) {
     exit();
 }
 
+// Verificar se existem pelo menos 2 administradores antes de permitir a atualização para 'adm' = 0
+if ($adm == 1 && $admin == 0) {
+    $sql_contar_adms = "SELECT COUNT(*) AS total_adms FROM users WHERE adm = 1";
+    $result_contar_adms = mysqli_query($con, $sql_contar_adms);
+    $row_contar_adms = mysqli_fetch_assoc($result_contar_adms);
+    $total_adms = $row_contar_adms['total_adms'];
+
+    if ($total_adms < 2) {
+        $_SESSION['mensagem'] = "É obrigatório existir pelo menos 1 administrador!";
+        header("Location: ./editUser.php?id_user=$id_user");
+        exit();
+    }
+}
+
 // Atualize os dados do utilizador no banco de dados
 $sql = "UPDATE users SET 
         nome = '$nome',
@@ -103,3 +117,4 @@ if (mysqli_query($con, $sql)) {
 // Redirecione de volta para a página de perfil
 header("Location: utilizadores.php");
 exit();
+?>

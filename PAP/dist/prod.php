@@ -214,12 +214,12 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                                         <input type="number" name="quantidade" value="1" min="1" max="1" id="quantidadeInput" onchange="checkQuantity(this)">
                                                     </div>
                                                 </div>
-                                                <div id="outOfStockMessage" class="mt-4 mb-3 product-option" style="display: <?= ($tamanhosDisponivel === false) ? "block" : "none" ?>">
-                                                    <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Fora de stock</small>
+                                                <div id="outOfStockMessage" class="mt-4 mb-3 product-option" style="display: <?= ($tamanhosDisponivel === false && $status === true ) ? "block" : "none" ?>">
+                                                    <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Fora de stock.</small>
                                                 </div>
 
                                                 <div id="inactiveMessage" class="mt-4 mb-3 product-option" style="display: <?= ($status === false) ? "block" : "none" ?>">
-                                                    <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Este produto está temporáriamente indisponível</small>
+                                                    <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Este produto foi desativado.</small>
                                                 </div>
 
                                                 <button id="btnAddToCart" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow" style="display: <?= ($tamanhosDisponivel === true &&  $status=== true) ? "block" : "none" ?>">Adicionar ao carrinho</button>

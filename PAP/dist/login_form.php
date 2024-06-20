@@ -2,18 +2,7 @@
 <html lang="pt">
 <?php
 session_start();
-// Verifica se a mensagem de erro está definida na sessão
-if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "Foi enviado um email com as instruções para repor a password!") {
-  echo '<div class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
-  // Limpa a mensagem de erro da sessão após exibi-la
-  unset($_SESSION['mensagem']);
-} else {
-  if (isset($_SESSION['mensagem']) && ($_SESSION['mensagem'] != "Inicie sessão com a sua nova password !" || $_SESSION['mensagem'] == "A sua conta está desativada! Para mais informações contacte o suporte" )) {
-    echo '<div class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
-    // Limpa a mensagem de erro da sessão após exibi-la
-    unset($_SESSION['mensagem']);
-  }
-}
+
 ?>
 <!-- Head -->
 
@@ -44,31 +33,22 @@ if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "Foi enviado um ema
 
   <!-- Main CSS -->
   <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
-  <!-- Fix for custom scrollbar if JS is disabled-->
-  <noscript>
-    <style>
-      /**
-          * Reinstate scrolling for non-JS clients
-          */
-      .simplebar-content-wrapper {
-        overflow: auto;
-      }
 
-      .error-message {
-        color: red !important;
-
-      }
-    </style>
-  </noscript>
+  <!-- Custom CSS -->
+  <style>
+    .error-message {
+      color: red !important;
+    }
+  </style>
 
   <!-- Page Title -->
-  <title> Motospeed | Login</title>
+  <title>Motospeed | Login</title>
 
 </head>
 
-<body class=" bg-light">
+<body class="bg-light">
   <!-- Main Section-->
-  <section class="mt-0 overflow-hidden  vh-100 d-flex justify-content-center align-items-center p-4">
+  <section class="mt-0 overflow-hidden vh-100 d-flex justify-content-center align-items-center p-4">
     <!-- Page Content Goes Here -->
 
     <!-- Login Form-->
@@ -83,54 +63,45 @@ if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "Foi enviado um ema
       <!-- / Logo-->
       <div class="shadow-xl p-4 p-lg-5 bg-white">
         <h1 class="text-center fw-bold mb-5 fs-2">Login</h1>
-        <!--<a href="#" class="btn btn-facebook d-block mb-2"><i class="ri-facebook-circle-fill align-bottom"></i> Login
-          with Facebook</a>
-        <a href="#" class="btn btn-twitter d-block mb-2"><i class="ri-twitter-fill align-bottom"></i> Login with
-          Twitter</a>
-        <span class="text-muted text-center d-block fw-bolder my-4">OU</span>-->
-        <form name="login_form" action="login.php" method="POST" onsubmit="return validateForm()" novalidate>
-          <?php
-          if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "Inicie sessão com a sua nova password !") {
+        <?php
+        // Verifica se a mensagem de erro está definida na sessão
+        if (isset($_SESSION['mensagem'])) {
+          if (
+            $_SESSION['mensagem'] == "Foi enviado um email com as instruções para repor a password!" ||
+            $_SESSION['mensagem'] == "Inicie sessão com a sua nova password !"
+          ) {
             echo '<div class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
-            // Limpa a mensagem de erro da sessão após exibi-la
-            unset($_SESSION['mensagem']);
+          } else {
+            echo '<div class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
           }
-          ?>
+          // Limpa a mensagem da sessão após exibi-la
+          unset($_SESSION['mensagem']);
+        }
+        ?>
+        <form name="login_form" action="login.php" method="POST" onsubmit="return validateForm()" novalidate>
           <div class="form-group">
-            <label class="form-label" for="email">Endereço de email</label>
+            <label class="form-label" for="email">Endereço de email <span id="email-error"
+                class="error-message"></span></label>
             <input type="email" class="form-control" name="email" id="email" placeholder="nome@email.com"
               value="<?php echo isset($_SESSION['email_value']) ? $_SESSION['email_value'] : ''; ?>"
               oninput="clearErrorMessage('email-error')">
-            <span id="email-error" class="error-message"></span>
-
           </div>
 
           <div class="form-group">
-            <label for="password" class="form-label d-flex justify-content-between align-items-center">Password</label>
+            <label for="password" class="form-label d-flex justify-content align-items-center">Password <span
+                id="pass-error" class="error-message"></span></label>
             <input type="password" class="form-control" name="password" id="password"
-              placeholder="Insira a sua password" oninput="clearErrorMessage('pass-error')">
-            <span id="pass-error" class="error-message"></span><br>
-            <span id="login-error" class="error-message"></span><br>
-
+              placeholder="Insira a sua password" oninput="clearErrorMessage('pass-error')"><br>
             Não tem conta? <a href="./register.php">Criar conta</a>
             <a href="./forgotten-password.php" style="float: right;">Esqueci-me da password</a><br>
             <button type="submit" class="btn btn-dark d-block w-100 my-4">Login</button>
           </div>
-          <div class="form-group">
-
-          </div>
         </form>
-
-
       </div>
-
     </div>
     <!-- / Login Form-->
-
-    <!-- /Page Content -->
   </section>
   <!-- / Main Section-->
-
 
   <!-- Theme JS -->
   <!-- Vendor JS -->
@@ -147,17 +118,12 @@ if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] == "Foi enviado um ema
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       if (email === "" || !emailRegex.test(email)) {
-        displayErrorMessage('email-error', '<br>Insira um email válido !');
+        displayErrorMessage('email-error', '&nbsp*Insira um email válido');
         return false;
       }
 
       if (pass === "") {
-        displayErrorMessage('pass-error', '<br>Insira uma password !');
-        return false;
-      }
-
-      if (isset($_SESSION['mensagem'])) {
-        displayErrorMessage('login-error', '<br>Credenciais inválidas !');
+        displayErrorMessage('pass-error', '&nbsp*Insira uma password');
         return false;
       }
 

@@ -14,7 +14,8 @@ session_start();
     <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/images/favicon/favicon-16x16.png">
     <link rel="mask-icon" href="./assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
@@ -68,12 +69,16 @@ session_start();
         form input[type="email"],
         form input[type="date"],
         form input[type="password"] {
-            width: 100%;
+            width: auto;
             padding: 5px;
-            /* margin-bottom: 15px; */
+            margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
+        }
+
+        .subcateg {
+            width: 20%;
         }
 
         form input[type="submit"] {
@@ -140,7 +145,8 @@ session_start();
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
 
                         <li class="nav-item menu-closed">
                             <a href="#" class="nav-link ">
@@ -214,8 +220,12 @@ session_start();
                             </h1>
                             <?php
                             // Verifica se a mensagem de erro está definida na sessão
-                            if (isset($_SESSION['mensagem'])) {
+                            if (isset($_SESSION['mensagem']) && $_SESSION['mensagem'] != "Subcategoria apagada com sucesso." ) {
                                 echo '<div id="alert" class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
+                                unset($_SESSION['mensagem']);
+                            }
+                            if (isset($_SESSION['mensagem'])) {
+                                echo '<div id="alert" class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
                                 unset($_SESSION['mensagem']);
                             }
                             ?>
@@ -243,7 +253,7 @@ session_start();
                             <!-- /.card-header -->
                             <!-- form start -->
                             <?php
-                            include("ligacao.php");
+                            include ("ligacao.php");
 
                             // Verifica se o utilizador está autenticado
                             if (!isset($_SESSION['id_user'])) {
@@ -270,19 +280,29 @@ session_start();
                             $sql_subcategorias = "SELECT * FROM subcategorias WHERE id_categoria = '$id_categoria'";
                             $result_subcategorias = mysqli_query($con, $sql_subcategorias);
                             ?>
-                            <form action="updateCategoria.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                            <?php
+                            // Consulta SQL para obter as subcategorias da categoria atual
+                            $sql_subcategorias = "SELECT * FROM subcategorias WHERE id_categoria = '$id_categoria'";
+                            $result_subcategorias = mysqli_query($con, $sql_subcategorias);
+                            $_SESSION['id_categoria'] = $id_categoria;
+                            ?>
+                            <form action="updateCategoria.php" method="POST" enctype="multipart/form-data"
+                                onsubmit="return validateForm()">
                                 <input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
 
-                                <label for="nome">Nome:</label>
-                                <input placeholder="Insira uma categoria" type="text" name="nome" id="nome" value="<?= $row['nome_categoria'] ?>" oninput="clearErrorMessage('nome-error')"><br>
+                                <label for="nome">Nome:</label><br>
+                                <input placeholder="Insira uma categoria" type="text" name="nome" id="nome"
+                                    value="<?= $row['nome_categoria'] ?>" oninput="clearErrorMessage('nome-error')"><br>
                                 <span id="nome-error" class="error-message"></span><br>
 
                                 <h3>Subcategorias</h3>
-                                <ul>
+                                <ul id="subcategoria-list">
                                     <?php
                                     if (mysqli_num_rows($result_subcategorias) > 0) {
                                         while ($row_subcategoria = mysqli_fetch_assoc($result_subcategorias)) {
-                                            echo '<li>' . $row_subcategoria['nome_subcategoria'] . '</li>';
+                                            echo '<li><input type="text" name="subcategorias[]" value="' . $row_subcategoria['nome_subcategoria'] . '">
+                <input type="hidden" name="subcategoria_ids[]" value="' . $row_subcategoria['id_subcategoria'] . '">
+                <a href="deleteSubcategoria.php?id_subcategoria=' . $row_subcategoria['id_subcategoria'] . '" class="remove-subcategoria"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></a></li>';
                                         }
                                     } else {
                                         echo '<li>Nenhuma subcategoria encontrada</li>';
@@ -290,15 +310,25 @@ session_start();
                                     ?>
                                 </ul>
 
-                                <label for="nova_subcategoria">Adicionar nova subcategoria:</label>
-                                <input type="text" name="nova_subcategoria" id="nova_subcategoria" placeholder="Insira um nome"><br><br>
+                                <label for="nova_subcategoria">Adicionar nova subcategoria:</label><br>
+                                <input type="text" name="nova_subcategoria" id="nova_subcategoria"
+                                    placeholder="Insira um nome"><br><br>
 
-                                <input type="submit" value="Editar">
+                                <input type="submit" value="Submeter">
                                 <li class="breadcrumb-item active" style="list-style: none;">
                                     <a href="categorias.php"> <i class="fas fa-arrow-left"></i> Voltar</a>
                                 </li>
                             </form>
 
+
+                            <!-- <script>
+                                document.querySelectorAll('.remove-subcategoria').forEach(function (el) {
+                                    el.addEventListener('click', function (event) {
+                                        event.preventDefault();
+                                        this.closest('li').remove();
+                                    });
+                                });
+                            </script> -->
                         </div>
             </section>
             <!-- /.content -->
@@ -311,7 +341,16 @@ session_start();
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var alertBox = document.getElementById('alert');
+            if (alertBox) {
+                setTimeout(function () {
+                    alertBox.classList.add('hide');
+                }, 3000); // 5000 milissegundos = 5 segundos
+            }
+        });
+    </script>
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->

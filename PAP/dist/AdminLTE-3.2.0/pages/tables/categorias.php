@@ -151,11 +151,11 @@
               </h1>
               <?php
               // Verifica se a mensagem de erro está definida na sessão
-              if (isset($_SESSION['mensagem']) && ($_SESSION['mensagem'] != "Já existe uma categoria com esse nome!" && $_SESSION['mensagem'] != "Esta categoria não pode ser eliminada, porque tem subcategorias associadas!" )) {
+              if (isset($_SESSION['mensagem']) && ($_SESSION['mensagem'] != "Já existe uma categoria com esse nome!" && $_SESSION['mensagem'] != "Esta categoria não pode ser eliminada, porque tem subcategorias associadas!")) {
                 echo '<div id="alert" class="alert alert-success" role="alert">' . $_SESSION['mensagem'] . '</div>';
                 unset($_SESSION['mensagem']);
               } else {
-                if (isset($_SESSION['mensagem']) &&( $_SESSION['mensagem'] == "Já existe uma categoria com esse nome!" || $_SESSION['mensagem'] == "Esta categoria não pode ser eliminada, porque tem subcategorias associadas!" )) {
+                if (isset($_SESSION['mensagem'])) {
                   echo '<div id="alert" class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
                   unset($_SESSION['mensagem']);
                 }

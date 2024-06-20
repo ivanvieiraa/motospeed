@@ -354,7 +354,7 @@
               </div>
             </div>
 
-            <input type="submit" value="Editar">
+            <input type="submit" value="Submeter">
             <li class="breadcrumb-item active" style="list-style: none;">
               <a href="utilizadores.php"> <i class="fas fa-arrow-left"></i> Voltar</a>
             </li>

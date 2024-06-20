@@ -384,7 +384,7 @@ include("ligacao.php");
                                         this.nextSibling.nodeValue = textToDisplay;
                                     });
                                 </script>
-                                <input type="submit" value="Criar">
+                                <input type="submit" value="Submeter">
                                 <li class="breadcrumb-item active" style="list-style: none;">
                                     <a href="produtos.php"> <i class="fas fa-arrow-left"></i> Voltar</a>
                                 </li>

@@ -13,8 +13,7 @@
 
   <!-- Custom Google Fonts-->
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto" rel="stylesheet">
 
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon/apple-touch-icon.png">
@@ -30,18 +29,12 @@
   <!-- Main CSS -->
   <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
 
-  <!-- Fix for custom scrollbar if JS is disabled-->
-  <noscript>
-    <style>
-      .simplebar-content-wrapper {
-        overflow: auto;
-      }
-
-      .error-message {
-        color: red;
-      }
-    </style>
-  </noscript>
+  <!-- Custom CSS -->
+  <style>
+    .error-message {
+      color: red !important;
+    }
+  </style>
 
   <!-- Page Title -->
   <title>Motospeed | Criar conta</title>
@@ -53,8 +46,7 @@
     <!-- Login Form-->
     <div class="col col-md-8 col-lg-6 col-xxl-5">
       <!-- Logo-->
-      <a class="navbar-brand fw-bold fs-3 flex-shrink-0 order-0 align-self-center justify-content-center d-flex mx-0 px-0"
-        href="./index.php">
+      <a class="navbar-brand fw-bold fs-3 flex-shrink-0 order-0 align-self-center justify-content-center d-flex mx-0 px-0" href="./index.php">
         <div class="d-flex align-items-center">
           <img src="mstile-150x150.png" alt="" height="90px" width="90px">
         </div>
@@ -64,29 +56,16 @@
         <h1 class="text-center fw-bold mb-5 fs-2">Criar conta</h1>
         <form name="criar_form" method="POST" action="criar.php" onsubmit="return validateForm()">
           <div class="form-group">
-            <label class="form-label" for="nome">Nome</label>
-            <input type="text" class="form-control" name="nome" id="nome" placeholder="Insira o seu primeiro nome"
-              value="<?php echo isset($_SESSION['nome_value']) ? $_SESSION['nome_value'] : ''; ?>"
-              oninput="clearErrorMessage('nome-error')">
-            <span id="nome-error" class="error-message"></span>
+            <label class="form-label" for="nome">Nome<span id="nome-error" class="error-message"></span></label>
+            <input type="text" class="form-control" name="nome" id="nome" placeholder="Insira o seu primeiro nome" value="<?php echo isset($_SESSION['nome_value']) ? $_SESSION['nome_value'] : ''; ?>" oninput="clearErrorMessage('nome-error')">
           </div>
-
           <div class="form-group">
-            <label class="form-label" for="apelido">Apelido</label>
-            <input type="text" class="form-control" name="apelido" id="apelido" placeholder="Insira o seu apelido"
-              value="<?php echo isset($_SESSION['apelido_value']) ? $_SESSION['apelido_value'] : ''; ?>"
-              oninput="clearErrorMessage('apelido-error')">
-            <span id="apelido-error" class="error-message"></span>
-
+            <label class="form-label" for="apelido">Apelido<span id="apelido-error" class="error-message"></span></label>
+            <input type="text" class="form-control" name="apelido" id="apelido" placeholder="Insira o seu apelido" value="<?php echo isset($_SESSION['apelido_value']) ? $_SESSION['apelido_value'] : ''; ?>" oninput="clearErrorMessage('apelido-error')">
           </div>
-
           <div class="form-group">
-            <label class="form-label" for="email">Endereço de email</label>
-            <input type="email" class="form-control" name="email" id="email" placeholder="nome@email.com"
-              value="<?php echo isset($_SESSION['email_value']) ? $_SESSION['email_value'] : ''; ?>"
-              oninput="clearErrorMessage('email-error')">
-            <span id="email-error" class="error-message"></span>
-
+            <label class="form-label" for="email">Endereço de email<span id="email-error" class="error-message"></span></label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="nome@email.com" value="<?php echo isset($_SESSION['email_value']) ? $_SESSION['email_value'] : ''; ?>" oninput="clearErrorMessage('email-error')">
             <?php
             if (isset($_SESSION['mensagem'])) {
               echo '<div class="alert alert-danger" role="alert">' . $_SESSION['mensagem'] . '</div>';
@@ -94,20 +73,14 @@
             }
             ?>
           </div>
-
           <div class="form-group">
-            <label class="form-label" for="password">Password</label>
-            <input type="password" class="form-control" name="password" id="password"
-              placeholder="Insira a sua password" oninput="clearErrorMessage('pass-error')">
-            <span id="pass-error" class="error-message"></span><br>
+            <label class="form-label" for="password">Password<span id="pass-error" class="error-message"></span><br></label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Insira a sua password" oninput="clearErrorMessage('pass-error')">
             <br>Já é cliente? <a href="./login_form.php">Inicie sessão</a>
             <a href="./index.php" style="float: right;">Voltar</a>
-
           </div>
-
           <button type="submit" class="btn btn-dark d-block w-100 my-4">Criar conta</button>
         </form>
-
       </div>
     </div>
     <!-- / Login Form-->
@@ -129,22 +102,22 @@
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       if (nome === "") {
-        displayErrorMessage('nome-error', '<br>Insira um nome!');
+        displayErrorMessage('nome-error', '&nbsp* Insira um nome!');
         return false;
       }
 
       if (apelido === "") {
-        displayErrorMessage('apelido-error', '<br>Insira um apelido!');
+        displayErrorMessage('apelido-error', '&nbsp* Insira um apelido!');
         return false;
       }
 
       if (email === "" || !emailRegex.test(email)) {
-        displayErrorMessage('email-error', '<br>Insira um email válido!');
+        displayErrorMessage('email-error', '&nbsp* Insira um email válido!');
         return false;
       }
 
       if (pass === "") {
-        displayErrorMessage('pass-error', '<br>Insira uma password!');
+        displayErrorMessage('pass-error', '&nbsp* Insira uma password!');
         return false;
       }
 

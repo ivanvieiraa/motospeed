@@ -1,7 +1,6 @@
 <?php
 include ("ligacao.php");
 session_start();
-
 ?>
 
 <!doctype html>
@@ -20,8 +19,7 @@ session_start();
 
   <!-- Custom Google Fonts-->
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto" rel="stylesheet">
 
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon/apple-touch-icon.png">
@@ -37,34 +35,28 @@ session_start();
   <!-- Main CSS -->
   <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
 
-  <!-- Fix for custom scrollbar if JS is disabled-->
-  <noscript>
-    <style>
-      /**
-          * Reinstate scrolling for non-JS clients
-          */
-      .simplebar-content-wrapper {
-        overflow: auto;
-      }
-    </style>
-  </noscript>
+  <!-- Custom CSS -->
+  <style>
+    .error-message {
+      color: red !important;
+    }
+  </style>
 
   <!-- Page Title -->
   <title>Motospeed | Recuperação</title>
 
 </head>
 
-<body class=" bg-light">
+<body class="bg-light">
 
   <!-- Main Section-->
-  <section class="mt-0 overflow-hidden  vh-100 d-flex justify-content-center align-items-center p-4">
+  <section class="mt-0 overflow-hidden vh-100 d-flex justify-content-center align-items-center p-4">
     <!-- Page Content Goes Here -->
 
     <!-- Login Form-->
     <div class="col col-md-8 col-lg-6 col-xxl-5">
       <!-- Logo-->
-      <a class="navbar-brand fw-bold fs-3 flex-shrink-0 order-0 align-self-center justify-content-center d-flex mx-0 px-0"
-        href="./index.php">
+      <a class="navbar-brand fw-bold fs-3 flex-shrink-0 order-0 align-self-center justify-content-center d-flex mx-0 px-0" href="./index.php">
         <div class="d-flex align-items-center">
           <img src="mstile-150x150.png" alt="" height="100px" width="100px">
         </div>
@@ -75,10 +67,8 @@ session_start();
         <p class="text-muted">Insira o seu endereço de email abaixo para repor a sua password.</p>
         <form name="forget_pass" action="reset.php" method="POST" onsubmit="return validateForm()" novalidate>
           <div class="form-group">
-            <label for="forgot-password" class="form-label">Endereço de email </label>
-            <input type="email" class="form-control" name="reset_email" id="forgot-password"
-              placeholder="Endereço de email" oninput="clearErrorMessage('email-error')">
-            <span id="email-error" class="error-message"></span>
+            <label for="forgot-password" class="form-label">Endereço de email<span id="email-error" class="error-message"></span></label>
+            <input type="email" class="form-control" name="reset_email" id="forgot-password" placeholder="Endereço de email" oninput="clearErrorMessage('email-error')">
             <?php
             // Verifica se a mensagem de erro está definida na sessão
             if (isset ($_SESSION['mensagem'])) {
@@ -90,10 +80,8 @@ session_start();
           </div>
           <button type="submit" class="btn btn-dark d-block w-100 my-4">Recuperar password</button>
         </form>
-        <p class="d-block text-center text-muted"><a href="./login_form.php">Inicie sessão</a> | <a
-            href="./register.php">Crie uma conta</a> </p>
+        <p class="d-block text-center text-muted"><a href="./login_form.php">Inicie sessão</a> | <a href="./register.php">Crie uma conta</a> </p>
       </div>
-
     </div>
     <!-- / Login Form-->
 
@@ -101,8 +89,6 @@ session_start();
   </section>
   <!-- / Main Section-->
 
-
-  <!-- Theme JS -->
   <!-- Vendor JS -->
   <script src="./assets/js/vendor.bundle.js"></script>
 
@@ -116,11 +102,12 @@ session_start();
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       if (email === "" || !emailRegex.test(email)) {
-        displayErrorMessage('email-error', '<br>Insira um email válido !');
+        displayErrorMessage('email-error', '&nbsp*Insira um email válido !');
         return false;
       }
       return true;
     }
+
     function displayErrorMessage(id, message) {
       document.getElementById(id).innerHTML = message;
     }

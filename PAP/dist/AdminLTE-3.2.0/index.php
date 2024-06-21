@@ -386,9 +386,9 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
                     </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
                       <i class="fas fa-times"></i>
-                    </button>
+                    </button> -->
                   </div>
                 </div>
                 <div class="card-body">
@@ -411,9 +411,9 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
                     </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
                       <i class="fas fa-times"></i>
-                    </button>
+                    </button> -->
                   </div>
                 </div>
                 <div class="card-body">
@@ -436,9 +436,9 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
                       <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                       </button>
-                      <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
                         <i class="fas fa-times"></i>
-                      </button>
+                      </button> -->
                     </div>
                   </div>
                   <div class="card-body">
@@ -762,7 +762,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
   <script type="text/javascript" charset="utf8"
     src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
   <script>
-    $(function() {
+    $(function () {
       $("#listapedidos").DataTable({
         "responsive": true,
         "lengthChange": false,
@@ -863,29 +863,28 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
 
   <script>
     // Calcular o total máximo atual e adicionar 10 a ele
-    var maxStock = <?php echo max($estoqueEstoqueBaixo); ?>;
+    var maxStock = <?php echo max($estoqueEstoqueBaixo); ?> + 10;
 
-    // Definir os dados do gráfico de barras para produtos com estoque baixo
+    // Definir os dados do gráfico de linhas para produtos com estoque baixo
     var estoqueBaixoData = {
       labels: <?php echo json_encode($produtosEstoqueBaixo); ?>,
       datasets: [{
-        label: 'Stock',
-        backgroundColor: 'rgba(255, 193, 7, 0.8)', // Cor das barras
+        label: 'Qtd Stock',
+        backgroundColor: 'rgba(255, 193, 7, 0.2)', // Cor da linha
         borderColor: 'rgba(255, 193, 7, 1)',
-        borderWidth: 1,
+        borderWidth: 2,
         data: <?php echo json_encode($estoqueEstoqueBaixo); ?>,
-        // Adicionar o tamanho do estoque aos rótulos das barras
-        datalabels: {
-          anchor: 'end',
-          align: 'end',
-          formatter: function (value, context) {
-            return value + " (" + context.dataset.data[context.dataIndex] + ")";
-          }
-        }
+        fill: false, // Não preencher abaixo da linha
+        pointBackgroundColor: 'red',
+        pointBorderColor: 'red',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'red',
+        pointRadius: 3, // Aumentar o tamanho dos pontos
+        pointHoverRadius: 4 // Aumentar o tamanho dos pontos ao passar o mouse
       }]
     };
 
-    // Renderizar o gráfico de barras para produtos com estoque baixo
+    // Renderizar o gráfico de linhas para produtos com estoque baixo
     var estoqueBaixoChartCanvas = $('#estoqueBaixoChart').get(0).getContext('2d');
     var estoqueBaixoOptions = {
       maintainAspectRatio: false,
@@ -894,7 +893,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
         yAxes: [{
           ticks: {
             beginAtZero: true,
-            stepSize: 1, // Definir o passo para 5
+            stepSize: 1, // Definir o passo para 1
             max: maxStock // Definir o limite superior para 10 acima do total máximo
           }
         }]
@@ -904,6 +903,11 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
           color: '#000',
           font: {
             weight: 'bold'
+          },
+          anchor: 'end',
+          align: 'end',
+          formatter: function (value, context) {
+            return value + " (" + context.dataset.data[context.dataIndex] + ")";
           }
         }
       },
@@ -912,7 +916,7 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
           var datasetIndex = elements[0]._datasetIndex;
           var index = elements[0]._index;
           var stock = <?php echo json_encode($estoqueEstoqueBaixo); ?>[index]; // Obter o estoque do produto clicado
-          if (stock > 0) { // Verificar se o estoque é maior que 0
+          if (stock >= 0) { // Verificar se o estoque é maior que 0
             var id_prod = <?php echo json_encode($idProdutosEstoqueBaixo); ?>[index]; // Obter o ID do produto clicado
             window.location.href = "./pages/tables/editProd.php?id_prod=" + id_prod; // Redirecionar para a página editProd.php com o ID do produto
           }
@@ -921,11 +925,13 @@ while ($rowEstoqueBaixo = mysqli_fetch_assoc($resultEstoqueBaixo)) {
     };
 
     new Chart(estoqueBaixoChartCanvas, {
-      type: 'bar',
+      type: 'line',
       data: estoqueBaixoData,
       options: estoqueBaixoOptions
     });
   </script>
+
+
 </body>
 
 </html>

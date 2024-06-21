@@ -81,6 +81,9 @@ while ($row = mysqli_fetch_assoc($result_vendas)) {
     <!-- Main CSS -->
     <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
     <style>
+        a:hover{
+            color:red;
+        }
         /* Estilo para a tabela */
         .table-responsive {
             /* Remover a propriedade overflow-x */

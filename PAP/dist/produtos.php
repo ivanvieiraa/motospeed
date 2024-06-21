@@ -64,6 +64,23 @@ session_start();
         <?php
         include('ligacao.php');
 
+        $filtros_aplicados = false;
+
+        if (isset($_GET['id_categoria']) || isset($_GET['id_subcategoria']) || isset($_GET['id_marca']) || isset($_GET['query']) || isset($_GET['preco_min']) || isset($_GET['preco_max'])) {
+            $filtros_aplicados = true;
+        }
+
+
+        $produtos_por_pagina = 12;
+
+        if (isset($_GET['pagina'])) {
+            $pagina_atual = intval($_GET['pagina']);
+        } else {
+            $pagina_atual = 1;
+        }
+
+        $offset = ($pagina_atual - 1) * $produtos_por_pagina;
+
         $sql_count = "";
         $nome_categoria = "";
         $nome_subcategoria = "";
@@ -101,96 +118,109 @@ session_start();
         }
 
         if (isset($_GET['query'])) {
-        $query = mysqli_real_escape_string($con, $_GET['query']);
-        $filtros[] = "(nome_prod LIKE '%$query%' OR c.nome_categoria LIKE '%$query%' OR m.nome_marca LIKE '%$query%' OR s.nome_subcategoria LIKE '%$query%')";
+            $query = mysqli_real_escape_string($con, $_GET['query']);
+            $filtros[] = "(nome_prod LIKE '%$query%' OR c.nome_categoria LIKE '%$query%' OR m.nome_marca LIKE '%$query%' OR s.nome_subcategoria LIKE '%$query%')";
         }
 
         if (isset($_GET['id_categoria'])) {
-        $id_categoria = intval($_GET['id_categoria']);
-        $filtros[] = "c.id_categoria = $id_categoria";
+            $id_categoria = intval($_GET['id_categoria']);
+            $filtros[] = "c.id_categoria = $id_categoria";
         }
 
         if (isset($_GET['id_subcategoria'])) {
-        $id_subcategoria = intval($_GET['id_subcategoria']);
-        $filtros[] = "s.id_subcategoria = $id_subcategoria";
+            $id_subcategoria = intval($_GET['id_subcategoria']);
+            $filtros[] = "s.id_subcategoria = $id_subcategoria";
         }
 
         if (isset($_GET['id_marca'])) {
-        $id_marca = intval($_GET['id_marca']);
-        $filtros[] = "m.id_marca = $id_marca";
+            $id_marca = intval($_GET['id_marca']);
+            $filtros[] = "m.id_marca = $id_marca";
         }
 
         if (isset($_GET['preco_min'])) {
-        $preco_min = floatval($_GET['preco_min']);
-        $filtros[] = "p.preco_prod >= $preco_min";
+            $preco_min = floatval($_GET['preco_min']);
+            $filtros[] = "p.preco_prod >= $preco_min";
         }
 
         if (isset($_GET['preco_max'])) {
-        $preco_max = floatval($_GET['preco_max']);
-        $filtros[] = "p.preco_prod <= $preco_max"; } $filtroSQL="" ; if (count($filtros)> 0) {
+            $preco_max = floatval($_GET['preco_max']);
+            $filtros[] = "p.preco_prod <= $preco_max";
+        }
+        $filtroSQL = "";
+        if (count($filtros) > 0) {
             $filtroSQL = " AND " . implode(" AND ", $filtros);
-            }
+        }
 
-            $sql_count = "SELECT COUNT(*) as total_produtos
+        $sql_count = "SELECT COUNT(*) as total_produtos
             FROM produtos p
             INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria
             INNER JOIN categorias c ON s.id_categoria = c.id_categoria
             INNER JOIN marcas m ON p.id_marca = m.id_marca
             WHERE p.status = 1 $filtroSQL";
 
-            $result_count = mysqli_query($con, $sql_count);
+        $result_count = mysqli_query($con, $sql_count);
+        // Verifica se a consulta foi bem-sucedida e manipula o resultado
+        if ($result_count) {
             $row_count = mysqli_fetch_assoc($result_count);
             $total_produtos = $row_count['total_produtos'];
-            ?>
+            // Calcula o número total de páginas
+            $total_paginas = ceil($total_produtos / $produtos_por_pagina);
+        } else {
+            // Caso a consulta falhe, define $total_produtos como 0
+            $total_produtos = 0;
+            $total_produtos = $row_count['total_produtos'];
+        }
+        ?>
 
 
-            <div class="container-fluid" data-aos="fade-in">
-                <!-- Category Toolbar-->
-                <div class="d-flex justify-content-between items-center pt-5 pb-4 flex-column flex-lg-row">
-                    <div>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.php">Início</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php">Produtos</a></li>
-                                <?php
-                                if (isset($_GET['query'])) {
-                                    echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?query=' . $query . '">Pesquisa</a></li>';
-                                    echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?query=' . $query . '">' . $query . '</a></li>';
-                                }
-                                ?>
-                                <?php
-                                if (isset($id_categoria))
-                                    echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_categoria=' . $id_categoria . '">' . $nome_categoria . '</a></li>';
-                                ?>
-                                <?php
-                                if (isset($id_marca))
-                                    echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_marca=' . $id_marca . '">' . $nome_marca . '</a></li>';
-                                ?>
-                                <?php
-                                if (isset($id_subcategoria))
-                                    echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_subcategoria=' . $id_subcategoria . '">' . $nome_subcategoria . '</a></li>';
-                                ?>
+        <div class="container-fluid" data-aos="fade-in">
+            <!-- Category Toolbar-->
+            <div class="d-flex justify-content-between items-center pt-5 pb-4 flex-column flex-lg-row">
+                <div>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.php">Início</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="produtos.php">Produtos</a>
+                            </li>
+                            <?php
+                            if (isset($_GET['query'])) {
+                                echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?query=' . $query . '">Pesquisa</a></li>';
+                                echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?query=' . $query . '">' . $query . '</a></li>';
+                            }
+                            ?>
+                            <?php
+                            if (isset($id_categoria))
+                                echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_categoria=' . $id_categoria . '">' . $nome_categoria . '</a></li>';
+                            ?>
+                            <?php
+                            if (isset($id_marca))
+                                echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_marca=' . $id_marca . '">' . $nome_marca . '</a></li>';
+                            ?>
+                            <?php
+                            if (isset($id_subcategoria))
+                                echo '<li class="breadcrumb-item active" aria-current="page"><a href="produtos.php?id_subcategoria=' . $id_subcategoria . '">' . $nome_subcategoria . '</a></li>';
+                            ?>
 
-                            </ol>
-                        </nav>
-                        <!-- Exibir a contagem de produtos -->
-                        <h1 class="fw-bold fs-3 mb-2">Produtos (<?php echo $total_produtos; ?>)</h1>
-                    </div>
-                    <div class="d-flex justify-content-end align-items-center mt-4 mt-lg-0 flex-column flex-md-row">
+                        </ol>
+                    </nav>
+                    <!-- Exibir a contagem de produtos -->
+                    <h1 class="fw-bold fs-3 mb-2">Produtos (<?php echo $total_produtos; ?>)</h1>
+                </div>
+                <div class="d-flex justify-content-end align-items-center mt-4 mt-lg-0 flex-column flex-md-row">
 
-                        <!-- Filter Trigger-->
-                        <button class="btn bg-light p-3 me-md-3 d-flex align-items-center fs-7 lh-1 w-100 mb-2 mb-md-0 w-md-auto " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">
-                            <i class="ri-equalizer-line me-2"></i> Filtrar produtos
-                        </button>
-                        <!-- / Filter Trigger-->
-                    </div>
-                </div> <!-- /Category Toolbar-->
+                    <!-- Filter Trigger-->
+                    <button class="btn bg-light p-3 me-md-3 d-flex align-items-center fs-7 lh-1 w-100 mb-2 mb-md-0 w-md-auto " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">
+                        <i class="ri-equalizer-line me-2"></i> Filtrar produtos
+                    </button>
+                    <!-- / Filter Trigger-->
+                </div>
+            </div> <!-- /Category Toolbar-->
 
-                <div class="row g-4">
-                    <?php
-                    if (isset($_GET['query'])) {
-                        $query = mysqli_real_escape_string($con, $_GET['query']);
-                        $sqlProd = "SELECT DISTINCT 
+            <div class="row g-4">
+                <?php
+                if (isset($_GET['query'])) {
+                    $query = mysqli_real_escape_string($con, $_GET['query']);
+                    $sqlProd = "SELECT DISTINCT 
                                 p.id_prod,
                                 p.nome_prod,
                                 c.nome_categoria,
@@ -205,65 +235,100 @@ session_start();
                             INNER JOIN categorias c ON s.id_categoria = c.id_categoria
                             INNER JOIN marcas m ON p.id_marca = m.id_marca
                             WHERE status = 1 AND (nome_prod LIKE '%$query%' OR c.nome_categoria LIKE '%$query%' OR m.nome_marca LIKE '%$query%' OR s.nome_subcategoria LIKE '%$query%')";
-                    } else {
-                        $sqlProd = "SELECT DISTINCT 
-                                p.id_prod,
-                                p.nome_prod,
-                                c.nome_categoria,
-                                s.nome_subcategoria,
-                                m.nome_marca,
-                                p.preco_prod,
-                                p.foto_prod,
-                                p.desc_prod
-                            FROM 
-                                produtos p
-                            INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
-                            INNER JOIN categorias c ON s.id_categoria = c.id_categoria
-                            INNER JOIN marcas m ON p.id_marca = m.id_marca
-                            WHERE p.status = 1 $filtroSQL";
-                    }
-                    $resultProd = mysqli_query($con, $sqlProd);
+                } else {
+                    $sqlProd = "SELECT DISTINCT 
+    p.id_prod,
+    p.nome_prod,
+    c.nome_categoria,
+    s.nome_subcategoria,
+    m.nome_marca,
+    p.preco_prod,
+    p.foto_prod,
+    p.desc_prod
+FROM 
+    produtos p
+INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
+INNER JOIN categorias c ON s.id_categoria = c.id_categoria
+INNER JOIN marcas m ON p.id_marca = m.id_marca
+WHERE p.status = 1 $filtroSQL
+LIMIT $produtos_por_pagina OFFSET $offset";
+                }
+                $resultProd = mysqli_query($con, $sqlProd);
 
-                    // Exibir produtos
-                    if (mysqli_num_rows($resultProd) > 0) {
-                        while ($dados = mysqli_fetch_array($resultProd)) {
-                    ?>
-                            <div class="col-12 col-sm-4 col-lg-3">
-                                <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
-                                    <div class="card-img position-relative">
-                                        <div class="card-badges">
-                                        </div>
-                                        <picture class="position-relative overflow-hidden d-block bg-light">
-                                            <img class="w-100 img-fluid position-relative z-index-10" title="" src="<?= $dados['foto_prod']; ?>" alt="">
-                                        </picture>
-                                        <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
-                                            <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i>Ver detalhe do produto</button>
-                                        </div>
+                // Exibir produtos
+                if (mysqli_num_rows($resultProd) > 0) {
+                    while ($dados = mysqli_fetch_array($resultProd)) {
+                ?>
+                        <div class="col-12 col-sm-4 col-lg-3">
+                            <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
+                                <div class="card-img position-relative">
+                                    <div class="card-badges">
                                     </div>
-                                    <div class="card-body px-0">
-                                        <a class="text-decoration-none link-cover" href="./prod.php?id_prod=<?= $dados['id_prod'] ?>"><?= $dados['nome_prod']; ?></a>
-                                        <p class="mt-2 mb-0 large"><?= $dados['preco_prod']; ?>€</p>
+                                    <picture class="position-relative overflow-hidden d-block bg-light">
+                                        <img class="w-100 img-fluid position-relative z-index-10" title="" src="<?= $dados['foto_prod']; ?>" alt="">
+                                    </picture>
+                                    <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
+                                        <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i>Ver detalhe do
+                                            produto</button>
                                     </div>
                                 </div>
+                                <div class="card-body px-0">
+                                    <a class="text-decoration-none link-cover" href="./prod.php?id_prod=<?= $dados['id_prod'] ?>"><?= $dados['nome_prod']; ?></a>
+                                    <p class="mt-2 mb-0 large"><?= $dados['preco_prod']; ?>€</p>
+                                </div>
                             </div>
-                            <!-- / Product-->
-                    <?php
-                        }
-                    } else {
-                        echo "<p class='text-center'>Não foram encontrados produtos...</p>";
+                        </div>
+                        <!-- / Product-->
+                <?php
                     }
-                    ?>
-                </div>
-                <!-- / Products-->
+                } else {
+                    echo "<p class='text-center'>Não foram encontrados produtos...</p>";
+                }
+                ?>
+            </div>
+            <!-- / Products-->
 
 
-                <!-- /Page Content -->
+            <!-- /Page Content -->
     </section>
     <!-- / Main Section-->
     <!-- Pagination-->
+    <!-- / Pagination-->
+    <!-- Pagination Controls -->
+    <?php if (!$filtros_aplicados) : ?>
+        <div class="d-flex justify-content-center mt-4">
+            <nav aria-label="Navegação de página">
+                <ul class="pagination">
+                    <?php if ($pagina_atual > 1) : ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?pagina=<?= $pagina_atual - 1 ?>" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php for ($i = 1; $i <= $total_paginas; $i++) : ?>
+                        <li class="page-item <?= ($i == $pagina_atual) ? 'active' : '' ?>">
+                            <a class="page-link" href="?pagina=<?= $i ?>"><?= $i ?></a>
+                        </li>
+                    <?php endfor; ?>
+
+                    <?php if ($pagina_atual < $total_paginas) : ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?pagina=<?= $pagina_atual + 1 ?>" aria-label="Próximo">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+        </div>
+    <?php endif; ?>
+
+
+    </div>
     <div class="d-flex flex-column f-w-44 mx-auto my-5 text-center">
         <a href="#" class="btn btn-outline-dark btn-sm mt-5 align-self-center py-3 px-4 border-2">Voltar ao topo</a>
-    </div> <!-- / Pagination-->
     </div>
 
     <!-- Footer -->
@@ -315,7 +380,8 @@ session_start();
                                         while ($rowMarcas = mysqli_fetch_assoc($resultMarcas)) {
                                     ?>
                                             <div class="form-group form-check-custom mb-1">
-                                                <input type="checkbox" class="form-check-input marca-checkbox" id="marca_<?php echo $rowMarcas['id_marca']; ?>" value="<?php echo $rowMarcas['id_marca']; ?>" <?php if (isset($_GET['id_marca']) && $_GET['id_marca'] == $rowMarcas['id_marca']) echo 'checked'; ?>>
+                                                <input type="checkbox" class="form-check-input marca-checkbox" id="marca_<?php echo $rowMarcas['id_marca']; ?>" value="<?php echo $rowMarcas['id_marca']; ?>" <?php if (isset($_GET['id_marca']) && $_GET['id_marca'] == $rowMarcas['id_marca'])
+                                                                                                                                                                                                                    echo 'checked'; ?>>
                                                 <label class="form-check-label fw-normal text-body flex-grow-1 d-flex align-items-center" for="marca_<?php echo $rowMarcas['id_marca']; ?>">
                                                     <?php echo $rowMarcas['nome_marca']; ?>
                                                 </label>
@@ -344,7 +410,8 @@ session_start();
                                         while ($rowCategorias = mysqli_fetch_assoc($resultCategorias)) {
                                     ?>
                                             <div class="form-group form-check-custom mb-1">
-                                                <input type="checkbox" class="form-check-input categoria-checkbox" id="categoria_<?php echo $rowCategorias['id_categoria']; ?>" value="<?php echo $rowCategorias['id_categoria']; ?>" <?php if (isset($_GET['id_categoria']) && $_GET['id_categoria'] == $rowCategorias['id_categoria']) echo 'checked'; ?>>
+                                                <input type="checkbox" class="form-check-input categoria-checkbox" id="categoria_<?php echo $rowCategorias['id_categoria']; ?>" value="<?php echo $rowCategorias['id_categoria']; ?>" <?php if (isset($_GET['id_categoria']) && $_GET['id_categoria'] == $rowCategorias['id_categoria'])
+                                                                                                                                                                                                                                            echo 'checked'; ?>>
                                                 <label class="form-check-label fw-normal text-body flex-grow-1 d-flex align-items-center" for="categoria_<?php echo $rowCategorias['id_categoria']; ?>">
                                                     <?php echo $rowCategorias['nome_categoria']; ?>
                                                 </label>

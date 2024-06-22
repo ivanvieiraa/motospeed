@@ -243,7 +243,8 @@ session_start();
                             INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria 
                             INNER JOIN categorias c ON s.id_categoria = c.id_categoria
                             INNER JOIN marcas m ON p.id_marca = m.id_marca
-                            WHERE status = 1 AND (nome_prod LIKE '%$query%' OR c.nome_categoria LIKE '%$query%' OR m.nome_marca LIKE '%$query%' OR s.nome_subcategoria LIKE '%$query%')";
+                            WHERE status = 1 AND (nome_prod LIKE '%$query%' OR c.nome_categoria LIKE '%$query%' OR m.nome_marca LIKE '%$query%' OR s.nome_subcategoria LIKE '%$query%')
+                            LIMIT $produtos_por_pagina OFFSET $offset";
                     } else {
                         $sqlProd = "SELECT DISTINCT 
     p.id_prod,

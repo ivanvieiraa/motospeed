@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['status'] = 1;
             $_SESSION['morada'] = "";
             $_SESSION['codigop'] = "";
-            header('refresh:0;URL=index.php');
+            header('refresh:0;URL=perfil.php');
         } else {
             echo "Erro ao criar conta !";
         }

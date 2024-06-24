@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("ligacao.php");
+include ("ligacao.php");
 $id_prod = $_GET['id_prod'];
 $id_user = isset($_SESSION['id_user']) ? $_SESSION['id_user'] : null; // Verifica se $_SESSION['id_user'] está definido
 
@@ -22,12 +22,12 @@ if (mysqli_num_rows($resultTamanhos) > 0) {
 }
 
 $sqlStatus = "SELECT status FROM produtos WHERE id_prod = $id_prod";
-$resultStatus = mysqli_query($con,$sqlStatus);
+$resultStatus = mysqli_query($con, $sqlStatus);
 
 $status = true;
-if (mysqli_num_rows($resultStatus) > 0){
-    while($produto = mysqli_fetch_array($resultStatus)){
-        if($produto['status'] == 0){
+if (mysqli_num_rows($resultStatus) > 0) {
+    while ($produto = mysqli_fetch_array($resultStatus)) {
+        if ($produto['status'] == 0) {
             $status = false;
             break;
         }
@@ -65,7 +65,9 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
 
     <!-- Custom Google Fonts-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
+        rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon/apple-touch-icon.png">
@@ -101,7 +103,7 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
 
 <body class="">
     <!-- Navbar -->
-    <?php include('navbar.php'); ?>
+    <?php include ('navbar.php'); ?>
     <!-- / Navbar-->
 
     <!-- Main Section-->
@@ -141,9 +143,15 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item breadcrumb-light"><a href="index.php">Início</a></li>
                                     <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php">Produtos</a></li>
-                                    <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_categoria=<?= $row2['id_categoria']; ?>"><?= $row2['nome_categoria']; ?></a></li>
-                                    <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_subcategoria=<?= $row2['id_subcategoria']; ?>"><?= $row2['nome_subcategoria']; ?></a></li>
-                                    <li class="breadcrumb-item breadcrumb-light"><a href="produtos.php?id_marca=<?= $row2['id_marca']; ?>"><?= $row2['nome_marca']; ?></a></li>
+                                    <li class="breadcrumb-item breadcrumb-light"><a
+                                            href="produtos.php?id_categoria=<?= $row2['id_categoria']; ?>"><?= $row2['nome_categoria']; ?></a>
+                                    </li>
+                                    <li class="breadcrumb-item breadcrumb-light"><a
+                                            href="produtos.php?id_subcategoria=<?= $row2['id_subcategoria']; ?>"><?= $row2['nome_subcategoria']; ?></a>
+                                    </li>
+                                    <li class="breadcrumb-item breadcrumb-light"><a
+                                            href="produtos.php?id_marca=<?= $row2['id_marca']; ?>"><?= $row2['nome_marca']; ?></a>
+                                    </li>
                                     <li class="breadcrumb-item breadcrumb-light active" aria-current="page">
                                         <?= $row2['nome_prod'] ?>
                                     </li>
@@ -174,8 +182,10 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                 <div class="sticky-top top-5">
                                     <div class="pb-3" data-aos="fade-in">
                                         <h1 class="mb-1 fs-2 fw-bold"><?= $row2['nome_prod'] ?>
-                                            <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted" style="display: <?= ($id_user != null) ? "block" : "none" ?>">
-                                                <a href="#" style="text-decoration: none;" class="wishlist-icon" data-id-prod="<?= $row2['id_prod']; ?>">
+                                            <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"
+                                                style="display: <?= ($id_user != null) ? "block" : "none" ?>">
+                                                <a href="#" style="text-decoration: none;" class="wishlist-icon"
+                                                    data-id-prod="<?= $row2['id_prod']; ?>">
                                                     <i class="<?= $isInWishlist ? 'ri-heart-fill' : 'ri-heart-line'; ?>"></i>
                                                 </a>
                                             </span>
@@ -183,7 +193,8 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p class="fs-4 m-0"><?= $row2['preco_prod'] ?>€</p>
                                         </div>
-                                        <div class="border-top mt-4 mb-3 product-option" style="display: <?= ($tamanhosDisponivel && $status === true) ? "block" : "none" ?>">
+                                        <div class="border-top mt-4 mb-3 product-option"
+                                            style="display: <?= ($tamanhosDisponivel && $status === true) ? "block" : "none" ?>">
                                             <small class="text-uppercase pt-4 d-block fw-bolder">
                                                 <span class="text-muted">Tamanhos disponíveis</span> :
                                             </small>
@@ -192,12 +203,14 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                                 $i = 0;
                                                 while ($tamanho = mysqli_fetch_array($resultTamanhos)) { ?>
                                                     <div class="form-check-option form-check-rounded me-3 mb-3">
-                                                        <input type="radio" name="product-option-sizes" value="<?= $tamanho['tamanho']; ?>" id="option-sizes-<?= $i; ?>" data-max="<?= $tamanho['stock'] ?>">
+                                                        <input type="radio" name="product-option-sizes"
+                                                            value="<?= $tamanho['tamanho']; ?>" id="option-sizes-<?= $i; ?>"
+                                                            data-max="<?= $tamanho['stock'] ?>">
                                                         <label for="option-sizes-<?= $i; ?>">
                                                             <small><?= $tamanho['tamanho']; ?></small>
                                                         </label>
                                                     </div>
-                                                <?php
+                                                    <?php
                                                     $i++;
                                                 }
                                                 ?>
@@ -205,30 +218,41 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                         </div>
                                         <div class="border-top mt-4 mb-3 product-option">
                                             <small class="text-uppercase pt-4 d-block fw-bolder">
-                                                <span class="text-muted" style="display: <?= ($tamanhosDisponivel && $status === true ) ? "block" : "none" ?>">Quantidade</span>
+                                                <span class="text-muted"
+                                                    style="display: <?= ($tamanhosDisponivel && $status === true) ? "block" : "none" ?>">Quantidade</span>
                                             </small>
 
                                             <form id="formAddToCart" action="adicionar_ao_carrinho.php" method="POST">
                                                 <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
-                                                    <div class="form-check-option2 form-check-rounded" style="display: <?= ($tamanhosDisponivel && $status === true) ? "block" : "none" ?>">
-                                                        <input type="number" name="quantidade" value="1" min="1" max="1" id="quantidadeInput" onchange="checkQuantity(this)">
+                                                    <div class="form-check-option2 form-check-rounded"
+                                                        style="display: <?= ($tamanhosDisponivel && $status === true) ? "block" : "none" ?>">
+                                                        <input type="number" name="quantidade" value="1" min="1" max="1"
+                                                            id="quantidadeInput" onchange="checkQuantity(this)">
                                                     </div>
                                                 </div>
-                                                <div id="outOfStockMessage" class="mt-4 mb-3 product-option" style="display: <?= ($tamanhosDisponivel === false && $status === true ) ? "block" : "none" ?>">
-                                                    <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Fora de stock.</small>
+                                                <div id="outOfStockMessage" class="mt-4 mb-3 product-option"
+                                                    style="display: <?= ($tamanhosDisponivel === false && $status === true) ? "block" : "none" ?>">
+                                                    <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Fora de
+                                                        stock.</small>
                                                 </div>
 
-                                                <div id="inactiveMessage" class="mt-4 mb-3 product-option" style="display: <?= ($status === false) ? "block" : "none" ?>">
-                                                    <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Este produto foi desativado.</small>
+                                                <div id="inactiveMessage" class="mt-4 mb-3 product-option"
+                                                    style="display: <?= ($status === false) ? "block" : "none" ?>">
+                                                    <small class="text-uppercase pt-4 d-block fw-bolder text-danger">Este produto
+                                                        foi desativado.</small>
                                                 </div>
 
-                                                <button id="btnAddToCart" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow" style="display: <?= ($tamanhosDisponivel === true &&  $status=== true) ? "block" : "none" ?>">Adicionar ao carrinho</button>
+                                                <button id="btnAddToCart"
+                                                    class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow"
+                                                    style="display: <?= ($tamanhosDisponivel === true && $status === true) ? "block" : "none" ?>">Adicionar
+                                                    ao carrinho</button>
 
                                                 <input type="hidden" name="id_prod" value="<?= $id_prod ?>">
-                                                <input type="hidden" name="tamanho" id="tamanhoSelecionado"> <!-- Campo oculto para o tamanho -->
+                                                <input type="hidden" name="tamanho" id="tamanhoSelecionado">
+                                                <!-- Campo oculto para o tamanho -->
                                             </form>
                                             <script>
-                                                document.getElementById('btnAddToCart').addEventListener('click', function(event) {
+                                                document.getElementById('btnAddToCart').addEventListener('click', function (event) {
                                                     event.preventDefault();
 
                                                     var tamanhoSelecionado = document.querySelector('input[name="product-option-sizes"]:checked');
@@ -261,8 +285,8 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                                     document.getElementById('formAddToCart').submit();
                                                 });
 
-                                                document.querySelectorAll('input[name="product-option-sizes"]').forEach(function(radio) {
-                                                    radio.addEventListener('change', function() {
+                                                document.querySelectorAll('input[name="product-option-sizes"]').forEach(function (radio) {
+                                                    radio.addEventListener('change', function () {
                                                         var maxQuantidade = parseInt(this.getAttribute('data-max'), 10);
                                                         var quantidadeInput = document.getElementById('quantidadeInput');
                                                         var btnAddToCart = document.getElementById('btnAddToCart');
@@ -289,7 +313,7 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                                 });
 
                                                 // Adiciona um evento ao campo de entrada da quantidade para garantir que apenas valores válidos sejam aceitos
-                                                document.getElementById('quantidadeInput').addEventListener('input', function() {
+                                                document.getElementById('quantidadeInput').addEventListener('input', function () {
                                                     var maxQuantidade = parseInt(this.getAttribute('max'), 10);
                                                     var minQuantidade = parseInt(this.getAttribute('min'), 10);
                                                     var quantidade = parseInt(this.value, 10);
@@ -331,11 +355,14 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                             <div class="accordion" id="accordionProduct">
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="headingThree">
-                                                        <button class="accordion-button open collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        <button class="accordion-button open collapsed" type="button"
+                                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                                            aria-expanded="false" aria-controls="collapseThree">
                                                             Descrição do produto
                                                         </button>
                                                     </h2>
-                                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionProduct">
+                                                    <div id="collapseThree" class="accordion-collapse collapse"
+                                                        aria-labelledby="headingThree" data-bs-parent="#accordionProduct">
                                                         <div class="accordion-body">
                                                             <p class="m-0"><?= $row2['desc_prod'] ?></p>
                                                         </div>
@@ -349,18 +376,19 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                 <!-- / Product Information-->
                             </div>
                             <!-- / Product Top Section-->
-                <?php
-                    $i++;
+                            <?php
+                            $i++;
                 }
             }
         }
-                ?>
-                        </div>
-                        <!-- /Page Content -->
-                        <div class="col-12 aos-init aos-animate" data-aos="fade-up" bis_skin_checked="1">
-                            <h3 class="fs-4 fw-bolder mt-7 mb-4">Produtos que poderá gostar</h3>
-                            <!-- Swiper Latest -->
-                            <div class="swiper-container swiper-container-initialized swiper-container-horizontal" data-swiper="" data-options="{
+        ?>
+            </div>
+            <!-- /Page Content -->
+            <div class="col-12 aos-init aos-animate" data-aos="fade-up" bis_skin_checked="1">
+                <h3 class="fs-4 fw-bolder mt-7 mb-4">Produtos que poderá gostar</h3>
+                <!-- Swiper Latest -->
+                <div class="swiper-container swiper-container-initialized swiper-container-horizontal" data-swiper=""
+                    data-options="{
             &quot;spaceBetween&quot;: 10,
             &quot;loop&quot;: true,
             &quot;autoplay&quot;: {
@@ -383,10 +411,12 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
               }
             }
         }" bis_skin_checked="1">
-                                <div class="swiper-wrapper" style="transform: translate3d(-5762.25px, 0px, 0px); transition-duration: 0ms;" bis_skin_checked="1">
-                                    <?php
-                                    while ($product = mysqli_fetch_array($resultRecommended)) {
-                                        echo '
+                    <div class="swiper-wrapper"
+                        style="transform: translate3d(-5762.25px, 0px, 0px); transition-duration: 0ms;"
+                        bis_skin_checked="1">
+                        <?php
+                        while ($product = mysqli_fetch_array($resultRecommended)) {
+                            echo '
                     <div class="swiper-slide" data-swiper-slide-index="0" style="width: 433.25px; margin-right: 10px;" bis_skin_checked="1">
                         <!-- Card Product-->
                         <div class="card border border-transparent position-relative overflow-hidden h-100 transparent" bis_skin_checked="1">
@@ -408,24 +438,26 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                         <!--/ Card Product-->
                     </div>
                     ';
-                                    }
-                                    ?>
-                                </div>
-                                <!-- Add Arrows -->
-                                <div class="swiper-prev top-50 start-0 z-index-30 cursor-pointer transition-all bg-white px-3 py-4 position-absolute z-index-30 top-50 start-0 mt-n8 d-flex justify-content-center align-items-center opacity-50-hover" bis_skin_checked="1">
-                                    <i class="ri-arrow-left-s-line ri-lg"></i>
-                                </div>
-                                <div class="swiper-next top-50 end-0 z-index-30 cursor-pointer transition-all bg-white px-3 py-4 position-absolute z-index-30 top-50 end-0 mt-n8 d-flex justify-content-center align-items-center opacity-50-hover" bis_skin_checked="1">
-                                    <i class="ri-arrow-right-s-line ri-lg"></i>
-                                </div>
-                            </div>
-                            <!-- / Swiper Latest-->
-                        </div>
+                        }
+                        ?>
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-prev top-50 start-0 z-index-30 cursor-pointer transition-all bg-white px-3 py-4 position-absolute z-index-30 top-50 start-0 mt-n8 d-flex justify-content-center align-items-center opacity-50-hover"
+                        bis_skin_checked="1">
+                        <i class="ri-arrow-left-s-line ri-lg"></i>
+                    </div>
+                    <div class="swiper-next top-50 end-0 z-index-30 cursor-pointer transition-all bg-white px-3 py-4 position-absolute z-index-30 top-50 end-0 mt-n8 d-flex justify-content-center align-items-center opacity-50-hover"
+                        bis_skin_checked="1">
+                        <i class="ri-arrow-right-s-line ri-lg"></i>
+                    </div>
+                </div>
+                <!-- / Swiper Latest-->
+            </div>
     </section>
     <!-- / Main Section-->
 
     <!-- Footer -->
-    <?php include("footer.php"); ?>
+    <?php include ("footer.php"); ?>
 
     <!-- Theme JS -->
     <!-- Vendor JS -->
@@ -434,21 +466,21 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
     <!-- Theme JS -->
     <script src="./assets/js/theme.bundle.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.wishlist-icon').forEach(function(icon) {
-                icon.addEventListener('click', function(event) {
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.wishlist-icon').forEach(function (icon) {
+                icon.addEventListener('click', function (event) {
                     event.preventDefault();
 
                     var idProd = this.getAttribute('data-id-prod');
                     var iconElement = this.querySelector('i');
 
                     fetch('add_to_wishlist.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            body: 'id_prod=' + idProd
-                        })
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: 'id_prod=' + idProd
+                    })
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
@@ -458,6 +490,13 @@ $resultRecommended = mysqli_query($con, $sqlRecommended);
                                     Swal.fire({
                                         icon: 'success',
                                         text: 'Produto adicionado à lista de desejos!',
+                                        cancelButtonText: 'Fechar',
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Ver lista de desejos',
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = 'desejos.php';
+                                        }
                                     });
                                 } else if (data.action === 'removed') {
                                     iconElement.classList.remove('ri-heart-fill');

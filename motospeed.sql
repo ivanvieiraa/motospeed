@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21-Jun-2024 às 18:42
+-- Tempo de geração: 24-Jun-2024 às 11:08
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -183,10 +183,10 @@ INSERT INTO `produtos` (`id_prod`, `nome_prod`, `preco_prod`, `desc_prod`, `foto
 (64, 'ALPINESTARS TOUCAN GORE-TEX', 386.55, 'Botas técnicas de touring com design inovador, de fechamento com fivelas. Oferecem impermeabilidade e respirabilidade do 100%  (graças à membrana Gore-Tex), uma excelente segurança (graças aos sistemas de proteção integrados), e uma flexibilidade e conforto soberbas, que são as companheiras ideais para viagens longas.', 'uploads/produtos/toucan_gore_tex_black_10-1-M-0668031.avif', 1, 9, '2024-06-21 17:09:30', NULL, 1),
 (65, 'ARMURE MACK WATERPROOF', 99.87, 'Botas de cano alto estilo touring feitas principalmente de pele. Incorpora uma membrana totalmente impermeável para adaptar-se perfeitamente a qualquer condição climática. Incorporam reforços estrategicamente localizados e destacam-se por serem muito confortáveis e seguras.', 'uploads/produtos/armure-armure_mack_black_10-0-M-200150991.avif', 9, 9, '2024-06-21 17:10:14', NULL, 1),
 (66, 'DAINESE TORQUE 3 OUT', 359, 'Bota desportiva realizada em Microfibra e tecido D-Stone com inserções de TPU para maior aderência. As Botas Dainese Torque 3 Out oferecem altos níveis de segurança, conforto e precisão na condução. Incorporam proteções e reforços estrategicamente localizados e equipados com o sistema D-Axial de TPU, desenhado para reduzir o risco de torções do pé e para protegê-lo contra os choques. Especialmente indicadas para uso desportivo em estrada e pista.', 'uploads/produtos/dainese-torque_3_out_black_fluo_red_628-0-M-2000295310.avif', 4, 9, '2024-06-21 17:11:17', NULL, 1),
-(67, 'ALPINESTARS SMX-S', 224, 'Confeccionadas em microfibra, as SMX-S ofrecem-nos um design desportivo e níveis de segurança excepcionais. Leves e confortáveis, oferecem altos níveis de segurança e precisão na condução. Estas botas estão equipados com os últimos avanços no desenvolvimento de calçados da Alpinestars.', 'uploads/produtos/dainese-torque_3_out_black_fluo_red_628-0-M-2000295310.avif', 1, 9, '2024-06-21 17:11:43', NULL, 1),
+(67, 'ALPINESTARS SMX-S', 224, 'Confeccionadas em microfibra, as SMX-S ofrecem-nos um design desportivo e níveis de segurança excepcionais. Leves e confortáveis, oferecem altos níveis de segurança e precisão na condução. Estas botas estão equipados com os últimos avanços no desenvolvimento de calçados da Alpinestars.', 'uploads/produtos/smx_s_black_white_12-1-M-07865516.avif', 1, 9, '2024-06-21 17:11:43', '2024-06-24 10:00:04', 1),
 (68, 'ALPINESTARS FASTER-3 HONDA', 123.89, 'Sapatilhas de design agressivo confeccionadas em microfibra. Incorporam protetores dos tornozelos, e reforços acolchoados estrategicamente localizados e fechamento melhorado. Estas sapatilhas destacam-se por serem muito confortáveis e leves. Têm certificação CE.', 'uploads/produtos/alpinestars-faster_3_honda_black_red_blue_183-0-M-200037211.avif', 1, 9, '2024-06-21 17:12:14', NULL, 1),
-(69, 'ARMURE TERROWIN BROWN', 54.25, 'Tênis urbano de estilo casual ideais para uso na cidade. Confeccionadas em couro, possuem reforços na ponta e no calcanhar para maior proteção. Eles têm um fecho de atacar e um zíper lateral.', 'uploads/produtos/armure-terrowin_brown_18-3-M-200242611.avif', 9, 10, '2024-06-21 17:12:43', NULL, 1),
-(70, ' DAINESE DYNO PRO D1', 251.96, 'Botas de cano curto e estilo desportivo desenhadas para oferecer um elevado nível de segurança, graças à incorporação de soluções técnicas próprias de botas de competição.', 'uploads/produtos/dainese-dyno_pro_d1_black_anthracite_604-1-M-0707561.avif', 4, 9, '2024-06-21 17:13:23', NULL, 1);
+(69, 'ARMURE TERROWIN BROWN', 54.25, 'Tênis urbano de estilo casual ideais para uso na cidade. Confeccionadas em couro, possuem reforços na ponta e no calcanhar para maior proteção. Eles têm um fecho de atacar e um zíper lateral.', 'uploads/produtos/armure-terrowin_brown_18-3-M-200242611.avif', 9, 10, '2024-06-21 17:12:43', '2024-06-24 10:05:36', 1),
+(70, ' DAINESE DYNO PRO D1', 251.96, 'Botas de cano curto e estilo desportivo desenhadas para oferecer um elevado nível de segurança, graças à incorporação de soluções técnicas próprias de botas de competição.', 'uploads/produtos/dainese-dyno_pro_d1_black_anthracite_604-1-M-0707561.avif', 4, 9, '2024-06-21 17:13:23', '2024-06-24 10:05:23', 1);
 
 -- --------------------------------------------------------
 
@@ -205,11 +205,11 @@ CREATE TABLE `produtos_tamanhos` (
 --
 
 INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
-(2, 'L', 25),
-(2, 'M', 98),
-(2, 'S', 0),
-(2, 'XL', 20),
-(2, 'XS', 100),
+(2, 'L', 12),
+(2, 'M', 10),
+(2, 'S', 20),
+(2, 'XL', 15),
+(2, 'XS', 20),
 (5, 'L', 100),
 (5, 'M', 100),
 (5, 'S', 99),
@@ -240,11 +240,11 @@ INSERT INTO `produtos_tamanhos` (`id_prod`, `tamanho`, `stock`) VALUES
 (12, 'S', 100),
 (12, 'XL', 100),
 (12, 'XS', 100),
-(13, 'L', 3),
-(13, 'M', 12),
+(13, 'L', 100),
+(13, 'M', 100),
 (13, 'S', 150),
-(13, 'XL', 20),
-(13, 'XS', 0),
+(13, 'XL', 100),
+(13, 'XS', 100),
 (14, 'L', 100),
 (14, 'M', 100),
 (14, 'S', 100),
@@ -566,7 +566,8 @@ CREATE TABLE `suporte` (
 --
 
 INSERT INTO `suporte` (`id_suporte`, `email`, `assunto`, `mensagem`, `status`, `criado_a`, `atualizado_a`) VALUES
-(3, 'daniel@gmail.com', 'Ajuda', 'Boa tarde, preciso de alterar a minha data de nascimento...\r\nIntroduzi-a mal quando configurei o meu perfil.\r\nObrigado!', 0, '2024-06-19 15:07:32', '2024-06-21 15:50:34');
+(3, 'daniel@gmail.com', 'Ajuda', 'Boa tarde, preciso de alterar a minha data de nascimento...\r\nIntroduzi-a mal quando configurei o meu perfil.\r\nObrigado!', 0, '2024-06-19 15:07:32', '2024-06-21 15:50:34'),
+(5, 'leonor@gmail.com', 'Conta desativada', 'Bom dia,\r\nA minha conta foi desativada, como posso reativá-la ?', 0, '2024-06-24 10:01:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -666,18 +667,6 @@ CREATE TABLE `wishlist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `wishlist`
---
-
-INSERT INTO `wishlist` (`id`, `id_user`, `id_prod`) VALUES
-(6, 61, 2),
-(8, 61, 9),
-(9, 61, 21),
-(10, 61, 29),
-(19, 61, 30),
-(21, 61, 8);
-
---
 -- Índices para tabelas despejadas
 --
 
@@ -762,13 +751,13 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT de tabela `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `marcas`
 --
 ALTER TABLE `marcas`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
@@ -780,13 +769,13 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `subcategorias`
 --
 ALTER TABLE `subcategorias`
-  MODIFY `id_subcategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_subcategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `suporte`
 --
 ALTER TABLE `suporte`
-  MODIFY `id_suporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_suporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `users`

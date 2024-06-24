@@ -4,15 +4,15 @@
                 <div>
                     <ul class="list-unstyled">
                         <li class="d-inline-block me-1"><a class="text-decoration-none text-dark-hover transition-all"
-                                href="https://www.instagram.com/"><i class="ri-instagram-fill"></i></a></li>
+                                href="https://www.instagram.com/motospeed.2024/"><i class="ri-instagram-fill"></i></a></li>
                         <li class="d-inline-block me-1"><a class="text-decoration-none text-dark-hover transition-all"
-                                href="https://www.facebook.com/"><i class="ri-facebook-fill"></i></a></li>
+                                href="https://github.com/ivanvieiraa/motospeed"><i class="ri-github-fill"></i></a></li>
                         <li class="d-inline-block me-1"><a class="text-decoration-none text-dark-hover transition-all"
-                                href="https://www.twitter.com/"><i class="ri-twitter-fill"></i></a></li>
+                                href="https://x.com/MotoSpeed2024"><i class="ri-twitter-fill"></i></a></li>
                     </ul>
                 </div>
                 <div class="d-flex align-items-center justify-content-end flex-column flex-lg-row">
-                    <p class="small m-0 text-center text-lg-start">&copy; 2024 Motospeed All Rights Reserved.
+                    <p class="small m-0 text-center text-lg-start">&copy; 2024 Motospeed.
                         
                     </p>
                     <ul class="list-unstyled mb-0 ms-lg-4 mt-3 mt-lg-0 d-flex justify-content-end align-items-center">

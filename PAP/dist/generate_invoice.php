@@ -117,4 +117,4 @@ $pdf->writeHTML('<br>');
 $pdf->writeHTML('<p style="text-align:center; margin-top:50px; margin-bottom: 150px; font-size:16px;">Obrigado pela sua compra!</p>');
 
 // Output the PDF
-$pdf->Output('fatura.pdf', 'D');
+$pdf->Output('Fatura - Pedido#'.$venda['id_venda'].'.pdf', 'D');

@@ -15,7 +15,9 @@
 
     <!-- Custom Google Fonts-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
+        rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon/apple-touch-icon.png">
@@ -30,6 +32,22 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
+
+    <style>
+        .hover-red {
+            color: inherit;
+            /* Mantém a cor padrão do link */
+            text-decoration: underline;
+            /* Remove sublinhado padrão do link */
+        }
+
+        .hover-red:hover {
+            color: red;
+            /* Define a cor vermelha ao passar o mouse */
+            text-decoration: underline;
+            /* Adiciona sublinhado ao passar o mouse (opcional) */
+        }
+    </style>
 
     <!-- Fix for custom scrollbar if JS is disabled-->
     <noscript>
@@ -49,7 +67,7 @@
 </head>
 
 <body class="">
-    <?php include("navbar.php"); ?>
+    <?php include ("navbar.php"); ?>
     <!-- Main Section-->
     <section class="mt-0 overflow-lg-hidden  vh-lg-100">
         <!-- Page Content Goes Here -->
@@ -77,8 +95,8 @@
                                         // Verifica se a sessão do carrinho está definida e se há produtos no carrinho
                                         if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
                                             $carrinho = $_SESSION['carrinho'];
-                                        ?>
-                                        <?php
+                                            ?>
+                                            <?php
                                             // Loop através dos produtos no carrinho
                                             foreach ($carrinho as $produto) {
                                                 echo '<!-- Cart Item-->
@@ -92,9 +110,9 @@
                                                                     </div>
                                                                     <div class="col-9 offset-1">
                                                                         <div>
-                                                                            <a style="text-decoration: none;" href="prod.php?id_prod=' . $produto['id_prod'] . '"><h6 class="justify-content-between d-flex align-items-start mb-2">
+                                                                            <a style="text-decoration: none;" class="hover-red" href="prod.php?id_prod=' . $produto['id_prod'] . '"><h6 class="justify-content-between d-flex align-items-start mb-2">
                                                                                 ' . $produto['nome'] . '
-                                                                                <a style="text-decoration:none;" href="remover_do_carrinho.php?produto_id=' . $produto['id_prod'] . '" >  <i class="ri-close-line ms-3"></i> </a>
+                                                                                <a style="text-decoration:none;" class="hover-red" href="remover_do_carrinho.php?produto_id=' . $produto['id_prod'] . '" >  <i class="ri-close-line ms-3"></i> </a>
                                                                             </h6></a>
                                                                             <span class="d-block text-muted fw-bolder text-uppercase fs-9">Tamanho: ' . $produto['tamanho'] . ' / Quantidade: ' . $produto['quantidade'] . '</span>
                                                                         </div>
@@ -105,8 +123,7 @@
                                                         </tr>';
                                             }
                                         } else {
-                                            // Se não houver produtos no carrinho, exibe uma mensagem indicando isso
-                                            echo '<td colspan="3">O seu carrinho está vazio... <a href="./produtos.php" role="button">Adicione produtos</a></td>';
+                                            echo '<td colspan="3"><p>O seu carrinho está vazio... <a class="hover-red" href="./produtos.php">Adicione produtos</a></p></td>';
                                         }
                                         ?>
                                     </tbody>
@@ -148,7 +165,8 @@
                                     <!-- <p class="m-0 fs-5 fw-bold">422.99€</p> -->
                                 </div>
                             </div>
-                            <a href="./checkout.php" class="btn btn-dark w-100 text-center" role="button">Proceder para checkout</a>
+                            <a href="./checkout.php" class="btn btn-dark w-100 text-center" role="button">Proceder para
+                                checkout</a>
                         </div>
                     </div>
                 <?php } ?>
@@ -156,7 +174,7 @@
         </div>
         <!-- /Page Content -->
     </section>
-    <?php include('footer.php'); ?>
+    <?php include ('footer.php'); ?>
     <!-- / Main Section-->
 
     <!-- Theme JS -->

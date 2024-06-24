@@ -352,7 +352,7 @@ include("ligacao.php");
                                 <span id="tamanho-error" class="error-message"></span><br>
 
                                 <label for="preco">Preço:</label><br>
-                                <input type="number" name="preco" id="preco" oninput="clearErrorMessage('preco-error')" step="any" placeholder="Valor">
+                                <input type="number" name="preco" id="preco" oninput="clearErrorMessage('preco-error')" min="0" max="3000" step="any" placeholder="Valor">
                                 <i class="fa-solid fa-euro-sign fa-lg" style="color: #000000;"></i><br>
                                 <span id="preco-error" class="error-message"></span><br>
 
